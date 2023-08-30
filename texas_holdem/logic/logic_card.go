@@ -9,7 +9,7 @@ import (
 	"Odds/texas_holdem/define"
 )
 
-// 牌转逻辑牌
+// card_2_lcard 牌转逻辑牌
 //
 //lcard:logic card
 func card_2_lcard(card byte) byte {
@@ -22,6 +22,8 @@ func card_2_lcard(card byte) byte {
 	return card
 }
 
+// cards_2_lcards
+//
 //lcards:logic cards
 func cards_2_lcards(cards []byte) []byte {
 	if len(cards) <= 0 {
@@ -35,7 +37,7 @@ func cards_2_lcards(cards []byte) []byte {
 	return lcards
 }
 
-// 逻辑牌转牌
+// lcard_2_card 逻辑牌转牌
 //
 //lcard:logic card
 func lcard_2_card(card byte) byte {
@@ -48,6 +50,8 @@ func lcard_2_card(card byte) byte {
 	return card
 }
 
+// lcards_2_cards
+//
 //lcards:logic cards
 func lcards_2_cards(lcards []byte) []byte {
 	if len(lcards) <= 0 {

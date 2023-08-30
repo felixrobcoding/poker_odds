@@ -13,7 +13,7 @@ const (
 	_LOOP_CNT = 5
 )
 
-// 随机洗牌
+// Shuffle_cards 随机洗牌
 func Shuffle_cards(decks int) []byte {
 	cards := Raw_cards(decks)
 
@@ -29,7 +29,7 @@ func Shuffle_cards(decks int) []byte {
 	return cards
 }
 
-// 得到牌
+// Raw_cards 得到牌
 func Raw_cards(decks int) []byte {
 	cards := []byte{
 		0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0A, 0x0B, 0x0C, 0x0D, //方块

@@ -4,7 +4,7 @@
 */
 package algorithm
 
-//查找个数
+// Find_cnt 查找个数
 func Find_cnt[T byte | int](all []T, element T) int {
 	cnt := 0
 	for _, v := range all {
@@ -15,7 +15,7 @@ func Find_cnt[T byte | int](all []T, element T) int {
 	return cnt
 }
 
-//查找牌值个数
+// Find_value_cnt 查找牌值个数
 func Find_value_cnt(cards []byte, value byte, Value ValueFunc) int {
 	cnt := 0
 	for _, v := range cards {
@@ -26,7 +26,7 @@ func Find_value_cnt(cards []byte, value byte, Value ValueFunc) int {
 	return cnt
 }
 
-//查找牌花色个数
+// Find_suit_cnt 查找牌花色个数
 func Find_suit_cnt(cards []byte, suit byte, Suit SuitFunc) int {
 	cnt := 0
 	for _, v := range cards {

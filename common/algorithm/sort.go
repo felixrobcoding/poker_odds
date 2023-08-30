@@ -9,7 +9,7 @@ import (
 	"sort"
 )
 
-// 按花色排序,默认升序
+// Sort_by_suit 按花色排序,默认升序
 func Sort_by_suit(cards []byte, Suit SuitFunc, Value ValueFunc, order_types ...ORDER_TYPE.TYPE) []byte {
 	if Suit == nil || Value == nil {
 		return []byte{}
@@ -46,7 +46,7 @@ func Sort_by_suit(cards []byte, Suit SuitFunc, Value ValueFunc, order_types ...O
 	return tmp_cards
 }
 
-// 按花色个数排序,默认升序
+// Sort_by_suit_cnt 按花色个数排序,默认升序
 func Sort_by_suit_cnt(cards []byte, Suit SuitFunc, Value ValueFunc, order_types ...ORDER_TYPE.TYPE) []byte {
 	if Suit == nil || Value == nil {
 		return []byte{}
@@ -83,7 +83,7 @@ func Sort_by_suit_cnt(cards []byte, Suit SuitFunc, Value ValueFunc, order_types 
 	return tmp_cards
 }
 
-// 按值大小排序,默认升序
+// Sort_by_value 按值大小排序,默认升序
 func Sort_by_value(cards []byte, Suit SuitFunc, Value ValueFunc, order_types ...ORDER_TYPE.TYPE) []byte {
 	if Suit == nil || Value == nil {
 		return []byte{}
@@ -120,7 +120,7 @@ func Sort_by_value(cards []byte, Suit SuitFunc, Value ValueFunc, order_types ...
 	return tmp_cards
 }
 
-// 按值个数排序,默认升序
+// Sort_by_value_cnt 按值个数排序,默认升序
 func Sort_by_value_cnt(cards []byte, Suit SuitFunc, Value ValueFunc, order_types ...ORDER_TYPE.TYPE) []byte {
 	if Suit == nil || Value == nil {
 		return []byte{}

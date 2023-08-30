@@ -6,7 +6,7 @@ package algorithm
 
 import "sort"
 
-//删除
+// Remove 删除
 func Remove[T byte | int](all []T, target_element T) (removed_cnt int, results []T) {
 	results = make([]T, 0)
 	if cnt := Find_cnt(all, target_element); cnt <= 0 {
@@ -24,7 +24,7 @@ func Remove[T byte | int](all []T, target_element T) (removed_cnt int, results [
 	return removed_cnt, results
 }
 
-//删除
+// Removes 删除
 func Removes[T byte | int](all []T, target_elements []T) (removed_cnt int, results []T) {
 	results = make([]T, 0)
 	copy(results, all)

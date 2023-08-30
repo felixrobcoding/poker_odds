@@ -4,7 +4,7 @@
 */
 package logic
 
-// 分析牌型
+// Analyse 分析牌型
 func Analyse(cards []byte) *AnalyseItem {
 	if len(cards) <= 0 {
 		return nil

@@ -20,7 +20,7 @@ type sameValue struct {
 	four_cnt   int //四条个数
 }
 
-// 分析项
+// AnalyseItem 分析项
 type AnalyseItem struct {
 	cards         []byte           //牌
 	suit_cnts     []int            //花色统计
@@ -35,7 +35,7 @@ type typeHandler struct {
 	handler HandlerAnalyseCardType
 }
 
-// 创建
+// NewAnalyseItem 创建
 func NewAnalyseItem(cards []byte) *AnalyseItem {
 	if len(cards) <= 0 {
 		return nil
@@ -66,17 +66,17 @@ func (a *AnalyseItem) init() {
 	a.compare_cards = make([]byte, 0)
 }
 
-// 牌列表
+// Cards 牌列表
 func (a *AnalyseItem) Cards() []byte {
 	return a.cards
 }
 
-// 牌张数
+// Card_cnt 牌张数
 func (a *AnalyseItem) Card_cnt() int {
 	return len(a.cards)
 }
 
-// 计算相同值项
+// cal_same_value_item 计算相同值项
 func (a *AnalyseItem) cal_same_value_item() {
 	for _, v := range a.value_cnts {
 		if v == 1 {
@@ -98,7 +98,7 @@ func (a *AnalyseItem) cal_same_value_item() {
 	}
 }
 
-// 计算牌型
+// cal_card_type 计算牌型
 func (a *AnalyseItem) cal_card_type() {
 	type_handlers := []typeHandler{
 		{CARD_TYPE.EX_FLUSH_3, is_ex_flush_3},
