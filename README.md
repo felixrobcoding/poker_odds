@@ -1,5 +1,6 @@
-# 项目说明 
-工作室网站 [www.poker-x-studio.com](www.poker-x-studio.com)
+# 项目说明
+- 扑克概率计算 
+- 工作室网站 [www.poker-x-studio.com](www.poker-x-studio.com)
 
 ## 一 功能说明:
   总体是扑克类游戏概率的统计计算,分别为
