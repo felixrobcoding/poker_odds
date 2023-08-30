@@ -53,7 +53,7 @@ func (f *FlowControl) init() {
 	//f.betting_strategy = strategy_betting.NewBetting(BETTING_TYPE.KELLY, PLAYER_INIT_CHIP)
 }
 
-// 洗牌
+// Shuffle 洗牌
 func (f *FlowControl) Shuffle() {
 	f.shoe_index = shoe_index
 	shoe_index++
@@ -66,7 +66,7 @@ func (f *FlowControl) Shuffle() {
 	//f.shoe_cards = []byte{0x01, 0x11, 0x21, 0x31, 0x01, 0x11, 0x21, 0x31, 0x01, 0x11, 0x21, 0x31, 0x01, 0x11, 0x21, 0x31}
 }
 
-// 发牌
+// Round_begin_to_deal 发牌
 func (f *FlowControl) Round_begin_to_deal() error {
 	f.messages = make([]string, 0)
 
@@ -111,7 +111,7 @@ func (f *FlowControl) Round_begin_to_deal() error {
 	return nil
 }
 
-// 剩下的shoe牌是否有效
+// Is_valid_shoe_cards 剩下的shoe牌是否有效
 func (f *FlowControl) Is_valid_shoe_cards() bool {
 	shoe_card_cnt := len(f.shoe_cards)
 	if shoe_card_cnt <= define.REMAIN_CARD_CNT {
@@ -120,7 +120,7 @@ func (f *FlowControl) Is_valid_shoe_cards() bool {
 	return true
 }
 
-// 校验blackjack牌型
+// Check_blackjack 校验blackjack牌型
 func (f *FlowControl) Check_blackjack() error {
 	player_card_type := f.player.Current_hand().Card_type()
 	dealer_card_type := f.dealer.Current_hand().Card_type()
@@ -146,7 +146,7 @@ func (f *FlowControl) Check_blackjack() error {
 	return nil
 }
 
-// 发一张牌
+// Deal_1_card 发一张牌
 func (f *FlowControl) Deal_1_card() byte {
 	if (f.shoe_cards == nil) || (len(f.shoe_cards) < 1) {
 		panic("")
@@ -156,7 +156,7 @@ func (f *FlowControl) Deal_1_card() byte {
 	return card
 }
 
-// 闲家操作
+// Player_turn 闲家操作
 func (f *FlowControl) Player_turn() error {
 	// 闲家叫牌,庄家一张明牌
 	DEALER_CARD := f.dealer.Current_hand().Cards()[0]
@@ -261,7 +261,7 @@ func (f *FlowControl) Player_turn() error {
 	return nil
 }
 
-// 庄家操作
+// Dealer_turn 庄家操作
 func (f *FlowControl) Dealer_turn() error {
 
 	for {
@@ -295,7 +295,7 @@ func (f *FlowControl) Dealer_turn() error {
 	return nil
 }
 
-// 比牌
+// Compare 比牌
 func (f *FlowControl) Compare() {
 	dealer_cards := f.dealer.Current_hand().Cards()
 	dealer_points, _ := logic.Points(dealer_cards)
@@ -426,7 +426,7 @@ func (f *FlowControl) Compare() {
 	}
 }
 
-// 本轮结束
+// Round_end 本轮结束
 func (f *FlowControl) Round_end() {
 	msg := fmt.Sprintf("=====本轮结束=====")
 	f.push_message(msg)
@@ -454,7 +454,7 @@ func (f *FlowControl) Round_end() {
 	f.betting_strategy.Result_node_append(result_node)
 }
 
-// 游戏结束
+// Game_over 游戏结束
 func (f *FlowControl) Game_over() {
 	player_stat := f.player.Extract_user_stat()
 	dealer_stat := f.dealer.Extract_user_stat()
@@ -464,18 +464,18 @@ func (f *FlowControl) Game_over() {
 	xlog_entry.Debugf("=====游戏结束,dealer_stat:%s=====", dealer_stat.String())
 }
 
-// 发牌次数
+// Deal_times 发牌次数
 func (f *FlowControl) Deal_times() int {
 	return f.deal_times
 }
 
-// 复盘信息
+// push_message 复盘信息
 func (f *FlowControl) push_message(txt string) {
 	msg := fmt.Sprintf("shoe_index:%d,轮数:%d,%d,%s", f.shoe_index, f.Deal_times(), len(f.messages), txt)
 	f.messages = append(f.messages, msg)
 }
 
-// 提取每靴牌的统计
+// Extract_shoe_stat 提取每靴牌的统计
 func (f *FlowControl) Extract_shoe_stat() *ShoeStat {
 	min_bet, max_bet, betting_t := f.betting_strategy.Query_option()
 	user_stat := f.player.Extract_user_stat()

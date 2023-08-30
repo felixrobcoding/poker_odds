@@ -19,7 +19,7 @@ import (
 
 const (
 	GO_ROUTINE_CNT          = 50    //goroutine个数
-	LOOP_TIMES              = 10000 //每个goroutine循环次数
+	LOOP_TIMES              = 10    //每个goroutine循环次数
 	is_output_strategy_jpeg = false //
 )
 

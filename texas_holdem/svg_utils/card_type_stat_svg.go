@@ -36,7 +36,7 @@ func Instance_card_type_stat_svg() *CardTypeStatSvg {
 	return instance_stat
 }
 
-// 生成svg图
+// Make_svg 生成svg图
 // 返回:svg图字符串
 func (c *CardTypeStatSvg) Make_svg(header string, stats []*CardTypeStat) string {
 	svg_writer := new(bytes.Buffer) //写入缓冲
@@ -66,23 +66,23 @@ func (c *CardTypeStatSvg) Make_svg(header string, stats []*CardTypeStat) string 
 	return svg_writer.String()
 }
 
-// 宽度
+// canvas_width 宽度
 func (c *CardTypeStatSvg) canvas_width() int {
 	return W_TOTAL_RUN_TIMES_HEADING + W_DEAL_CARD_CNT_HEADING + W_CARD_TYPE_HEADING + W_TYPE_CNT_HEADING + W_PERCENTAGE_HEADING
 }
 
-// 高度
+// canvas_height 高度
 func (c *CardTypeStatSvg) canvas_height() int {
 	return H_HEADER + c.y_axis_cnt*H_PER_ROW + H_HEADING + H_FOOTER //高度
 }
 
-// defs
+// make_defs defs
 func (c *CardTypeStatSvg) make_defs(canvas *svg.SVG) {
 	canvas.Def()
 	defer canvas.DefEnd()
 }
 
-// 整个svg图的背景
+// make_bg 整个svg图的背景
 func (c *CardTypeStatSvg) make_bg(canvas *svg.SVG) {
 	canvas.Gtransform("translate(0,0)")
 	defer canvas.Gend()
@@ -91,7 +91,7 @@ func (c *CardTypeStatSvg) make_bg(canvas *svg.SVG) {
 	canvas.Rect(0, 0, c.canvas_width(), c.canvas_height(), STYLE_BG)
 }
 
-// 头
+// make_header 头
 func (c *CardTypeStatSvg) make_header(canvas *svg.SVG) {
 	canvas.Gtransform("translate(0,0)")
 	defer canvas.Gend()
@@ -99,6 +99,7 @@ func (c *CardTypeStatSvg) make_header(canvas *svg.SVG) {
 	canvas.Text(c.canvas_width()/2-120, H_HEADER/2+10, c.header, STYLE_HEADER_TXT)
 }
 
+// make_body
 func (c *CardTypeStatSvg) make_body(canvas *svg.SVG, stats []*CardTypeStat) {
 	//标题
 	c.make_headings(canvas)
@@ -123,7 +124,7 @@ func (c *CardTypeStatSvg) make_body(canvas *svg.SVG, stats []*CardTypeStat) {
 	canvas.Gend()
 }
 
-// 标题
+// make_headings 标题
 func (c *CardTypeStatSvg) make_headings(canvas *svg.SVG) {
 	txt := fmt.Sprintf("translate(0,%d)", H_HEADER)
 	canvas.Gtransform(txt)
@@ -152,7 +153,7 @@ func (c *CardTypeStatSvg) make_headings(canvas *svg.SVG) {
 	w += W_PERCENTAGE_HEADING
 }
 
-// 行
+// make_row 行
 func (c *CardTypeStatSvg) make_row(canvas *svg.SVG, rect *xmath.Rect, stat *CardTypeStat) {
 	y_base := rect.Center_y() + 6
 
@@ -190,7 +191,7 @@ func (c *CardTypeStatSvg) make_row(canvas *svg.SVG, rect *xmath.Rect, stat *Card
 	canvas.Line(rect.X_left, rect.Y_bottom, rect.X_right, rect.Y_bottom, "stroke:rgb(88,88,88);stroke-width:1")
 }
 
-// 页脚
+// make_footer 页脚
 func (c *CardTypeStatSvg) make_footer(canvas *svg.SVG, total_height int) {
 	txt := fmt.Sprintf("translate(0,%d)", total_height-H_FOOTER)
 	canvas.Gtransform(txt)

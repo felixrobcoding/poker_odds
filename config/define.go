@@ -9,10 +9,6 @@ const (
 	TOML_FILE_APP = "app.toml"
 )
 
-type logFile struct {
-	Filename string `toml:"filename"`
-}
-
 //-----------------------------------------------
 //					the end
 //-----------------------------------------------

@@ -14,7 +14,7 @@ import (
 	"github.com/poker-x-studio/x/xdebug"
 )
 
-// 加载配置文件
+// Load_config_app 加载配置文件
 func Load_config_app() (cfg *ConfigApp, err error) {
 	xlog_entry := xlog.New_entry(xdebug.Funcname())
 

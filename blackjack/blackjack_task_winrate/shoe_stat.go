@@ -31,10 +31,12 @@ func (s *ShoeStat) String() string {
 	return str
 }
 
+// profit 盈利
 func (s *ShoeStat) profit() float64 {
 	return s.player_chip - s.player_init_chip
 }
 
+// total_hands 总手数
 func (s *ShoeStat) total_hands() int {
 	return s.player_lose_hands + s.player_push_hands + s.player_win_hands
 }

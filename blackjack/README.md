@@ -1,4 +1,4 @@
-# 项目说明
+# 任务说明
 
 
 ## 一 功能说明:
@@ -21,5 +21,3 @@ msg="min_bet:10,max_bet:1000,betting_strategy:fixed_amount,player_min_profit:-35
 msg="sum_deal_times:5500421,sum_hands:5638827,sum_bets:63034250,sum_profit:-1306545.00,hands_per_shoe:56.39,profit_per_shoe:-13.0655,profit_per_hand:-0.2317,sum_profit/sum_bets:-0.020728" 
 msg="sum_player_lose_hands:2863533,sum_player_push_hands:445554,sum_player_win_hands:2329740,player_lose_hands_ratio:0.5078,player_push_hands_ratio:0.0790,player_win_hands_ratio:0.4132," 
 ```
-
-## 三 

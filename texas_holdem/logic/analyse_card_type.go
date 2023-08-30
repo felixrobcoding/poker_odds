@@ -12,7 +12,7 @@ import (
 
 type HandlerAnalyseCardType func(item *AnalyseItem) (bool, []byte)
 
-// 高牌排序
+// sort_high_card 高牌排序
 func sort_high_card(item *AnalyseItem) []byte {
 	if item == nil {
 		return []byte{}
@@ -24,7 +24,7 @@ func sort_high_card(item *AnalyseItem) []byte {
 	return sort_cards
 }
 
-// 是否一对
+// is_one_pair 是否一对
 func is_one_pair(item *AnalyseItem) (bool, []byte) {
 	if item == nil {
 		return false, []byte{}
@@ -38,7 +38,7 @@ func is_one_pair(item *AnalyseItem) (bool, []byte) {
 	return false, []byte{}
 }
 
-// 是否两对
+// is_two_pair 是否两对
 func is_two_pair(item *AnalyseItem) (bool, []byte) {
 	if item == nil {
 		return false, []byte{}
@@ -53,7 +53,7 @@ func is_two_pair(item *AnalyseItem) (bool, []byte) {
 	return false, []byte{}
 }
 
-// 是否三条
+// is_three_of_a_kind 是否三条
 func is_three_of_a_kind(item *AnalyseItem) (bool, []byte) {
 	if item == nil {
 		return false, []byte{}
@@ -67,7 +67,7 @@ func is_three_of_a_kind(item *AnalyseItem) (bool, []byte) {
 	return false, []byte{}
 }
 
-// 是否顺子
+// is_straight 是否顺子
 func is_straight(item *AnalyseItem) (bool, []byte) {
 	if item == nil {
 		return false, []byte{}
@@ -126,7 +126,7 @@ func is_straight(item *AnalyseItem) (bool, []byte) {
 	return false, []byte{}
 }
 
-// 是否同花
+// is_flush 是否同花
 func is_flush(item *AnalyseItem) (bool, []byte) {
 	if item == nil {
 		return false, []byte{}
@@ -152,7 +152,7 @@ func is_flush(item *AnalyseItem) (bool, []byte) {
 	return false, []byte{}
 }
 
-// 是否葫芦
+// is_full_house 是否葫芦
 func is_full_house(item *AnalyseItem) (bool, []byte) {
 	if item == nil {
 		return false, []byte{}
@@ -166,7 +166,7 @@ func is_full_house(item *AnalyseItem) (bool, []byte) {
 	return false, []byte{}
 }
 
-// 是否四条
+// is_four_of_a_kind 是否四条
 func is_four_of_a_kind(item *AnalyseItem) (bool, []byte) {
 	if item == nil {
 		return false, []byte{}
@@ -180,7 +180,7 @@ func is_four_of_a_kind(item *AnalyseItem) (bool, []byte) {
 	return false, []byte{}
 }
 
-// 是否同花顺
+// is_straight_flush 是否同花顺
 func is_straight_flush(item *AnalyseItem) (bool, []byte) {
 	if is, _ := is_flush(item); !is {
 		return false, []byte{}
@@ -192,7 +192,7 @@ func is_straight_flush(item *AnalyseItem) (bool, []byte) {
 	return false, []byte{}
 }
 
-// 是否皇家同花顺
+// is_royal_straight_flush 是否皇家同花顺
 func is_royal_straight_flush(item *AnalyseItem) (bool, []byte) {
 	if is, sort_cards := is_straight_flush(item); is {
 		if algorithm.Find_value_cnt(sort_cards, define.LOGIC_VALUE_A, Value) > 0 { //A需要转化为逻辑牌

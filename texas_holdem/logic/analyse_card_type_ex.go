@@ -9,6 +9,7 @@ import (
 	"Odds/common/algorithm"
 )
 
+// is_ex_flush_3 是否3张同色
 func is_ex_flush_3(item *AnalyseItem) (bool, []byte) {
 	if item == nil {
 		return false, []byte{}
@@ -28,6 +29,7 @@ func is_ex_flush_3(item *AnalyseItem) (bool, []byte) {
 	return false, []byte{}
 }
 
+// is_ex_flush_4 是否4张同色
 func is_ex_flush_4(item *AnalyseItem) (bool, []byte) {
 	if item == nil {
 		return false, []byte{}
@@ -47,6 +49,7 @@ func is_ex_flush_4(item *AnalyseItem) (bool, []byte) {
 	return false, []byte{}
 }
 
+// is_ex_flush_5 是否5张同色
 func is_ex_flush_5(item *AnalyseItem) (bool, []byte) {
 	if item == nil {
 		return false, []byte{}
@@ -66,6 +69,7 @@ func is_ex_flush_5(item *AnalyseItem) (bool, []byte) {
 	return false, []byte{}
 }
 
+// is_ex_more_one_pair 至少一对
 func is_ex_more_one_pair(item *AnalyseItem) (bool, []byte) {
 	if item == nil {
 		return false, []byte{}
