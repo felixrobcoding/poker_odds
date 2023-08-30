@@ -1,0 +1,15 @@
+*.exe
+# 忽略log目录
+log/
+# 忽略tmp目录
+tmp/
+# 忽略images_tmp目录
+images_tmp/
+# 忽略log文件
+*.log
+#
+*.tar.gz
+
+#可执行文件
+
+
