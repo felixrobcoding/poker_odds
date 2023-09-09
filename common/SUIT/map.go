@@ -4,25 +4,25 @@
 */
 package SUIT
 
-type Value struct {
+type Item struct {
 	t       TYPE
 	txt_eng string
 	txt_chs string
 }
 
-var type_map map[TYPE]Value
+var (
+	type_map = make(map[TYPE]Item, 0)
+)
 
 func init() {
-	values := []Value{
+	items := []Item{
 		{DIAMOND, "Diamond", "方块"},
 		{CLUB, "Club", "梅花"},
 		{HEART, "Heart", "红心"},
 		{SPADE, "Spade", "黑桃"},
 	}
-
-	type_map = make(map[TYPE]Value, 0)
-	for k, v := range values {
-		type_map[v.t] = values[k]
+	for k, v := range items {
+		type_map[v.t] = items[k]
 	}
 }
 

@@ -9,7 +9,7 @@ import (
 	"Odds/baccarat/define/CARD_TYPE"
 )
 
-// 牌型
+// Card_type 牌型
 func Card_type(cards []byte) CARD_TYPE.TYPE {
 	len := len(cards)
 	if len < 2 {

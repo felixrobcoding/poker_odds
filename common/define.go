@@ -5,7 +5,7 @@
 package common
 
 const (
-	SUIT_CNT  = 4    //牌花色个数
+	SUIT_CNT  = 4    //花色个数
 	VALUE_CNT = 13   //牌个数，单个花色的牌个数
 	VALUE_A   = 0x01 //A值
 	VALUE_K   = 0x0D //K

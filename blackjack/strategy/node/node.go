@@ -36,7 +36,7 @@ func Make_key(hand_type HAND_TYPE.TYPE, player_point int, dealer_value string) s
 	return fmt.Sprintf("%d_%d_%s", int(hand_type), player_point, dealer_value)
 }
 
-// 分离
+// Split_key 分离
 func Split_key(key string) (hand_type HAND_TYPE.TYPE, player_point int, dealer_value string) {
 	split_txts := strings.Split(key, "_")
 	if len(split_txts) != 3 {

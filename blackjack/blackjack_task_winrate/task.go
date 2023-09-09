@@ -23,9 +23,11 @@ const (
 	is_output_strategy_jpeg = false //
 )
 
-var wg sync.WaitGroup
-var mutex sync.Mutex      //
-var shoe_stats []ShoeStat //每靴牌统计
+var (
+	wg         sync.WaitGroup
+	mutex      sync.Mutex //
+	shoe_stats []ShoeStat //每靴牌统计
+)
 
 // 开启
 func Start() {

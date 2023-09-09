@@ -27,9 +27,11 @@ const (
 	MAX_CARD_CNT   = 5
 )
 
-var wg sync.WaitGroup
-var mutex sync.Mutex
-var analyse_items []logic.AnalyseItem
+var (
+	wg            sync.WaitGroup
+	mutex         sync.Mutex
+	analyse_items []logic.AnalyseItem
+)
 
 // 开启
 func Start() {

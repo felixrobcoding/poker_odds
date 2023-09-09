@@ -8,7 +8,7 @@ package logic
 
 import "github.com/poker-x-studio/x/xutils"
 
-// 补闲家的牌
+// Draw_card_for_player 补闲家的牌
 //If the player has an initial total of 5 or less, they draw a third card. If the player has an initial total of 6 or 7, they stand.
 func Draw_card_for_player(player_cards []byte, dealer_cards []byte) bool {
 	len := len(player_cards)
@@ -22,7 +22,7 @@ func Draw_card_for_player(player_cards []byte, dealer_cards []byte) bool {
 	return false
 }
 
-//补庄家的牌
+// Draw_card_for_dealer 补庄家的牌
 func Draw_card_for_dealer(player_cards []byte, dealer_cards []byte) bool {
 	dealer_len := len(dealer_cards)
 	if dealer_len != 2 {

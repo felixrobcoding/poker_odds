@@ -40,7 +40,7 @@ func (h *HandCard) Card_cnt() int {
 	return len(h.cards)
 }
 
-// 追加
+// Append_card 追加
 func (h *HandCard) Append_card(card byte) {
 	if h.cards == nil {
 		panic("")
@@ -55,18 +55,18 @@ func (h *HandCard) Append_cards(cards []byte) {
 	h.cards = append(h.cards, cards...)
 }
 
-// 获取牌型
+// Card_type 获取牌型
 func (h *HandCard) Card_type() CARD_TYPE.TYPE {
 	return logic.Card_type(h.cards)
 }
 
-// 设置下注额
+// Set_bet 设置下注额
 func (h *HandCard) Set_bet(bet_area BET_AREA.TYPE, bet int) {
 	h.bet_area = bet_area
 	h.bet = bet
 }
 
-// 获取下注
+// Get_bet 获取下注
 func (h *HandCard) Get_bet() (bet_area BET_AREA.TYPE, bet int, win_bet_areas []BET_AREA.TYPE) {
 	bet_area = h.bet_area
 	bet = h.bet
@@ -74,12 +74,12 @@ func (h *HandCard) Get_bet() (bet_area BET_AREA.TYPE, bet int, win_bet_areas []B
 	return
 }
 
-// 获取积分
+// Get_score 获取积分
 func (h *HandCard) Get_score() float64 {
 	return h.score
 }
 
-// 更新积分
+// update_score 更新积分
 func (h *HandCard) update_score(score float64, win_bet_areas []BET_AREA.TYPE) (game_result GAME_RESULT.TYPE) {
 	game_result = GAME_RESULT.PUSH
 	if score > 0 {

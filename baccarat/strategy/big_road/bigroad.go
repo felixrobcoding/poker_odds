@@ -23,7 +23,7 @@ func NewBigRoad(bet_areas []BET_AREA.TYPE) *BigRoad {
 	return road
 }
 
-// 策略节点链构造大路
+// NewBigRoadWithNodes 策略节点链构造大路
 func NewBigRoadWithNodes(nodes []*define.StrategyNode) *BigRoad {
 	win_bet_areas := make([]BET_AREA.TYPE, 0)
 	for i := 0; i < len(nodes); i++ {
@@ -36,14 +36,14 @@ func (b *BigRoad) init() {
 	b.cols = make([]Col, 0)
 }
 
-// 插入多个元素
+// push 插入多个元素
 func (b *BigRoad) push(bet_areas []BET_AREA.TYPE) {
 	for _, v := range bet_areas {
 		b.push_element(v)
 	}
 }
 
-// 插入元素
+// push_element 插入元素
 func (b *BigRoad) push_element(bet_area BET_AREA.TYPE) {
 	if b.cols == nil {
 		b.cols = make([]Col, 0)
@@ -68,12 +68,12 @@ func (b *BigRoad) push_element(bet_area BET_AREA.TYPE) {
 	}
 }
 
-// 列数
+// Col_cnt 列数
 func (b *BigRoad) Col_cnt() int {
 	return len(b.cols)
 }
 
-// 最后的一列
+// Last_col 最后的一列
 func (b *BigRoad) Last_col() *Col {
 	if b.cols == nil || b.Col_cnt() == 0 {
 		panic(xdebug.Funcname())
@@ -81,7 +81,7 @@ func (b *BigRoad) Last_col() *Col {
 	return &b.cols[len(b.cols)-1]
 }
 
-// 获取列
+// Get_col 获取列
 func (b *BigRoad) Get_col(col_index int) *Col {
 	if col_index < 0 || col_index >= b.Col_cnt() {
 		panic(xdebug.Funcname())
@@ -89,7 +89,7 @@ func (b *BigRoad) Get_col(col_index int) *Col {
 	return &b.cols[col_index]
 }
 
-// 提取列统计
+// Extract_bigroad_stat 提取列统计
 func (b *BigRoad) Extract_bigroad_stat() *BigRoadStat {
 	tmp_map := make(map[int]int, 0)
 	for _, v := range b.cols {

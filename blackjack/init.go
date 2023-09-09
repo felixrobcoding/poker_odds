@@ -15,8 +15,10 @@ const (
 	DECKS = 6           //牌副数
 )
 
-var xlog_entry = xlog.New_entry(_TAG)
-var is_debug = true
+var (
+	xlog_entry = xlog.New_entry(_TAG)
+	is_debug   = true
+)
 
 func Logrus() *logrus.Entry {
 	return xlog_entry

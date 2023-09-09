@@ -4,7 +4,7 @@
 */
 package logic
 
-//牌花色
+//花色
 func Suit(card byte) byte {
 	return (card & 0xF0) >> 4
 }

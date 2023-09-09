@@ -4,17 +4,19 @@
 */
 package ACTION_TYPE
 
-type Value struct {
+type Item struct {
 	t         TYPE
 	txt_short string
 	txt_eng   string
 	txt_chs   string
 }
 
-var type_map map[TYPE]Value
+var (
+	type_map = make(map[TYPE]Item, 0)
+)
 
 func init() {
-	values := []Value{
+	items := []Item{
 		{HIT, "H", "hit", "要牌"},
 		{DOUBLE_DOWN, "D", "double", "加倍停牌"},
 		{STAND, "S", "stand", "停牌"},
@@ -22,10 +24,8 @@ func init() {
 		{INSURANCE, "", "insurance", "保险"},
 		{SURRENDER, "Rh", "surrender", "投降"},
 	}
-
-	type_map = make(map[TYPE]Value, 0)
-	for k, v := range values {
-		type_map[v.t] = values[k]
+	for k, v := range items {
+		type_map[v.t] = items[k]
 	}
 }
 

@@ -41,7 +41,7 @@ func (q *QueryTimes) init(strategy_map map[string]*node.Node) {
 	}
 }
 
-// 查询次数增加
+// Increase 查询次数增加
 func (q *QueryTimes) Increase(key string) {
 	q.mutex.Lock()
 	defer q.mutex.Unlock()
@@ -49,7 +49,7 @@ func (q *QueryTimes) Increase(key string) {
 	q.times_map[key]++
 }
 
-// 输出svg
+// Output_svg_query_times 输出svg
 func (q *QueryTimes) Output_svg_query_times() string {
 	q.mutex.Lock()
 	defer q.mutex.Unlock()
@@ -58,7 +58,7 @@ func (q *QueryTimes) Output_svg_query_times() string {
 	return svg_content
 }
 
-// 从没有被查询到
+// Output_svg_never_query_times 从没有被查询到
 func (q *QueryTimes) Output_svg_never_query_times() string {
 	q.mutex.Lock()
 	defer q.mutex.Unlock()

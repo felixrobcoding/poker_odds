@@ -26,7 +26,7 @@ func Find_value_cnt(cards []byte, value byte, Value ValueFunc) int {
 	return cnt
 }
 
-// Find_suit_cnt 查找牌花色个数
+// Find_suit_cnt 查找花色个数
 func Find_suit_cnt(cards []byte, suit byte, Suit SuitFunc) int {
 	cnt := 0
 	for _, v := range cards {

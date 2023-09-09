@@ -12,5 +12,6 @@
     - Baccarat押注策略[待完成]
     
 ## 二 技术栈
+    - Go语言开发
     - svgo包生成svg图
     - svg转jpeg图

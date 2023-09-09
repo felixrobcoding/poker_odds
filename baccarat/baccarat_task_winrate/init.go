@@ -11,8 +11,9 @@ const (
 	DECKS    = 8                       //牌副数
 )
 
-var xlog_entry = xlog.New_entry(TASK_TAG)
-var is_debug = true
+var (
+	xlog_entry = xlog.New_entry(TASK_TAG)
+)
 
 //-----------------------------------------------
 //					the end

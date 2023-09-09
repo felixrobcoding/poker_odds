@@ -6,16 +6,18 @@ package CARD_TYPE
 
 import "sort"
 
-type Value struct {
+type Item struct {
 	t       TYPE
 	txt_eng string
 	txt_chs string
 }
 
-var type_map map[TYPE]Value
+var (
+	type_map = make(map[TYPE]Item, 0)
+)
 
 func init() {
-	values := []Value{
+	items := []Item{
 		{EX_FLUSH_3, "Flush 3", "三张同花"},
 		{EX_FLUSH_4, "Flush 4", "四张同花"},
 		{EX_FLUSH_5, "Flush 5", "五张同花"},
@@ -31,10 +33,8 @@ func init() {
 		{STRAIGHT_FLUSH, "Straight Flush", "同花顺"},
 		{ROYAL_STRAIGHT_FLUSH, "Royal Straight Flush", "皇家同花顺"},
 	}
-
-	type_map = make(map[TYPE]Value, 0)
-	for k, v := range values {
-		type_map[v.t] = values[k]
+	for k, v := range items {
+		type_map[v.t] = items[k]
 	}
 }
 
