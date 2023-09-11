@@ -15,7 +15,6 @@ import (
 	"github.com/poker-x-studio/x/xdebug"
 	_ "github.com/poker-x-studio/x/xdebug"
 	"github.com/poker-x-studio/x/xlog"
-	"github.com/poker-x-studio/x/xutils"
 
 	"github.com/jessevdk/go-flags"
 )
@@ -66,7 +65,7 @@ func main() {
 	go baccarat_task_winrate.Start()
 
 	// 等待进程结束信号
-	xutils.Wait_for_signal()
+	xdebug.Wait_for_signal()
 }
 
 // load_config_file 加载配置文件

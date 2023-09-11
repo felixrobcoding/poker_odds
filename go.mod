@@ -7,7 +7,7 @@ require (
 	github.com/ajstarks/svgo v0.0.0-20211024235047-1546f124cd8b
 	github.com/jessevdk/go-flags v1.5.0
 	github.com/liushuochen/gotable v0.0.0-20221119160816-1113793e7092
-	github.com/poker-x-studio/x v0.0.16
+	github.com/poker-x-studio/x v0.0.19
 	github.com/sirupsen/logrus v1.9.3
 )
 
