@@ -10,11 +10,13 @@
     - Blackjack胜率统计,玩法策略统计,下注策略统计
     - Baccarat胜率统计
     - Baccarat押注策略[待完成]
-    
+    - Plo4四张奥马哈 胜率计算
+    - Plo5五张奥马哈 胜率计算
+
 ## 二 技术栈
     - Go语言开发
     - svgo包生成svg图
     - svg转jpeg图
 
 ## 三 github commit之间比较
- https://github.com/poker-x-studio/poker_odds/compare/e6399a6..e481619
+ https://github.com/poker-x-studio/poker_odds/compare/49c83f4..1abff3f
