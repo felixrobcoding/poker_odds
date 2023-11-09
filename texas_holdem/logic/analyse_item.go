@@ -71,9 +71,38 @@ func (a *AnalyseItem) Cards() []byte {
 	return a.cards
 }
 
+// Compare_cards 比较牌列表
+func (a *AnalyseItem) Compare_cards() []byte {
+	return a.compare_cards
+}
+
 // Card_cnt 牌张数
 func (a *AnalyseItem) Card_cnt() int {
 	return len(a.cards)
+}
+
+// Cal_compare_card_type 计算比较牌型
+func (a *AnalyseItem) Cal_compare_card_type() CARD_TYPE.TYPE {
+	//牌型中提取比较牌型
+	types := []CARD_TYPE.TYPE{
+		CARD_TYPE.ONE_PAIR,
+		CARD_TYPE.TWO_PAIR,
+		CARD_TYPE.THREE_OF_A_KIND,
+		CARD_TYPE.STRAIGHT,
+		CARD_TYPE.FLUSH,
+		CARD_TYPE.FULL_HOUSE,
+		CARD_TYPE.FOUR_OF_A_KIND,
+		CARD_TYPE.STRAIGHT_FLUSH,
+		CARD_TYPE.ROYAL_STRAIGHT_FLUSH,
+	}
+	for _, v1 := range a.Card_types {
+		for _, v2 := range types {
+			if v1 == v2 {
+				return v2
+			}
+		}
+	}
+	return CARD_TYPE.HIGH_CARD
 }
 
 // cal_same_value_item 计算相同值项

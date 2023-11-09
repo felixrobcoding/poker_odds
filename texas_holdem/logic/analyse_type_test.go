@@ -49,6 +49,19 @@ func TestXxx2(t *testing.T) {
 	}
 }
 
+func Test_2_pair(t *testing.T) {
+
+	cards := []byte{0x13, 0x15, 0x25, 0x33, 0x01}
+	fmt.Printf("%+v\r\n", cards)
+
+	item := NewAnalyseItem(cards)
+	if item != nil {
+		fmt.Printf("%+v\r\n", item)
+	}
+
+	fmt.Println("end")
+}
+
 //-----------------------------------------------
 //					the end
 //-----------------------------------------------

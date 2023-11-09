@@ -10,6 +10,10 @@ import (
 	"Odds/texas_holdem/define"
 )
 
+const (
+	ORDER_DESC = ORDER_TYPE.DESC //降序
+)
+
 type HandlerAnalyseCardType func(item *AnalyseItem) (bool, []byte)
 
 // sort_high_card 高牌排序
@@ -20,7 +24,7 @@ func sort_high_card(item *AnalyseItem) []byte {
 	//转逻辑值
 	lcards := cards_2_lcards(item.cards)
 	//值降序排序
-	sort_cards := algorithm.Sort_by_value(lcards, Suit, Value, ORDER_TYPE.DESC)
+	sort_cards := algorithm.Sort_by_value(lcards, Suit, Value, ORDER_DESC)
 	return sort_cards
 }
 
@@ -30,9 +34,12 @@ func is_one_pair(item *AnalyseItem) (bool, []byte) {
 		return false, []byte{}
 	}
 
+	//转逻辑值
+	lcards := cards_2_lcards(item.cards)
+
 	if item.same_value.pair_cnt == 1 && item.same_value.three_cnt == 0 {
 		//值个数降序排序
-		sort_cards := algorithm.Sort_by_value_cnt(item.cards, Suit, Value, ORDER_TYPE.DESC)
+		sort_cards := algorithm.Sort_by_value_cnt(lcards, Suit, Value, ORDER_DESC)
 		return true, sort_cards
 	}
 	return false, []byte{}
@@ -44,9 +51,12 @@ func is_two_pair(item *AnalyseItem) (bool, []byte) {
 		return false, []byte{}
 	}
 
+	//转逻辑值
+	lcards := cards_2_lcards(item.cards)
+
 	if item.same_value.pair_cnt == 2 {
 		//值个数降序排序
-		sort_cards := algorithm.Sort_by_value_cnt(item.cards, Suit, Value, ORDER_TYPE.DESC)
+		sort_cards := algorithm.Sort_by_value_cnt(lcards, Suit, Value, ORDER_DESC)
 		return true, sort_cards
 
 	}
@@ -59,9 +69,12 @@ func is_three_of_a_kind(item *AnalyseItem) (bool, []byte) {
 		return false, []byte{}
 	}
 
+	//转逻辑值
+	lcards := cards_2_lcards(item.cards)
+
 	if item.same_value.three_cnt == 1 && item.same_value.pair_cnt == 0 {
 		//值个数降序排序
-		sort_cards := algorithm.Sort_by_value_cnt(item.cards, Suit, Value, ORDER_TYPE.DESC)
+		sort_cards := algorithm.Sort_by_value_cnt(lcards, Suit, Value, ORDER_DESC)
 		return true, sort_cards
 	}
 	return false, []byte{}
@@ -92,7 +105,7 @@ func is_straight(item *AnalyseItem) (bool, []byte) {
 			//转逻辑值
 			lcards := cards_2_lcards(item.cards)
 			//值降序排序
-			sort_cards := algorithm.Sort_by_value(lcards, Suit, Value, ORDER_TYPE.DESC)
+			sort_cards := algorithm.Sort_by_value(lcards, Suit, Value, ORDER_DESC)
 			return true, sort_cards
 		}
 	}
@@ -120,7 +133,7 @@ func is_straight(item *AnalyseItem) (bool, []byte) {
 	//判断是否是顺子
 	if straight_cnt == 5 {
 		//值降序排序
-		sort_cards := algorithm.Sort_by_value(item.cards, Suit, Value, ORDER_TYPE.DESC)
+		sort_cards := algorithm.Sort_by_value(item.cards, Suit, Value, ORDER_DESC)
 		return true, sort_cards
 	}
 	return false, []byte{}
@@ -146,7 +159,7 @@ func is_flush(item *AnalyseItem) (bool, []byte) {
 		//转逻辑值
 		lcards := cards_2_lcards(item.cards)
 		//值降序排序
-		sort_cards := algorithm.Sort_by_value(lcards, Suit, Value, ORDER_TYPE.DESC)
+		sort_cards := algorithm.Sort_by_value(lcards, Suit, Value, ORDER_DESC)
 		return true, sort_cards
 	}
 	return false, []byte{}
@@ -158,9 +171,12 @@ func is_full_house(item *AnalyseItem) (bool, []byte) {
 		return false, []byte{}
 	}
 
+	//转逻辑值
+	lcards := cards_2_lcards(item.cards)
+
 	if item.same_value.three_cnt == 1 && item.same_value.pair_cnt == 1 {
 		//值个数降序排序
-		sort_cards := algorithm.Sort_by_value_cnt(item.cards, Suit, Value, ORDER_TYPE.DESC)
+		sort_cards := algorithm.Sort_by_value_cnt(lcards, Suit, Value, ORDER_DESC)
 		return true, sort_cards
 	}
 	return false, []byte{}
@@ -174,7 +190,7 @@ func is_four_of_a_kind(item *AnalyseItem) (bool, []byte) {
 
 	if item.same_value.four_cnt == 1 && item.same_value.single_cnt == 1 {
 		//值个数降序排序
-		sort_cards := algorithm.Sort_by_value_cnt(item.cards, Suit, Value, ORDER_TYPE.DESC)
+		sort_cards := algorithm.Sort_by_value_cnt(item.cards, Suit, Value, ORDER_DESC)
 		return true, sort_cards
 	}
 	return false, []byte{}

@@ -65,10 +65,15 @@ func Sort_by_suit_cnt(cards []byte, Suit SuitFunc, Value ValueFunc, order_types 
 		sort.SliceStable(tmp_cards, func(i, j int) bool {
 			suit_i := Suit(tmp_cards[i])
 			suit_j := Suit(tmp_cards[j])
-			if suit_i == suit_j { //值大的在前
-				return Value(tmp_cards[j]) < Value(tmp_cards[i])
+			if suit_i == suit_j { //值小的在前
+				return Value(tmp_cards[i]) < Value(tmp_cards[j])
 			}
-			return Find_suit_cnt(tmp_cards, suit_i, Suit) < Find_suit_cnt(tmp_cards, suit_j, Suit)
+			suit_j_cnt := Find_suit_cnt(tmp_cards, suit_j, Suit)
+			suit_i_cnt := Find_suit_cnt(tmp_cards, suit_i, Suit)
+			if suit_i_cnt == suit_j_cnt {
+				return suit_i < suit_j
+			}
+			return suit_i_cnt < suit_j_cnt
 		})
 	} else { //降序,从大到小
 		sort.SliceStable(tmp_cards, func(i, j int) bool {
@@ -77,7 +82,12 @@ func Sort_by_suit_cnt(cards []byte, Suit SuitFunc, Value ValueFunc, order_types 
 			if suit_i == suit_j { //值大的在前
 				return Value(tmp_cards[j]) < Value(tmp_cards[i])
 			}
-			return Find_suit_cnt(tmp_cards, suit_j, Suit) < Find_suit_cnt(tmp_cards, suit_i, Suit)
+			suit_j_cnt := Find_suit_cnt(tmp_cards, suit_j, Suit)
+			suit_i_cnt := Find_suit_cnt(tmp_cards, suit_i, Suit)
+			if suit_i_cnt == suit_j_cnt {
+				return suit_j < suit_i
+			}
+			return suit_j_cnt < suit_i_cnt
 		})
 	}
 	return tmp_cards
@@ -102,8 +112,8 @@ func Sort_by_value(cards []byte, Suit SuitFunc, Value ValueFunc, order_types ...
 		sort.SliceStable(tmp_cards, func(i, j int) bool {
 			value_i := Value(tmp_cards[i])
 			value_j := Value(tmp_cards[j])
-			if value_i == value_j { //花色大的在前
-				return Suit(tmp_cards[j]) < Suit(tmp_cards[i])
+			if value_i == value_j { //花色小的在前
+				return Suit(tmp_cards[i]) < Suit(tmp_cards[j])
 			}
 			return Value(tmp_cards[i]) < Value(tmp_cards[j])
 		})
@@ -139,10 +149,15 @@ func Sort_by_value_cnt(cards []byte, Suit SuitFunc, Value ValueFunc, order_types
 		sort.SliceStable(tmp_cards, func(i, j int) bool {
 			value_i := Value(tmp_cards[i])
 			value_j := Value(tmp_cards[j])
-			if value_i == value_j { //花色大的在前
-				return Suit(tmp_cards[j]) < Suit(tmp_cards[i])
+			if value_i == value_j { //花色小的在前
+				return Suit(tmp_cards[i]) < Suit(tmp_cards[j])
 			}
-			return Find_value_cnt(tmp_cards, value_i, Value) < Find_value_cnt(tmp_cards, value_j, Value)
+			value_j_cnt := Find_value_cnt(tmp_cards, value_j, Value)
+			value_i_cnt := Find_value_cnt(tmp_cards, value_i, Value)
+			if value_i_cnt == value_j_cnt {
+				return value_i < value_j
+			}
+			return value_i_cnt < value_j_cnt
 		})
 	} else { //降序,从大到小
 		sort.SliceStable(tmp_cards, func(i, j int) bool {
@@ -151,7 +166,12 @@ func Sort_by_value_cnt(cards []byte, Suit SuitFunc, Value ValueFunc, order_types
 			if value_i == value_j { //花色大的在前
 				return Suit(tmp_cards[j]) < Suit(tmp_cards[i])
 			}
-			return Find_value_cnt(tmp_cards, value_j, Value) < Find_value_cnt(tmp_cards, value_i, Value)
+			value_j_cnt := Find_value_cnt(tmp_cards, value_j, Value)
+			value_i_cnt := Find_value_cnt(tmp_cards, value_i, Value)
+			if value_i_cnt == value_j_cnt {
+				return value_j < value_i
+			}
+			return value_j_cnt < value_i_cnt
 		})
 	}
 	return tmp_cards

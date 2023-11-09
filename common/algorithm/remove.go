@@ -26,12 +26,15 @@ func Remove[T byte | int](all []T, target_element T) (removed_cnt int, results [
 
 // Removes 删除
 func Removes[T byte | int](all []T, target_elements []T) (removed_cnt int, results []T) {
-	results = make([]T, 0)
-	copy(results, all)
+	len := len(all)
+	results = make([]T, len)
+	if copy_cnt := copy(results, all); copy_cnt < len {
+		return 0, []T{}
+	}
 
 	for _, v := range target_elements {
 		tmp_removed_cnt, tmp_results := Remove(results, v)
-		if removed_cnt <= 0 {
+		if tmp_removed_cnt <= 0 {
 			return 0, []T{}
 		}
 		removed_cnt += tmp_removed_cnt
@@ -59,12 +62,15 @@ func Remove_value(all []byte, target_value byte, Value ValueFunc) (removed_cnt i
 }
 
 func Remove_values(all []byte, target_values []byte, Value ValueFunc) (removed_cnt int, result_cards []byte) {
-	result_cards = make([]byte, 0)
-	copy(result_cards, all)
+	len := len(all)
+	result_cards = make([]byte, len)
+	if copy_cnt := copy(result_cards, all); copy_cnt < len {
+		return 0, []byte{}
+	}
 
 	for _, v := range target_values {
 		tmp_removed_cnt, tmp_result_cards := Remove_value(result_cards, v, Value)
-		if removed_cnt <= 0 {
+		if tmp_removed_cnt <= 0 {
 			return 0, []byte{}
 		}
 		removed_cnt += tmp_removed_cnt
@@ -80,8 +86,10 @@ func Remove_duplication[T byte | int](all []T) []T {
 		return all
 	}
 
-	tmp_all := make([]T, 0)
-	copy(tmp_all, all)
+	tmp_all := make([]T, len)
+	if copy_cnt := copy(tmp_all, all); copy_cnt < len {
+		return all
+	}
 
 	tmp_map := make(map[T]interface{}, 0)
 	for _, v := range tmp_all {
