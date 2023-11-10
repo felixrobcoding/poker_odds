@@ -6,18 +6,17 @@ package logic
 
 import (
 	"Odds/common"
-	"Odds/texas_holdem/define"
 )
 
 // card_2_lcard 牌转逻辑牌
 //
 //lcard:logic card
 func card_2_lcard(card byte) byte {
-	suit := Suit(card)
-	value := Value(card)
+	suit := common.Suit(card)
+	value := common.Value(card)
 
 	if value == common.VALUE_A {
-		return suit<<4 | define.LOGIC_VALUE_A
+		return suit<<4 | common.LOGIC_VALUE_A
 	}
 	return card
 }
@@ -41,10 +40,10 @@ func cards_2_lcards(cards []byte) []byte {
 //
 //lcard:logic card
 func lcard_2_card(card byte) byte {
-	suit := Suit(card)
-	value := Value(card)
+	suit := common.Suit(card)
+	value := common.Value(card)
 
-	if value == define.LOGIC_VALUE_A {
+	if value == common.LOGIC_VALUE_A {
 		return suit<<4 | common.VALUE_A
 	}
 	return card

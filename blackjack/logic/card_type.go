@@ -10,7 +10,6 @@ import (
 	"Odds/blackjack/define/HAND_TYPE"
 	"Odds/common"
 	"Odds/common/algorithm"
-	"Odds/texas_holdem/logic"
 )
 
 // 分析hand type
@@ -18,12 +17,12 @@ func Analyse_hand_type(player_cards []byte) HAND_TYPE.TYPE {
 
 	//分牌
 	if len(player_cards) == 2 {
-		if cnt := algorithm.Find_value_cnt(player_cards, logic.Value(player_cards[0]), logic.Value); cnt == 2 {
+		if cnt := algorithm.Find_value_cnt(player_cards, common.Value(player_cards[0]), common.Value); cnt == 2 {
 			return HAND_TYPE.SPLITS
 		}
 	}
 
-	A_cnt := algorithm.Find_value_cnt(player_cards, common.VALUE_A, logic.Value)
+	A_cnt := algorithm.Find_value_cnt(player_cards, common.VALUE_A, common.Value)
 	if A_cnt > 0 { //可能是soft
 		points, _ := Points(player_cards)
 		if points[1] < define.POINT_BUST { //A存在可变点数
@@ -49,7 +48,7 @@ func is_blackjack(cards []byte) bool {
 	if len(cards) != 2 {
 		return false
 	}
-	A_cnt := algorithm.Find_value_cnt(cards, common.VALUE_A, Value)
+	A_cnt := algorithm.Find_value_cnt(cards, common.VALUE_A, common.Value)
 	if A_cnt != 1 {
 		return false
 	}
@@ -61,7 +60,7 @@ func is_blackjack(cards []byte) bool {
 		common.VALUE_T,
 	}
 	for _, v := range value_tens {
-		if cnt := algorithm.Find_value_cnt(cards, v, Value); cnt > 0 {
+		if cnt := algorithm.Find_value_cnt(cards, v, common.Value); cnt > 0 {
 			return true
 		}
 	}

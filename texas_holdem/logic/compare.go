@@ -5,6 +5,7 @@
 package logic
 
 import (
+	"Odds/common"
 	"Odds/common/COMPARE_TYPE"
 	"Odds/texas_holdem/define/CARD_TYPE"
 )
@@ -126,8 +127,8 @@ func compare_royal_straight_flush(source *AnalyseItem, target *AnalyseItem) COMP
 // compare_one_card 比较单张牌
 // _2_logic_card:是否转换为逻辑牌
 func compare_one_card(source byte, target byte) COMPARE_TYPE.TYPE {
-	s_value := Value(source)
-	t_value := Value(target)
+	s_value := common.Value(source)
+	t_value := common.Value(target)
 
 	if t_value > s_value {
 		return COMPARE_TYPE.BIGGER

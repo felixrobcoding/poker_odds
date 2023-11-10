@@ -7,6 +7,7 @@ package logic
 import (
 	"Odds/baccarat/define"
 	"Odds/baccarat/define/CARD_TYPE"
+	"Odds/common"
 )
 
 // Card_type 牌型
@@ -24,8 +25,8 @@ func Card_type(cards []byte) CARD_TYPE.TYPE {
 	}
 
 	//对子
-	value_0 := Value(cards[0])
-	value_1 := Value(cards[1])
+	value_0 := common.Value(cards[0])
+	value_1 := common.Value(cards[1])
 	if value_0 == value_1 {
 		return CARD_TYPE.PAIR
 	}

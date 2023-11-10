@@ -118,7 +118,7 @@ func stat() {
 
 			}
 			//输出所有牌型信息
-			xlog_entry.Tracef("%s", v.String())
+			xlog_entry.Tracef("%s", v.String(true))
 		}
 
 		//日志输出

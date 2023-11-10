@@ -5,6 +5,7 @@
 package logic
 
 import (
+	"Odds/common"
 	"Odds/common/ORDER_TYPE"
 	"Odds/common/algorithm"
 )
@@ -22,7 +23,7 @@ func is_ex_flush_3(item *AnalyseItem) (bool, []byte) {
 	for _, v := range item.suit_cnts {
 		if v == 3 {
 			//花色个数降序排序
-			sort_cards := algorithm.Sort_by_suit_cnt(item.cards, Suit, Value, ORDER_TYPE.DESC)
+			sort_cards := algorithm.Sort_by_suit_cnt(item.cards, common.Suit, common.Value, ORDER_TYPE.DESC)
 			return true, sort_cards
 		}
 	}
@@ -42,7 +43,7 @@ func is_ex_flush_4(item *AnalyseItem) (bool, []byte) {
 	for _, v := range item.suit_cnts {
 		if v == 4 {
 			//花色个数降序排序
-			sort_cards := algorithm.Sort_by_suit_cnt(item.cards, Suit, Value, ORDER_TYPE.DESC)
+			sort_cards := algorithm.Sort_by_suit_cnt(item.cards, common.Suit, common.Value, ORDER_TYPE.DESC)
 			return true, sort_cards
 		}
 	}
@@ -62,7 +63,7 @@ func is_ex_flush_5(item *AnalyseItem) (bool, []byte) {
 	for _, v := range item.suit_cnts {
 		if v == 5 {
 			//花色个数降序排序
-			sort_cards := algorithm.Sort_by_suit_cnt(item.cards, Suit, Value, ORDER_TYPE.DESC)
+			sort_cards := algorithm.Sort_by_suit_cnt(item.cards, common.Suit, common.Value, ORDER_TYPE.DESC)
 			return true, sort_cards
 		}
 	}
@@ -82,7 +83,7 @@ func is_ex_more_one_pair(item *AnalyseItem) (bool, []byte) {
 	for _, v := range item.value_cnts {
 		if v == 2 || v == 3 || v == 4 {
 			//值个数降序排序
-			sort_cards := algorithm.Sort_by_value_cnt(item.cards, Suit, Value, ORDER_TYPE.DESC)
+			sort_cards := algorithm.Sort_by_value_cnt(item.cards, common.Suit, common.Value, ORDER_TYPE.DESC)
 			return true, sort_cards
 		}
 	}

@@ -2,7 +2,7 @@
 功能：分离花色和值
 说明：
 */
-package logic
+package common
 
 //花色
 func Suit(card byte) byte {

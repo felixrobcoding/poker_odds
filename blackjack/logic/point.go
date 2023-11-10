@@ -15,7 +15,7 @@ import (
 
 // 点数
 func Point(card byte) int {
-	v := Value(card)
+	v := common.Value(card)
 
 	value_tens := []byte{
 		common.VALUE_K,

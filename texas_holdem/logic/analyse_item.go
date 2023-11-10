@@ -6,7 +6,6 @@ package logic
 
 import (
 	"Odds/common"
-	"Odds/texas_holdem/define"
 	"Odds/texas_holdem/define/CARD_TYPE"
 
 	"fmt"
@@ -45,8 +44,8 @@ func NewAnalyseItem(cards []byte) *AnalyseItem {
 
 	item.cards = cards[:]
 	for _, v := range cards {
-		suit := Suit(v)   //花色
-		value := Value(v) //值
+		suit := common.Suit(v)   //花色
+		value := common.Value(v) //值
 		item.suit_cnts[suit]++
 		item.value_cnts[value-1]++
 	}
@@ -60,7 +59,7 @@ func NewAnalyseItem(cards []byte) *AnalyseItem {
 func (a *AnalyseItem) init() {
 	a.cards = make([]byte, 0)
 	a.suit_cnts = make([]int, common.SUIT_CNT)
-	a.value_cnts = make([]int, define.VALUE_CNT_LOGIC)
+	a.value_cnts = make([]int, common.VALUE_CNT_LOGIC)
 
 	a.Card_types = make([]CARD_TYPE.TYPE, 0)
 	a.compare_cards = make([]byte, 0)
@@ -162,10 +161,14 @@ func (a *AnalyseItem) cal_card_type() {
 }
 
 // 描述字符串
-func (a *AnalyseItem) String() string {
-	cards := common.String(a.cards)
-	card_type := CARD_TYPE.String(a.Card_types)
-	compare_cards := common.String(a.compare_cards)
+// is_include_ex:是否包含扩展牌型
+func (a *AnalyseItem) String(is_include_ex bool) string {
+	cards := common.Cards_2_string(a.cards)
+	card_type := CARD_TYPE.String(a.Card_types) //默认是包含扩展牌型
+	if !is_include_ex {
+		card_type = a.Cal_compare_card_type().String()
+	}
+	compare_cards := common.Cards_2_string(a.compare_cards)
 	return fmt.Sprintf("AnalyseItem:[原始牌:%s,牌型:%s,比较牌:%s]", cards, card_type, compare_cards)
 }
 

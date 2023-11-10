@@ -34,7 +34,7 @@ func Player_query_action(player_cards []byte, dealer_card byte) (action ACTION_T
 	if (hand_type == HAND_TYPE.HARD) || (hand_type == HAND_TYPE.SOFT) {
 		point = logic.Player_pick_best_point_to_query(hand_type, points)
 	} else if hand_type == HAND_TYPE.SPLITS {
-		value_cnt := algorithm.Find_value_cnt(player_cards, common.VALUE_A, logic.Value)
+		value_cnt := algorithm.Find_value_cnt(player_cards, common.VALUE_A, common.Value)
 		if value_cnt > 0 {
 			point = define.POINT_A_11
 		} else {
@@ -56,13 +56,13 @@ func Player_query_action(player_cards []byte, dealer_card byte) (action ACTION_T
 		action = node.Action
 
 		if xdebug.Is_debug() {
-			fmt.Printf("player_cards:%s[点数:%d],dealer_card:0x%02X[%s],hand_type:%s,key:%s,action:%s\r\n", common.String(player_cards), point, dealer_card, dealer_value, hand_type, key, action)
+			fmt.Printf("player_cards:%s[点数:%d],dealer_card:0x%02X[%s],hand_type:%s,key:%s,action:%s\r\n", common.Cards_2_string(player_cards), point, dealer_card, dealer_value, hand_type, key, action)
 		}
 		return
 	}
 	action = ACTION_TYPE.STAND
 	if xdebug.Is_debug() {
-		fmt.Printf("player_cards:%s[点数:%d],dealer_card:0x%02X[%s],hand_type:%s,key:%s,action:%s\r\n", common.String(player_cards), point, dealer_card, dealer_value, hand_type, key, action)
+		fmt.Printf("player_cards:%s[点数:%d],dealer_card:0x%02X[%s],hand_type:%s,key:%s,action:%s\r\n", common.Cards_2_string(player_cards), point, dealer_card, dealer_value, hand_type, key, action)
 	}
 
 	return
