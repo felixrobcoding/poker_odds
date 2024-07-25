@@ -12,7 +12,7 @@ import (
 
 const (
 	_TAG  = "blackjack" //游戏名称
-	DECKS = 6           //牌副数
+	DECKS = 4           //牌副数
 )
 
 var (

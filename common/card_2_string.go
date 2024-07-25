@@ -41,7 +41,7 @@ func Card_2_sign(card byte) string {
 		return ERROR_SIGN
 	}
 
-	return values[value-2] + suits[suit]
+	return suits[suit] + values[value-2]
 }
 
 func Cards_2_sign(cards []byte) string {
