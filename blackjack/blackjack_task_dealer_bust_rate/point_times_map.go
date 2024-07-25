@@ -12,13 +12,15 @@ import (
 )
 
 var (
-	Point_times_map = make(map[int]int, 0)
+	Point_times_map = make(map[int]int, 0) //key为点数,value为次数
 )
 
+// 初始化
 func Init_point_times_map() {
 	Point_times_map = make(map[int]int, 0)
 }
 
+// 输出
 func Outputer_point_times_map() {
 	sum_shoe_cnt := 0
 	sum_shoe_cnt_bust := 0
@@ -29,7 +31,7 @@ func Outputer_point_times_map() {
 		}
 	}
 
-	//key排序
+	//key排序[点数]
 	var keys []int
 	for k, _ := range Point_times_map {
 		keys = append(keys, k)
@@ -46,7 +48,7 @@ func Outputer_point_times_map() {
 
 	//输出html表格
 	{
-		fmt.Printf("<h1>Blackjack,4副牌[4*52=208张],dealer明牌为%s,总运行次数10w次</h1>", common.Card_2_sign(g_show_card))
+		fmt.Printf("<h1>Blackjack,4副牌[4*52=208张],dealer明牌为%s,总运行次数10w次</h1>", common.Card_2_sign(show_card))
 
 		fmt.Println("<table><tr><th>dealer停牌时点数</th><th>出现次数</th><th>百分比</th><th>爆牌率</th></tr>")
 		for _, v := range keys {

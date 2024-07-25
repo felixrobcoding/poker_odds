@@ -16,11 +16,11 @@ const (
 )
 
 var (
-	wg          sync.WaitGroup
-	mutex       sync.Mutex //
-	shoe_stats  []ShoeStat //每靴牌统计
-	g_show_card byte       //dealer明牌
-	mutex_ex    sync.Mutex //
+	wg         sync.WaitGroup
+	mutex      sync.Mutex //
+	shoe_stats []ShoeStat //每靴牌统计
+	show_card  byte       //dealer明牌
+	mutex_ex   sync.Mutex //
 )
 
 // 开启
@@ -28,7 +28,7 @@ func Start() {
 	//xlog_entry.Tracef("%s,%s", xdebug.Funcname(), xdebug.FUNC_ENTER)
 	//defer xlog_entry.Tracef("%s,%s", xdebug.Funcname(), xdebug.FUNC_EXIT)
 
-	for g_show_card = 0x02; g_show_card <= 0x0D; g_show_card++ {
+	for show_card = 0x02; show_card <= 0x0D; show_card++ {
 		mutex_ex.Lock()
 		Start_ex()
 		mutex_ex.Unlock()
@@ -79,7 +79,7 @@ func run_unit() {
 		flow_control.Shuffle()
 
 		//dealer发牌[指定一张牌]
-		flow_control.Round_begin_to_deal(g_show_card)
+		flow_control.Round_begin_to_deal(show_card)
 
 		//dealer持续发牌到停牌
 		flow_control.Dealer_turn()
