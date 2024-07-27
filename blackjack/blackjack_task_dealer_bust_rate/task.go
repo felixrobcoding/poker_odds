@@ -28,7 +28,7 @@ func Start() {
 	//xlog_entry.Tracef("%s,%s", xdebug.Funcname(), xdebug.FUNC_ENTER)
 	//defer xlog_entry.Tracef("%s,%s", xdebug.Funcname(), xdebug.FUNC_EXIT)
 
-	for show_card = 0x02; show_card <= 0x0D; show_card++ {
+	for show_card = 0x01; show_card <= 0x0D; show_card++ {
 		mutex_ex.Lock()
 		Start_ex()
 		mutex_ex.Unlock()
