@@ -11,6 +11,7 @@
     - Blackjack庄家爆牌率
     - Baccarat胜率统计
     - Baccarat押注策略[待完成]
+    - Baccarat闲家/庄家点数分布概率
     - Plo4四张奥马哈 胜率计算
     - Plo5五张奥马哈 胜率计算
 
