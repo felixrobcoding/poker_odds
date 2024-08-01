@@ -1,3 +1,7 @@
+<h1>Baccarat,8副牌[8*52=416张],庄对闲对统计,总运行次数1w次</h1><table><tr><th>统计类别</th><th>出现次数</th><th>百分比</th><th>总手数</th></tr><tr><td>庄对</td><td>50765</td><td>6.30%</td><td rowspan="10">805779</td></tr></tr>
+<tr><td>闲对</td><td>51196</td><td>6.35%</td></tr></tr>
+</table>
+
 <h1>Baccarat,8副牌[8*52=416张],点数次数统计,总运行次数1w次</h1><table><tr><th>闲家点数</th><th>出现次数</th><th>百分比</th><th>总手数</th></tr><tr><td>0</td><td>75901</td><td>9.42%</td><td rowspan="10">806123</td></tr></tr>
 <tr><td>1</td><td>59721</td><td>7.41%</td></tr></tr>
 <tr><td>2</td><td>59952</td><td>7.44%</td></tr></tr>

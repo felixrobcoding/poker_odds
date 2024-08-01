@@ -119,6 +119,22 @@ func stat() {
 	//输出
 	Outputer_point_times_map(Player_point_times_map, "闲家")
 	Outputer_point_times_map(Dealer_point_times_map, "庄家")
+
+	//统计闲对/庄对
+	sum_deal_times := 0
+	sum_player_pair_cnt := 0
+	sum_dealer_pair_cnt := 0
+	for _, v := range shoe_stats {
+		sum_deal_times += v.deal_times
+		sum_player_pair_cnt += v.player_pair_cnt
+		sum_dealer_pair_cnt += v.dealer_pair_cnt
+	}
+
+	player_pair_ratio := float64(sum_player_pair_cnt) / float64(sum_deal_times)
+	dealer_pair_ratio := float64(sum_dealer_pair_cnt) / float64(sum_deal_times)
+
+	xlog_entry.Tracef("sum_player_pair_cnt:%d,sum_deal_times:%d,player_pair_ratio:%.2f%%,", sum_player_pair_cnt, sum_deal_times, player_pair_ratio*100)
+	xlog_entry.Tracef("sum_dealer_pair_cnt:%d,sum_deal_times:%d,player_pair_ratio:%.2f%%,", sum_dealer_pair_cnt, sum_deal_times, dealer_pair_ratio*100)
 }
 
 //-----------------------------------------------

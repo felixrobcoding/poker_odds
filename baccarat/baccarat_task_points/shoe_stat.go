@@ -10,10 +10,12 @@ import (
 
 // 每靴牌统计
 type ShoeStat struct {
-	shoe_index    int
-	deal_times    int   //发牌次数
-	player_points []int //闲家点数
-	dealer_points []int //庄家点数
+	shoe_index      int
+	deal_times      int   //发牌次数
+	player_points   []int //闲家点数
+	dealer_points   []int //庄家点数
+	player_pair_cnt int   //闲对
+	dealer_pair_cnt int   //庄对
 }
 
 func (s *ShoeStat) String() string {

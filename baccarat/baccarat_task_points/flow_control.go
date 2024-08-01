@@ -24,14 +24,16 @@ const (
 var shoe_index int //靴牌索引
 
 type FlowControl struct {
-	shoe_index    int                 //靴牌索引
-	shoe_cards    []byte              //牌靴里的牌
-	deal_times    int                 //发牌次数
-	player        *user_info.UserInfo //闲家
-	dealer        *user_info.UserInfo //庄家
-	messages      []string            //复盘信息
-	player_points []int               //闲家点数
-	dealer_points []int               //庄家点数
+	shoe_index      int                 //靴牌索引
+	shoe_cards      []byte              //牌靴里的牌
+	deal_times      int                 //发牌次数
+	player          *user_info.UserInfo //闲家
+	dealer          *user_info.UserInfo //庄家
+	messages        []string            //复盘信息
+	player_points   []int               //闲家点数
+	dealer_points   []int               //庄家点数
+	player_pair_cnt int                 //闲对
+	dealer_pair_cnt int                 //庄对
 }
 
 func NewFlowControl() *FlowControl {
@@ -82,6 +84,15 @@ func (f *FlowControl) Round_begin_to_deal() error {
 	//发第二张牌
 	player_cards = append(player_cards, f.Deal_1_card())
 	dealer_cards = append(dealer_cards, f.Deal_1_card())
+
+	//闲对
+	if logic.Card_type(player_cards) == CARD_TYPE.PAIR {
+		f.player_pair_cnt++
+	}
+	//庄对
+	if logic.Card_type(dealer_cards) == CARD_TYPE.PAIR {
+		f.dealer_pair_cnt++
+	}
 
 	f.deal_times++
 
@@ -315,10 +326,12 @@ func (f *FlowControl) Extract_shoe_stat() *ShoeStat {
 
 	//用户统计
 	shoe_stat := &ShoeStat{
-		shoe_index:    f.shoe_index,
-		deal_times:    f.Deal_times(),
-		player_points: f.player_points,
-		dealer_points: f.dealer_points,
+		shoe_index:      f.shoe_index,
+		deal_times:      f.Deal_times(),
+		player_points:   f.player_points,
+		dealer_points:   f.dealer_points,
+		player_pair_cnt: f.player_pair_cnt,
+		dealer_pair_cnt: f.dealer_pair_cnt,
 	}
 
 	return shoe_stat
