@@ -47,11 +47,17 @@ func compare_one_pair(source *AnalyseItem, target *AnalyseItem) COMPARE_TYPE.TYP
 	source_cards := source.Compare_cards()
 	target_cards := target.Compare_cards()
 
+	is_equal := false
 	for i := 0; i < len(target_cards); i++ {
 		ct := compare_one_card(source_cards[i], target_cards[i])
-		if ct != COMPARE_TYPE.EQUAL {
+		if ct == COMPARE_TYPE.EQUAL {
+			is_equal = true
+		} else {
 			return ct
 		}
+	}
+	if is_equal {
+		return COMPARE_TYPE.EQUAL
 	}
 	return COMPARE_TYPE.SMALLER
 }
@@ -60,11 +66,17 @@ func compare_two_pair(source *AnalyseItem, target *AnalyseItem) COMPARE_TYPE.TYP
 	source_cards := source.Compare_cards()
 	target_cards := target.Compare_cards()
 
+	is_equal := false
 	for i := 0; i < len(target_cards); i++ {
 		ct := compare_one_card(source_cards[i], target_cards[i])
-		if ct != COMPARE_TYPE.EQUAL {
+		if ct == COMPARE_TYPE.EQUAL {
+			is_equal = true
+		} else {
 			return ct
 		}
+	}
+	if is_equal {
+		return COMPARE_TYPE.EQUAL
 	}
 	return COMPARE_TYPE.SMALLER
 }
@@ -77,11 +89,17 @@ func compare_straight(source *AnalyseItem, target *AnalyseItem) COMPARE_TYPE.TYP
 	source_cards := source.Compare_cards()
 	target_cards := target.Compare_cards()
 
+	is_equal := false
 	for i := 0; i < len(target_cards); i++ {
 		ct := compare_one_card(source_cards[i], target_cards[i])
-		if ct != COMPARE_TYPE.EQUAL {
+		if ct == COMPARE_TYPE.EQUAL {
+			is_equal = true
+		} else {
 			return ct
 		}
+	}
+	if is_equal {
+		return COMPARE_TYPE.EQUAL
 	}
 	return COMPARE_TYPE.SMALLER
 }
@@ -90,11 +108,17 @@ func compare_flush(source *AnalyseItem, target *AnalyseItem) COMPARE_TYPE.TYPE {
 	source_cards := source.Compare_cards()
 	target_cards := target.Compare_cards()
 
+	is_equal := false
 	for i := 0; i < len(target_cards); i++ {
 		ct := compare_one_card(source_cards[i], target_cards[i])
-		if ct != COMPARE_TYPE.EQUAL {
+		if ct == COMPARE_TYPE.EQUAL {
+			is_equal = true
+		} else {
 			return ct
 		}
+	}
+	if is_equal {
+		return COMPARE_TYPE.EQUAL
 	}
 	return COMPARE_TYPE.SMALLER
 }
@@ -111,11 +135,17 @@ func compare_straight_flush(source *AnalyseItem, target *AnalyseItem) COMPARE_TY
 	source_cards := source.Compare_cards()
 	target_cards := target.Compare_cards()
 
+	is_equal := false
 	for i := 0; i < len(target_cards); i++ {
 		ct := compare_one_card(source_cards[i], target_cards[i])
-		if ct != COMPARE_TYPE.EQUAL {
+		if ct == COMPARE_TYPE.EQUAL {
+			is_equal = true
+		} else {
 			return ct
 		}
+	}
+	if is_equal {
+		return COMPARE_TYPE.EQUAL
 	}
 	return COMPARE_TYPE.SMALLER
 }

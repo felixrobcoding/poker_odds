@@ -27,6 +27,7 @@ type AnalyseItem struct {
 	same_value    sameValue        //相同值
 	Card_types    []CARD_TYPE.TYPE //牌型
 	compare_cards []byte           //比较牌
+	weight        int              //权重,用于比较牌大小,任何一副牌都有一个权重
 }
 
 type typeHandler struct {

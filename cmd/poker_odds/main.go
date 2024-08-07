@@ -6,7 +6,7 @@ package main
 
 import (
 	"Odds/app"
-	"Odds/baccarat/baccarat_task_points"
+	"Odds/texas_holdem/plo5_task_win_rate"
 
 	"Odds/config"
 
@@ -67,12 +67,12 @@ func main() {
 	//baccarat任务-胜率统计
 	//go baccarat_task_winrate.Start()
 	//baccarat任务-统计庄家/闲家点数分布
-	go baccarat_task_points.Start()
+	//go baccarat_task_points.Start()
 
 	//4张奥马哈任务-计算胜率
 	//go plo4_task_win_rate.Start()
 	//5张奥马哈任务-计算胜率
-	//go plo5_task_win_rate.Start()
+	go plo5_task_win_rate.Start()
 
 	// 等待进程结束信号
 	xdebug.Wait_for_signal()

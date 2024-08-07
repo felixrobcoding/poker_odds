@@ -13,7 +13,8 @@
             "args": [
                 "--debug",//bool flag只要设置 short或long,值就是true
                 "--log_filename","poker_odds",
-            ]
+            ],
+            // "console": "integratedTerminal",
         }
     ]
 }
