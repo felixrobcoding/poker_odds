@@ -1,5 +1,5 @@
 /*
-功能：下注类型
+功能：下注额策略
 说明：
 
 https://www.pinnacle.com/zh-cn/betting-articles/betting-strategy/staking-one-method-to-improve-your-betting/2962vhe9w3jpj7x7
@@ -20,7 +20,7 @@ https://www.pinnacle.com/zh-cn/betting-articles/betting-strategy/staking-one-met
 投注与你的优势成比例的资金在此模拟中，我们使用凯利准则公式计算比例投注。采用这种方法，注额等于优势除于赔率。在此示例中，优势是10%，赔率是一比一，10 / 1等于10。
 因此，注额是$1000的10%：$100。如果投注成功，下一个注额将提高到$110，亦即1100总资金的10%。这意味着彩金增加速度比固定注额系统快，损失速度也有所下降。
 */
-package BETTING_TYPE
+package BET_AMOUNT_STRATEGY
 
 type TYPE int
 

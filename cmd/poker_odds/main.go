@@ -6,7 +6,7 @@ package main
 
 import (
 	"Odds/app"
-	"Odds/texas_holdem/plo5_task_win_rate"
+	"Odds/baccarat/baccarat_task_winrate"
 
 	"Odds/config"
 
@@ -24,7 +24,7 @@ type CmdParams struct {
 }
 
 const (
-	VERSION = "poker odds v2022.11.26" //版本信息
+	VERSION = "poker odds v2024.8.28" //版本信息
 )
 
 func main() {
@@ -65,14 +65,16 @@ func main() {
 	//go blackjack_task_dealer_bust_rate.Start()
 
 	//baccarat任务-胜率统计
-	//go baccarat_task_winrate.Start()
+	go baccarat_task_winrate.Start()
 	//baccarat任务-统计庄家/闲家点数分布
 	//go baccarat_task_points.Start()
+	//baccarat任务-danny策略
+	//go baccarat_task_danny_strategy.Start()
 
 	//4张奥马哈任务-计算胜率
 	//go plo4_task_win_rate.Start()
 	//5张奥马哈任务-计算胜率
-	go plo5_task_win_rate.Start()
+	//go plo5_task_win_rate.Start()
 
 	// 等待进程结束信号
 	xdebug.Wait_for_signal()

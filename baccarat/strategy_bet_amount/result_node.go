@@ -1,8 +1,8 @@
 /*
-功能：下注策略-结果节点
+功能：下注额策略-结果节点
 说明：
 */
-package strategy_betting
+package strategy_bet_amount
 
 import (
 	"sort"

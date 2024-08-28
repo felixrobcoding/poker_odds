@@ -7,7 +7,7 @@ package baccarat_task_winrate
 import (
 	"Odds/baccarat/define/BET_AREA"
 	"Odds/baccarat/svg_utils"
-	"Odds/common/BETTING_TYPE"
+	"Odds/common/BET_AMOUNT_STRATEGY"
 	"fmt"
 	"os"
 	"sort"
@@ -19,8 +19,8 @@ import (
 )
 
 const (
-	GO_ROUTINE_CNT = 10    //goroutine个数
-	LOOP_TIMES     = 100   //每个goroutine循环次数
+	GO_ROUTINE_CNT = 1     //goroutine个数
+	LOOP_TIMES     = 1     //每个goroutine循环次数
 	is_output_jpeg = false //
 )
 
@@ -118,7 +118,7 @@ func stat() {
 	//
 	min_bet := 0
 	max_bet := 0
-	betting_t := BETTING_TYPE.ERROR
+	bet_amount_strategy := BET_AMOUNT_STRATEGY.ERROR
 
 	sum_deal_times := 0
 	sum_hands := 0
@@ -132,7 +132,7 @@ func stat() {
 	for _, v := range shoe_stats {
 		min_bet = v.min_bet
 		max_bet = v.max_bet
-		betting_t = v.betting_t
+		bet_amount_strategy = v.bet_amount_strategy
 
 		sum_deal_times += v.deal_times
 		sum_bets += v.player_total_bets
@@ -171,7 +171,7 @@ func stat() {
 	player_push_hands_ratio := float64(sum_player_push_hands) / float64(sum_hands)
 	player_win_hands_ratio := float64(sum_player_win_hands) / float64(sum_hands)
 
-	xlog_entry.Tracef("min_bet:%d,max_bet:%d,betting_strategy:%s,player_min_profit:%.2f,player_max_profit:%.2f,", min_bet, max_bet, betting_t.String(), player_profits[0], player_profits[len(player_profits)-1])
+	xlog_entry.Tracef("min_bet:%d,max_bet:%d,bet_amount_strategy:%s,player_min_profit:%.2f,player_max_profit:%.2f,", min_bet, max_bet, bet_amount_strategy.String(), player_profits[0], player_profits[len(player_profits)-1])
 	xlog_entry.Tracef("sum_deal_times:%d,sum_hands:%d,sum_bets:%d,sum_profit:%.2f,hands_per_shoe:%.2f,profit_per_shoe:%.4f,profit_per_hand:%.4f,sum_profit/sum_bets:%.4f", sum_deal_times, sum_hands, sum_bets, sum_profit, hands_per_shoe, profit_per_shoe, profit_per_hand, porfit_bet_ratio)
 	xlog_entry.Tracef("sum_player_lose_hands:%d,sum_player_push_hands:%d,sum_player_win_hands:%d,player_lose_hands_ratio:%.4f%%,player_push_hands_ratio:%.4f%%,player_win_hands_ratio:%.4f%%,", sum_player_lose_hands, sum_player_push_hands, sum_player_win_hands, player_lose_hands_ratio*100, player_push_hands_ratio*100, player_win_hands_ratio*100)
 }

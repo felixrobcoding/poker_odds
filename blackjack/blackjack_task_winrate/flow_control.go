@@ -5,6 +5,7 @@
 package blackjack_task_winrate
 
 import (
+	"Odds/baccarat/strategy_bet_amount"
 	"Odds/blackjack"
 	"Odds/blackjack/define"
 	"Odds/blackjack/define/ACTION_TYPE"
@@ -13,10 +14,9 @@ import (
 	"Odds/blackjack/strategy"
 	"Odds/blackjack/user_info"
 	"Odds/common"
-	"Odds/common/BETTING_TYPE"
+	"Odds/common/BET_AMOUNT_STRATEGY"
 	"Odds/common/USER_TYPE"
 	"Odds/common/algorithm"
-	"Odds/common/strategy_betting"
 	"errors"
 	"fmt"
 )
@@ -28,13 +28,13 @@ const (
 var shoe_index int //靴牌索引
 
 type FlowControl struct {
-	shoe_index       int                               //靴牌索引
-	shoe_cards       []byte                            //牌靴里的牌
-	deal_times       int                               //发牌次数
-	player           *user_info.UserInfo               //闲家
-	dealer           *user_info.UserInfo               //庄家
-	messages         []string                          //复盘信息
-	betting_strategy strategy_betting.IBettingStrategy //下注策略
+	shoe_index          int                                    //靴牌索引
+	shoe_cards          []byte                                 //牌靴里的牌
+	deal_times          int                                    //发牌次数
+	player              *user_info.UserInfo                    //闲家
+	dealer              *user_info.UserInfo                    //庄家
+	messages            []string                               //复盘信息
+	bet_amount_strategy strategy_bet_amount.IBetAmountStrategy //下注额策略
 }
 
 func NewFlowControl() *FlowControl {
@@ -46,11 +46,11 @@ func NewFlowControl() *FlowControl {
 func (f *FlowControl) init() {
 	f.player = user_info.NewUserInfo(USER_TYPE.PLAYER, PLAYER_INIT_CHIP)
 	f.dealer = user_info.NewUserInfo(USER_TYPE.BANKER, 0)
-	//f.betting_strategy = strategy_betting.NewBetting(BETTING_TYPE.ALL_IN, PLAYER_INIT_CHIP)
-	f.betting_strategy = strategy_betting.NewBetting(BETTING_TYPE.FIXED_AMOUNT, PLAYER_INIT_CHIP)
-	//f.betting_strategy = strategy_betting.NewBetting(BETTING_TYPE.MARTEGAL, PLAYER_INIT_CHIP)
-	//f.betting_strategy = strategy_betting.NewBetting(BETTING_TYPE.FIBONACCI, PLAYER_INIT_CHIP)
-	//f.betting_strategy = strategy_betting.NewBetting(BETTING_TYPE.KELLY, PLAYER_INIT_CHIP)
+	//f.bet_amount_strategy = strategy_bet_amount.NewBetAmountStrategy(BET_AMOUNT_STRATEGY.ALL_IN, PLAYER_INIT_CHIP)
+	f.bet_amount_strategy = strategy_bet_amount.NewBetAmountStrategy(BET_AMOUNT_STRATEGY.FIXED_AMOUNT, PLAYER_INIT_CHIP)
+	//f.bet_amount_strategy = strategy_bet_amount.NewBetAmountStrategy(BET_AMOUNT_STRATEGY.MARTEGAL, PLAYER_INIT_CHIP)
+	//f.bet_amount_strategy = strategy_bet_amount.NewBetAmountStrategy(BET_AMOUNT_STRATEGY.FIBONACCI, PLAYER_INIT_CHIP)
+	//f.bet_amount_strategy = strategy_bet_amount.NewBetAmountStrategy(BET_AMOUNT_STRATEGY.KELLY, PLAYER_INIT_CHIP)
 }
 
 // Shuffle 洗牌
@@ -88,7 +88,7 @@ func (f *FlowControl) Round_begin_to_deal() error {
 	player_cards = append(player_cards, f.Deal_1_card())
 	dealer_cards = append(dealer_cards, f.Deal_1_card())
 
-	bet, err := f.betting_strategy.Query_bet() //下注策略
+	bet, err := f.bet_amount_strategy.Query_bet_amount() //下注策略
 	if err != nil {
 		msg := fmt.Sprintf("本局结束,deal_times:%d,shoe_card_cnt:%d,err:%s,", f.deal_times, shoe_card_cnt, err.Error())
 		f.push_message(msg)
@@ -446,12 +446,12 @@ func (f *FlowControl) Round_end() {
 		f.player.Next_hand()
 	}
 
-	result_node := &strategy_betting.ResultNode{
+	result_node := &strategy_bet_amount.ResultNode{
 		Current_chip:   f.player.Get_chip(),
 		Current_bets:   Current_bets,
 		Current_scores: Game_scores,
 	}
-	f.betting_strategy.Result_node_append(result_node)
+	f.bet_amount_strategy.Result_node_append(result_node)
 }
 
 // Game_over 游戏结束
@@ -477,20 +477,20 @@ func (f *FlowControl) push_message(txt string) {
 
 // Extract_shoe_stat 提取每靴牌的统计
 func (f *FlowControl) Extract_shoe_stat() *ShoeStat {
-	min_bet, max_bet, betting_t := f.betting_strategy.Query_option()
+	min_bet, max_bet, bet_amount_strategy := f.bet_amount_strategy.Query_option()
 	user_stat := f.player.Extract_user_stat()
 	shoe_stat := &ShoeStat{
-		shoe_index:        f.shoe_index,
-		min_bet:           min_bet,
-		max_bet:           max_bet,
-		betting_t:         betting_t,
-		deal_times:        f.Deal_times(),
-		player_init_chip:  f.player.Get_init_chip(),
-		player_chip:       f.player.Get_chip(),
-		player_total_bets: user_stat.Total_bets,
-		player_lose_hands: user_stat.Lose_hands,
-		player_push_hands: user_stat.Push_hands,
-		player_win_hands:  user_stat.Win_hands,
+		shoe_index:          f.shoe_index,
+		min_bet:             min_bet,
+		max_bet:             max_bet,
+		bet_amount_strategy: bet_amount_strategy,
+		deal_times:          f.Deal_times(),
+		player_init_chip:    f.player.Get_init_chip(),
+		player_chip:         f.player.Get_chip(),
+		player_total_bets:   user_stat.Total_bets,
+		player_lose_hands:   user_stat.Lose_hands,
+		player_push_hands:   user_stat.Push_hands,
+		player_win_hands:    user_stat.Win_hands,
 	}
 
 	return shoe_stat

@@ -5,8 +5,8 @@
 package big_road
 
 import (
-	"Odds/baccarat/define"
 	"Odds/baccarat/define/BET_AREA"
+	"Odds/baccarat/strategy_bet_area/suggestion"
 
 	"github.com/poker-x-studio/x/xdebug"
 )
@@ -24,7 +24,7 @@ func NewBigRoad(bet_areas []BET_AREA.TYPE) *BigRoad {
 }
 
 // NewBigRoadWithNodes 策略节点链构造大路
-func NewBigRoadWithNodes(nodes []*define.StrategyNode) *BigRoad {
+func NewBigRoadWithNodes(nodes []*suggestion.ResultNode) *BigRoad {
 	win_bet_areas := make([]BET_AREA.TYPE, 0)
 	for i := 0; i < len(nodes); i++ {
 		win_bet_areas = append(win_bet_areas, nodes[i].Current_win_bet_area)

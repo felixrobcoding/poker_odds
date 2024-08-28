@@ -2,7 +2,7 @@
 功能：map查询
 说明：
 */
-package BETTING_TYPE
+package BET_AMOUNT_STRATEGY
 
 //文字描述
 func (t TYPE) String() string {

@@ -5,6 +5,7 @@
 package blackjack_task_dealer_bust_rate
 
 import (
+	"Odds/baccarat/strategy_bet_amount"
 	"Odds/blackjack"
 	"Odds/blackjack/define"
 	"Odds/blackjack/define/ACTION_TYPE"
@@ -14,7 +15,6 @@ import (
 	"Odds/common"
 	"Odds/common/USER_TYPE"
 	"Odds/common/algorithm"
-	"Odds/common/strategy_betting"
 	"errors"
 	"fmt"
 )
@@ -24,14 +24,14 @@ const ()
 var shoe_index int //靴牌索引
 
 type FlowControl struct {
-	shoe_index       int                               //靴牌索引
-	shoe_cards       []byte                            //牌靴里的牌
-	deal_times       int                               //发牌次数
-	show_card        byte                              //明牌
-	player           *user_info.UserInfo               //闲家
-	dealer           *user_info.UserInfo               //庄家
-	messages         []string                          //复盘信息
-	betting_strategy strategy_betting.IBettingStrategy //下注策略
+	shoe_index          int                                    //靴牌索引
+	shoe_cards          []byte                                 //牌靴里的牌
+	deal_times          int                                    //发牌次数
+	show_card           byte                                   //明牌
+	player              *user_info.UserInfo                    //闲家
+	dealer              *user_info.UserInfo                    //庄家
+	messages            []string                               //复盘信息
+	bet_amount_strategy strategy_bet_amount.IBetAmountStrategy //下注策略
 }
 
 func NewFlowControl() *FlowControl {
@@ -43,11 +43,11 @@ func NewFlowControl() *FlowControl {
 func (f *FlowControl) init() {
 	f.player = user_info.NewUserInfo(USER_TYPE.PLAYER, 0)
 	f.dealer = user_info.NewUserInfo(USER_TYPE.BANKER, 0)
-	//f.betting_strategy = strategy_betting.NewBetting(BETTING_TYPE.ALL_IN, PLAYER_INIT_CHIP)
-	//f.betting_strategy = strategy_betting.NewBetting(BETTING_TYPE.FIXED_AMOUNT, PLAYER_INIT_CHIP)
-	//f.betting_strategy = strategy_betting.NewBetting(BETTING_TYPE.MARTEGAL, PLAYER_INIT_CHIP)
-	//f.betting_strategy = strategy_betting.NewBetting(BETTING_TYPE.FIBONACCI, PLAYER_INIT_CHIP)
-	//f.betting_strategy = strategy_betting.NewBetting(BETTING_TYPE.KELLY, PLAYER_INIT_CHIP)
+	//f.bet_amount_strategy = strategy_bet_amount.NewBetAmountStrategy(BET_AMOUNT_STRATEGY.ALL_IN, PLAYER_INIT_CHIP)
+	//f.bet_amount_strategy = strategy_bet_amount.NewBetAmountStrategy(BET_AMOUNT_STRATEGY.FIXED_AMOUNT, PLAYER_INIT_CHIP)
+	//f.bet_amount_strategy = strategy_bet_amount.NewBetAmountStrategy(BET_AMOUNT_STRATEGY.MARTEGAL, PLAYER_INIT_CHIP)
+	//f.bet_amount_strategy = strategy_bet_amount.NewBetAmountStrategy(BET_AMOUNT_STRATEGY.FIBONACCI, PLAYER_INIT_CHIP)
+	//f.bet_amount_strategy = strategy_bet_amount.NewBetAmountStrategy(BET_AMOUNT_STRATEGY.KELLY, PLAYER_INIT_CHIP)
 }
 
 // Shuffle 洗牌

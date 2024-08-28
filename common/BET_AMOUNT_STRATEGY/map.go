@@ -2,7 +2,7 @@
 功能：下注类型map
 说明：
 */
-package BETTING_TYPE
+package BET_AMOUNT_STRATEGY
 
 type Item struct {
 	t       TYPE

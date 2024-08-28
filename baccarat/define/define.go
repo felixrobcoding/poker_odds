@@ -5,7 +5,7 @@
 package define
 
 const (
-	REMAIN_CARD_CNT = 20
+	REMAIN_CARD_CNT = 70
 	POINT_6         = 6
 	POINT_7         = 7
 	POINT_8         = 8
