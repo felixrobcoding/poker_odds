@@ -73,6 +73,29 @@ func (b *BigRoad) Col_cnt() int {
 	return len(b.cols)
 }
 
+// Col_max_node_cnt 最长列节点个数
+func (b *BigRoad) Col_max_node_cnt() int {
+	max_node_cnt := 0
+
+	for col_index := 0; col_index < b.Col_cnt(); col_index++ {
+		if b.Get_col(col_index).Cnt() > max_node_cnt {
+			max_node_cnt = b.Get_col(col_index).Cnt()
+		}
+	}
+
+	return max_node_cnt
+}
+
+// Total_cnt 总个数
+func (b *BigRoad) Total_cnt() int {
+	total_cnt := 0
+
+	for col_index := 0; col_index < b.Col_cnt(); col_index++ {
+		total_cnt += b.Get_col(col_index).Cnt()
+	}
+	return total_cnt
+}
+
 // Last_col 最后的一列
 func (b *BigRoad) Last_col() *Col {
 	if b.cols == nil || b.Col_cnt() == 0 {

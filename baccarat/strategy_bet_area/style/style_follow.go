@@ -20,6 +20,8 @@ func check_follow_style(nodes []*suggestion.ResultNode) (bool, *suggestion.BetAr
 	return true, &suggestion.BetAreaSuggestion{
 		Style:    STYLE.FOLLOW,
 		Bet_area: nodes[len-1].Current_win_bet_area,
+		Comment:  "默认跟随下注",
+		Alart:    false,
 	}
 }
 

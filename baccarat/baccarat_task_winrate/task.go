@@ -8,6 +8,7 @@ import (
 	"Odds/baccarat/define/BET_AREA"
 	"Odds/baccarat/svg_utils"
 	"Odds/common/BET_AMOUNT_STRATEGY"
+	"Odds/common/algorithm"
 	"fmt"
 	"os"
 	"sort"
@@ -19,15 +20,17 @@ import (
 )
 
 const (
-	GO_ROUTINE_CNT = 1     //goroutine个数
-	LOOP_TIMES     = 1     //每个goroutine循环次数
+	GO_ROUTINE_CNT = 3     //goroutine个数
+	LOOP_TIMES     = 3     //每个goroutine循环次数
 	is_output_jpeg = false //
 )
 
 var (
-	wg         sync.WaitGroup
-	mutex      sync.Mutex //
-	shoe_stats []ShoeStat //每靴牌统计
+	wg               sync.WaitGroup
+	mutex            sync.Mutex //
+	shoe_stats       []ShoeStat //每靴牌统计
+	shoe_cards       []byte     //靴牌,只洗牌一次,下注测试多次,比较盈利情况
+	shoe_cards_mutex sync.Mutex //靴牌互斥锁
 )
 
 // 开启
@@ -40,6 +43,9 @@ func Start() {
 	defer func() {
 		lifeTime.End()
 	}()
+
+	//洗牌
+	shoe_cards = algorithm.Shuffle_cards(DECKS)
 
 	shoe_stats = make([]ShoeStat, 0)
 	wg.Add(GO_ROUTINE_CNT)
@@ -70,7 +76,10 @@ func run_unit() {
 	//创建
 	flow_control := NewFlowControl()
 	//洗牌
-	flow_control.Shuffle()
+	//flow_control.Shuffle()
+	shoe_cards_mutex.Lock()
+	flow_control.Shuffle_from_outside(shoe_cards)
+	shoe_cards_mutex.Unlock()
 
 	//循环
 	for {

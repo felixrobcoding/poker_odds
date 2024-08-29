@@ -32,6 +32,8 @@ func check_long_style(nodes []*suggestion.ResultNode) (bool, *suggestion.BetArea
 	return true, &suggestion.BetAreaSuggestion{
 		Style:    STYLE.LONG,
 		Bet_area: big_road.Last_col().Bet_area(),
+		Comment:  "检测到_长龙_形态",
+		Alart:    true,
 	}
 }
 

@@ -31,6 +31,8 @@ func check_single_jump_style(nodes []*suggestion.ResultNode) (bool, *suggestion.
 	return true, &suggestion.BetAreaSuggestion{
 		Style:    STYLE.SINGLE_JUMP,
 		Bet_area: big_road.Get_col(big_road.Col_cnt() - 2).Bet_area(),
+		Comment:  "检测到_单跳_形态",
+		Alart:    true,
 	}
 }
 

@@ -35,7 +35,7 @@ func (s *Strategy) Result_node_append(node *suggestion.ResultNode) {
 		return
 	}
 	if s.nodes == nil {
-		s.Strategy_node_clear()
+		s.Result_node_clear()
 	}
 	//策略链中不插入tie
 	if node.Current_win_bet_area == BET_AREA.TIE {
@@ -57,7 +57,7 @@ func (s *Strategy) Query_big_road() *big_road.BigRoad {
 }
 
 // 清空
-func (s *Strategy) Strategy_node_clear() {
+func (s *Strategy) Result_node_clear() {
 	s.nodes = make([]*suggestion.ResultNode, 0)
 }
 

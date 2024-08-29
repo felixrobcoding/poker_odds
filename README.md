@@ -13,6 +13,7 @@
     - Baccarat押注策略[待完成]
     - Baccarat闲家/庄家点数分布概率
     - Baccarat闲对/庄对概率
+    - Baccarat大路图输出[不包含Tie]
     - Plo4四张奥马哈 胜率计算
     - Plo5五张奥马哈 胜率计算
 

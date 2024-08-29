@@ -50,6 +50,8 @@ func check_double_jump_style(nodes []*suggestion.ResultNode) (bool, *suggestion.
 	return true, &suggestion.BetAreaSuggestion{
 		Style:    STYLE.DOUBLE_JUMP,
 		Bet_area: bet_area,
+		Comment:  "检测到_双跳_形态",
+		Alart:    true,
 	}
 }
 

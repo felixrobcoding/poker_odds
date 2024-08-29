@@ -11,6 +11,7 @@ import (
 	"Odds/baccarat/logic"
 	"Odds/baccarat/strategy_bet_amount"
 	"Odds/baccarat/strategy_bet_area"
+	"Odds/baccarat/strategy_bet_area/big_road"
 	"Odds/baccarat/strategy_bet_area/suggestion"
 	"Odds/baccarat/user_info"
 	"Odds/common"
@@ -19,11 +20,15 @@ import (
 	"Odds/common/algorithm"
 	"errors"
 	"fmt"
+	"os"
 	"sort"
+
+	"github.com/poker-x-studio/x/ximage"
 )
 
 const (
-	PLAYER_INIT_CHIP = 10000
+	PLAYER_INIT_CHIP  = 10000
+	ALERT_STYLE_TIMES = 3 //警报后建议下注额倍数
 )
 
 var shoe_index int //靴牌索引
@@ -73,6 +78,14 @@ func (f *FlowControl) Shuffle() {
 	//f.shoe_cards = []byte{0x01, 0x11, 0x21, 0x31, 0x01, 0x11, 0x21, 0x31, 0x01, 0x11, 0x21, 0x31, 0x01, 0x11, 0x21, 0x31}
 }
 
+func (f *FlowControl) Shuffle_from_outside(shoe_cards []byte) {
+	f.shoe_index = shoe_index
+	shoe_index++
+	f.shoe_cards = make([]byte, 0)
+	f.shoe_cards = shoe_cards
+	f.deal_times = 0
+}
+
 // 发牌
 func (f *FlowControl) Round_begin_to_deal() error {
 	f.messages = make([]string, 0)
@@ -106,6 +119,11 @@ func (f *FlowControl) Round_begin_to_deal() error {
 	}
 	f.deal_times++
 
+	//警报
+	if suggestion_bet_area.Alart {
+		bet = ALERT_STYLE_TIMES * bet
+	}
+
 	f.player.Deal(player_cards, suggestion_bet_area.Bet_area, bet) //闲家押注
 	f.dealer.Deal(dealer_cards, BET_AREA.ERROR, 0)
 
@@ -115,7 +133,7 @@ func (f *FlowControl) Round_begin_to_deal() error {
 	msg := fmt.Sprintf("发牌,shoe_card_cnt:%d,player_cards:%s[点数:%d],dealer_cards:%s[点数:%d],", shoe_card_cnt, common.Cards_2_string(player_cards), player_point, common.Cards_2_string(dealer_cards), dealer_point)
 	f.push_message(msg)
 
-	msg = fmt.Sprintf("闲家押注区域:%s,%d,", suggestion_bet_area.Bet_area.String(), bet)
+	msg = fmt.Sprintf("%s,闲家押注区域:%s,下注额:%d,", suggestion_bet_area.Comment, suggestion_bet_area.Bet_area.String(), bet)
 	f.push_message(msg)
 
 	return nil
@@ -347,6 +365,9 @@ func (f *FlowControl) Game_over() {
 	xlog_entry.Debugf("=====游戏结束,总轮数:%d,shoe_card_cnt:%d=====", f.Deal_times(), len(f.shoe_cards))
 	xlog_entry.Debugf("=====游戏结束,player_stat:%s=====", player_stat.String())
 	xlog_entry.Debugf("=====游戏结束,dealer_stat:%s=====", dealer_stat.String())
+
+	//输出svg
+	f.Make_svg()
 }
 
 // 发牌次数
@@ -365,6 +386,21 @@ func (f *FlowControl) dump_messages() {
 	for _, v := range f.messages {
 		xlog_entry.Debugf("%s", v)
 	}
+}
+
+// 输出svg
+func (f *FlowControl) Make_svg() {
+	bigroad := f.bet_area_strategy.Query_big_road()
+
+	instance_svg := big_road.Instance_big_road_svg()
+	svg_content := instance_svg.Make_svg(bigroad, true)
+
+	jpeg_filepath, svg_filepath, err := ximage.Svg_2_jpeg(svg_content)
+	if err != nil {
+		return
+	}
+	os.Remove(svg_filepath)
+	fmt.Println(jpeg_filepath)
 }
 
 // 提取每靴牌的统计
