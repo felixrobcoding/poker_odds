@@ -105,7 +105,7 @@ func (f *FlowControl) Round_begin_to_deal() error {
 	msg := fmt.Sprintf("发牌,shoe_card_cnt:%d,player_cards:%s[点数:%s],dealer_cards:%s[点数:%s],", shoe_card_cnt, common.Cards_2_string(player_cards), player_points_txt, common.Cards_2_string(dealer_cards), dealer_points_txt)
 	f.push_message(msg)
 
-	msg = fmt.Sprintf("闲家押注:%d,", f.player.Current_hand().Get_bet())
+	msg = fmt.Sprintf("闲家押注:%d,", f.player.Current_hand().Get_bet_amount())
 	f.push_message(msg)
 
 	return nil
@@ -318,8 +318,8 @@ func (f *FlowControl) Compare() {
 				msg := fmt.Sprintf("庄家blackjack,闲家Blackjack,player_cards:%s[点数%s],dealer_cards:%s[点数%d],闲家筹码:%.2f,庄家筹码:%.2f,闲输赢:%.2f,庄输赢:%.2f,", common.Cards_2_string(player_cards), player_points_txt, common.Cards_2_string(dealer_cards), dealer_point, f.player.Get_chip(), f.dealer.Get_chip(), f.player.Get_profit(), f.dealer.Get_profit())
 				f.push_message(msg)
 			} else { //闲家非blackjack
-				f.dealer.Update_score(1 * float64(f.player.Current_hand().Get_bet()) * CARD_TYPE.BLACK_JACK.Odds())
-				f.player.Update_score(-1 * float64(f.player.Current_hand().Get_bet()) * CARD_TYPE.BLACK_JACK.Odds())
+				f.dealer.Update_score(1 * float64(f.player.Current_hand().Get_bet_amount()) * CARD_TYPE.BLACK_JACK.Odds())
+				f.player.Update_score(-1 * float64(f.player.Current_hand().Get_bet_amount()) * CARD_TYPE.BLACK_JACK.Odds())
 
 				msg := fmt.Sprintf("庄家blackjack,闲家非Blackjack,player_cards:%s[点数%s],dealer_cards:%s[点数%d],闲家筹码:%.2f,庄家筹码:%.2f,闲输赢:%.2f,庄输赢:%.2f,", common.Cards_2_string(player_cards), player_points_txt, common.Cards_2_string(dealer_cards), dealer_point, f.player.Get_chip(), f.dealer.Get_chip(), f.player.Get_profit(), f.dealer.Get_profit())
 				f.push_message(msg)
@@ -335,8 +335,8 @@ func (f *FlowControl) Compare() {
 			_, player_points_txt := logic.Points(player_cards)
 
 			if player_card_type == CARD_TYPE.BLACK_JACK {
-				f.dealer.Update_score(-1 * float64(f.player.Current_hand().Get_bet()) * CARD_TYPE.BLACK_JACK.Odds())
-				f.player.Update_score(1 * float64(f.player.Current_hand().Get_bet()) * CARD_TYPE.BLACK_JACK.Odds())
+				f.dealer.Update_score(-1 * float64(f.player.Current_hand().Get_bet_amount()) * CARD_TYPE.BLACK_JACK.Odds())
+				f.player.Update_score(1 * float64(f.player.Current_hand().Get_bet_amount()) * CARD_TYPE.BLACK_JACK.Odds())
 
 				msg := fmt.Sprintf("闲家Blackjack,player_cards:%s[点数%s],dealer_cards:%s[点数%d],闲家筹码:%.2f,庄家筹码:%.2f,闲输赢:%.2f,庄输赢:%.2f,", common.Cards_2_string(player_cards), player_points_txt, common.Cards_2_string(dealer_cards), dealer_point, f.player.Get_chip(), f.dealer.Get_chip(), f.player.Get_profit(), f.dealer.Get_profit())
 				f.push_message(msg)
@@ -351,8 +351,8 @@ func (f *FlowControl) Compare() {
 		player_cards := f.player.Current_hand().Cards()
 		_, player_points_txt := logic.Points(player_cards)
 		if f.player.Current_hand().Is_surrender() {
-			f.dealer.Update_score(1 * float64(f.player.Current_hand().Get_bet()) * CARD_TYPE.SURRENDER.Odds())
-			f.player.Update_score(-1 * float64(f.player.Current_hand().Get_bet()) * CARD_TYPE.SURRENDER.Odds())
+			f.dealer.Update_score(1 * float64(f.player.Current_hand().Get_bet_amount()) * CARD_TYPE.SURRENDER.Odds())
+			f.player.Update_score(-1 * float64(f.player.Current_hand().Get_bet_amount()) * CARD_TYPE.SURRENDER.Odds())
 			msg := fmt.Sprintf("庄家赢,闲家投降,player_cards:%s[点数%s],dealer_cards:%s[点数%d],闲家筹码:%.2f,庄家筹码:%.2f,闲输赢:%.2f,庄输赢:%.2f,", common.Cards_2_string(player_cards), player_points_txt, common.Cards_2_string(dealer_cards), dealer_point, f.player.Get_chip(), f.dealer.Get_chip(), f.player.Get_profit(), f.dealer.Get_profit())
 			f.push_message(msg)
 		}
@@ -365,8 +365,8 @@ func (f *FlowControl) Compare() {
 		player_cards := f.player.Current_hand().Cards()
 		player_points, player_points_txt := logic.Points(player_cards)
 		if player_points[0] >= define.POINT_BUST { //闲家爆点
-			f.dealer.Update_score(1 * float64(f.player.Current_hand().Get_bet()) * CARD_TYPE.POINT.Odds())
-			f.player.Update_score(-1 * float64(f.player.Current_hand().Get_bet()) * CARD_TYPE.POINT.Odds())
+			f.dealer.Update_score(1 * float64(f.player.Current_hand().Get_bet_amount()) * CARD_TYPE.POINT.Odds())
+			f.player.Update_score(-1 * float64(f.player.Current_hand().Get_bet_amount()) * CARD_TYPE.POINT.Odds())
 			msg := fmt.Sprintf("庄家赢,闲家爆点,player_cards:%s[点数%s],dealer_cards:%s[点数%d],闲家筹码:%.2f,庄家筹码:%.2f,闲输赢:%.2f,庄输赢:%.2f,", common.Cards_2_string(player_cards), player_points_txt, common.Cards_2_string(dealer_cards), dealer_point, f.player.Get_chip(), f.dealer.Get_chip(), f.player.Get_profit(), f.dealer.Get_profit())
 			f.push_message(msg)
 		}
@@ -383,8 +383,8 @@ func (f *FlowControl) Compare() {
 			player_cards := f.player.Current_hand().Cards()
 			_, player_points_txt := logic.Points(player_cards)
 
-			f.dealer.Update_score(-1 * float64(f.player.Current_hand().Get_bet()) * CARD_TYPE.POINT.Odds())
-			f.player.Update_score(1 * float64(f.player.Current_hand().Get_bet()) * CARD_TYPE.POINT.Odds())
+			f.dealer.Update_score(-1 * float64(f.player.Current_hand().Get_bet_amount()) * CARD_TYPE.POINT.Odds())
+			f.player.Update_score(1 * float64(f.player.Current_hand().Get_bet_amount()) * CARD_TYPE.POINT.Odds())
 
 			msg := fmt.Sprintf("闲家赢,庄家爆点,player_cards:%s[点数%s],dealer_cards:%s[点数%d],闲家筹码:%.2f,庄家筹码:%.2f,闲输赢:%.2f,庄输赢:%.2f,", common.Cards_2_string(player_cards), player_points_txt, common.Cards_2_string(dealer_cards), dealer_point, f.player.Get_chip(), f.dealer.Get_chip(), f.player.Get_profit(), f.dealer.Get_profit())
 			f.push_message(msg)
@@ -401,8 +401,8 @@ func (f *FlowControl) Compare() {
 			player_point := logic.Player_pick_best_point_to_compare(player_points)
 
 			if dealer_point > player_point { //庄赢
-				f.dealer.Update_score(1 * float64(f.player.Current_hand().Get_bet()) * CARD_TYPE.POINT.Odds())
-				f.player.Update_score(-1 * float64(f.player.Current_hand().Get_bet()) * CARD_TYPE.POINT.Odds())
+				f.dealer.Update_score(1 * float64(f.player.Current_hand().Get_bet_amount()) * CARD_TYPE.POINT.Odds())
+				f.player.Update_score(-1 * float64(f.player.Current_hand().Get_bet_amount()) * CARD_TYPE.POINT.Odds())
 
 				msg := fmt.Sprintf("庄家赢,player_cards:%s[点数%d],dealer_cards:%s[点数%d],闲家筹码:%.2f,庄家筹码:%.2f,闲输赢:%.2f,庄输赢:%.2f,", common.Cards_2_string(player_cards), player_point, common.Cards_2_string(dealer_cards), dealer_point, f.player.Get_chip(), f.dealer.Get_chip(), f.player.Get_profit(), f.dealer.Get_profit())
 				f.push_message(msg)
@@ -415,8 +415,8 @@ func (f *FlowControl) Compare() {
 				f.push_message(msg)
 
 			} else { //闲赢
-				f.dealer.Update_score(-1 * float64(f.player.Current_hand().Get_bet()) * CARD_TYPE.POINT.Odds())
-				f.player.Update_score(1 * float64(f.player.Current_hand().Get_bet()) * CARD_TYPE.POINT.Odds())
+				f.dealer.Update_score(-1 * float64(f.player.Current_hand().Get_bet_amount()) * CARD_TYPE.POINT.Odds())
+				f.player.Update_score(1 * float64(f.player.Current_hand().Get_bet_amount()) * CARD_TYPE.POINT.Odds())
 
 				msg := fmt.Sprintf("闲家赢,player_cards:%s[点数%d],dealer_cards:%s[点数%d],闲家筹码:%.2f,庄家筹码:%.2f,闲输赢:%.2f,庄输赢:%.2f,", common.Cards_2_string(player_cards), player_point, common.Cards_2_string(dealer_cards), dealer_point, f.player.Get_chip(), f.dealer.Get_chip(), f.player.Get_profit(), f.dealer.Get_profit())
 				f.push_message(msg)
@@ -441,7 +441,7 @@ func (f *FlowControl) Round_end() {
 	Game_scores := make([]float64, 0)
 	f.player.Reset_hand_index()
 	for i := 0; i < f.player.Hand_cnt(); i++ {
-		Current_bets = append(Current_bets, f.player.Current_hand().Get_bet())
+		Current_bets = append(Current_bets, f.player.Current_hand().Get_bet_amount())
 		Game_scores = append(Game_scores, f.player.Current_hand().Get_score())
 		f.player.Next_hand()
 	}

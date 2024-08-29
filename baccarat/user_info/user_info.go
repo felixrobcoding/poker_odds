@@ -34,10 +34,10 @@ func (u *UserInfo) init() {
 }
 
 // Deal 发牌
-func (u *UserInfo) Deal(cards []byte, bet_area BET_AREA.TYPE, bet int) {
+func (u *UserInfo) Deal(cards []byte, bet_area BET_AREA.TYPE, bet_amount int) {
 	u.hand = NewHandCard()
 	u.hand.Append_cards(cards)
-	u.hand.Set_bet(bet_area, bet)
+	u.hand.Set_bet(bet_area, bet_amount)
 }
 
 func (u *UserInfo) Current_hand() *HandCard {
@@ -52,8 +52,8 @@ func (u *UserInfo) Update_score(score float64, win_bet_areas []BET_AREA.TYPE) {
 	game_result := u.hand.update_score(score, win_bet_areas)
 	u.chip += score
 
-	_, bet, _ := u.hand.Get_bet()
-	u.user_stat.Total_bets += bet
+	_, bet_amount, _ := u.hand.Get_bet()
+	u.user_stat.Total_bets += bet_amount
 
 	if game_result == GAME_RESULT.WIN {
 		u.user_stat.Win_hands++

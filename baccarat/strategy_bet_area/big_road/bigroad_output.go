@@ -22,9 +22,9 @@ const (
 func nodes_2_string1(nodes []*suggestion.ResultNode) string {
 	txt := ""
 	for _, v := range nodes {
-		if v.Current_win_bet_area == BET_AREA.BANKER {
+		if v.Result_win_bet_area == BET_AREA.BANKER {
 			txt += BANKER_NODE
-		} else if v.Current_win_bet_area == BET_AREA.PLAYER {
+		} else if v.Result_win_bet_area == BET_AREA.PLAYER {
 			txt += PLAYER_NODE
 		} else {
 			panic(xdebug.Funcname())

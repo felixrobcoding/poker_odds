@@ -10,11 +10,11 @@ import (
 
 // 结果节点
 type ResultNode struct {
-	Current_chip         float64       //当前筹码
-	Current_bet_area     BET_AREA.TYPE //当前下注区域
-	Current_bet          int           //当前下注
-	Current_win_bet_area BET_AREA.TYPE //当前获胜区域
-	Current_score        float64       //当前得分
+	Current_chip        float64       //当前-筹码
+	Current_bet_area    BET_AREA.TYPE //当前-下注区域
+	Current_bet_amount  int           //当前-下注额
+	Result_win_bet_area BET_AREA.TYPE //结果-获胜区域
+	Result_score        float64       //结果-得分
 }
 
 //-----------------------------------------------

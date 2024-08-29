@@ -15,7 +15,7 @@ import (
 type HandCard struct {
 	cards       []byte
 	game_result GAME_RESULT.TYPE //手牌结果
-	bet         int              //下注额
+	bet_amount  int              //下注额
 	score       float64          //得分
 	action      int              //记录 分牌/投降
 }
@@ -105,13 +105,13 @@ func (h *HandCard) Is_surrender() bool {
 }
 
 // 设置下注额
-func (h *HandCard) Set_bet(bet int) {
-	h.bet = bet
+func (h *HandCard) Set_bet_amount(bet_amount int) {
+	h.bet_amount = bet_amount
 }
 
 // 获取下注额
-func (h *HandCard) Get_bet() int {
-	return h.bet
+func (h *HandCard) Get_bet_amount() int {
+	return h.bet_amount
 }
 
 // 获取积分
@@ -140,7 +140,7 @@ func (h *HandCard) Is_result() bool {
 
 // 加倍停牌
 func (h *HandCard) Double_down() {
-	h.bet = 2 * h.bet
+	h.bet_amount = 2 * h.bet_amount
 }
 
 //-----------------------------------------------

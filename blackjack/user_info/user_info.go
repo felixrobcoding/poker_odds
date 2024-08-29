@@ -39,10 +39,10 @@ func (u *UserInfo) init() {
 }
 
 // 发牌
-func (u *UserInfo) Deal(cards []byte, bet int) {
+func (u *UserInfo) Deal(cards []byte, bet_amount int) {
 	hand := NewHandCard()
 	hand.Append_cards(cards)
-	hand.Set_bet(bet)
+	hand.Set_bet_amount(bet_amount)
 
 	u.hands = make([]*HandCard, 0)
 	u.hand_index = 0
@@ -84,7 +84,7 @@ func (u *UserInfo) Split_card(right_card byte) ([]byte, []byte) {
 	//新的hand保留第二张
 	new_hand := NewHandCard()
 	new_hand.Append_card(u.hands[u.hand_index].cards[1])
-	new_hand.bet = u.hands[u.hand_index].bet
+	new_hand.bet_amount = u.hands[u.hand_index].bet_amount
 	new_hand.action = int(ACTION_TYPE.SPLIT)
 
 	//原来的hand保留第一张
@@ -123,7 +123,7 @@ func (u *UserInfo) Update_score(score float64) {
 
 	game_result := u.hands[u.hand_index].update_score(score)
 	u.chip += score
-	u.user_stat.Total_bets += u.hands[u.hand_index].Get_bet()
+	u.user_stat.Total_bets += u.hands[u.hand_index].Get_bet_amount()
 
 	if game_result == GAME_RESULT.WIN {
 		u.user_stat.Win_hands++

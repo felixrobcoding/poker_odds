@@ -38,7 +38,7 @@ func (s *Strategy) Result_node_append(node *suggestion.ResultNode) {
 		s.Result_node_clear()
 	}
 	//策略链中不插入tie
-	if node.Current_win_bet_area == BET_AREA.TIE {
+	if node.Result_win_bet_area == BET_AREA.TIE {
 		return
 	}
 	s.nodes = append(s.nodes, node)

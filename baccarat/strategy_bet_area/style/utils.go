@@ -21,7 +21,7 @@ func find(nodes []*suggestion.ResultNode, start_index int, target_bet_area BET_A
 	}
 
 	for i := start_index; i < len; i++ {
-		if nodes[i].Current_win_bet_area == target_bet_area {
+		if nodes[i].Result_win_bet_area == target_bet_area {
 			target_cnt++
 			continue
 		}

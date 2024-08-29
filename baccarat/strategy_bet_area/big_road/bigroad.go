@@ -27,7 +27,7 @@ func NewBigRoad(bet_areas []BET_AREA.TYPE) *BigRoad {
 func NewBigRoadWithNodes(nodes []*suggestion.ResultNode) *BigRoad {
 	win_bet_areas := make([]BET_AREA.TYPE, 0)
 	for i := 0; i < len(nodes); i++ {
-		win_bet_areas = append(win_bet_areas, nodes[i].Current_win_bet_area)
+		win_bet_areas = append(win_bet_areas, nodes[i].Result_win_bet_area)
 	}
 	return NewBigRoad(win_bet_areas)
 }

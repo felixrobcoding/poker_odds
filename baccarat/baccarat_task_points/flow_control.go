@@ -232,13 +232,13 @@ func (f *FlowControl) Compare() {
 		win_bet_area = BET_AREA.BANKER
 		win_bet_areas = append(win_bet_areas, win_bet_area)
 
-		bet_area, bet, _ := f.player.Current_hand().Get_bet()
+		bet_area, bet_amount, _ := f.player.Current_hand().Get_bet()
 		if bet_area == win_bet_area {
-			player_profit = 1 * float64(bet) * win_bet_area.Odds()
-			dealer_profit = -1 * float64(bet) * win_bet_area.Odds()
+			player_profit = 1 * float64(bet_amount) * win_bet_area.Odds()
+			dealer_profit = -1 * float64(bet_amount) * win_bet_area.Odds()
 		} else {
-			player_profit = -1 * float64(bet)
-			dealer_profit = 1 * float64(bet)
+			player_profit = -1 * float64(bet_amount)
+			dealer_profit = 1 * float64(bet_amount)
 		}
 		f.dealer.Update_score(dealer_profit, win_bet_areas)
 		f.player.Update_score(player_profit, win_bet_areas)
@@ -250,10 +250,10 @@ func (f *FlowControl) Compare() {
 		win_bet_area = BET_AREA.TIE
 		win_bet_areas = append(win_bet_areas, win_bet_area)
 
-		bet_area, bet, _ := f.player.Current_hand().Get_bet()
+		bet_area, bet_amount, _ := f.player.Current_hand().Get_bet()
 		if bet_area == win_bet_area {
-			player_profit = 1 * float64(bet) * win_bet_area.Odds()
-			dealer_profit = -1 * float64(bet) * win_bet_area.Odds()
+			player_profit = 1 * float64(bet_amount) * win_bet_area.Odds()
+			dealer_profit = -1 * float64(bet_amount) * win_bet_area.Odds()
 		} else {
 			player_profit = 0
 			dealer_profit = 0
@@ -268,13 +268,13 @@ func (f *FlowControl) Compare() {
 		win_bet_area = BET_AREA.PLAYER
 		win_bet_areas = append(win_bet_areas, win_bet_area)
 
-		bet_area, bet, _ := f.player.Current_hand().Get_bet()
+		bet_area, bet_amount, _ := f.player.Current_hand().Get_bet()
 		if bet_area == win_bet_area {
-			player_profit = 1 * float64(bet) * win_bet_area.Odds()
-			dealer_profit = -1 * float64(bet) * win_bet_area.Odds()
+			player_profit = 1 * float64(bet_amount) * win_bet_area.Odds()
+			dealer_profit = -1 * float64(bet_amount) * win_bet_area.Odds()
 		} else {
-			player_profit = -1 * float64(bet)
-			dealer_profit = 1 * float64(bet)
+			player_profit = -1 * float64(bet_amount)
+			dealer_profit = 1 * float64(bet_amount)
 		}
 		f.dealer.Update_score(dealer_profit, win_bet_areas)
 		f.player.Update_score(player_profit, win_bet_areas)

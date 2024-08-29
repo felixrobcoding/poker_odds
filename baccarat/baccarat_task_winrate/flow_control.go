@@ -27,8 +27,8 @@ import (
 )
 
 const (
-	PLAYER_INIT_CHIP  = 10000
-	ALERT_STYLE_TIMES = 3 //警报后建议下注额倍数
+	PLAYER_INIT_CHIP  = 10000 //
+	ALERT_STYLE_TIMES = 3     //警报后建议下注额倍数
 )
 
 var shoe_index int //靴牌索引
@@ -111,7 +111,7 @@ func (f *FlowControl) Round_begin_to_deal() error {
 	//查询下注区域
 	suggestion_bet_area := f.bet_area_strategy.Query_bet_area()
 	//下注策略
-	bet, err := f.bet_amount_strategy.Query_bet_amount()
+	bet_amount, err := f.bet_amount_strategy.Query_bet_amount()
 	if err != nil {
 		msg := fmt.Sprintf("本局结束,deal_times:%d,shoe_card_cnt:%d,err:%s,", f.deal_times, shoe_card_cnt, err.Error())
 		f.push_message(msg)
@@ -121,10 +121,10 @@ func (f *FlowControl) Round_begin_to_deal() error {
 
 	//警报
 	if suggestion_bet_area.Alart {
-		bet = ALERT_STYLE_TIMES * bet
+		bet_amount = ALERT_STYLE_TIMES * bet_amount
 	}
 
-	f.player.Deal(player_cards, suggestion_bet_area.Bet_area, bet) //闲家押注
+	f.player.Deal(player_cards, suggestion_bet_area.Bet_area, bet_amount) //闲家押注
 	f.dealer.Deal(dealer_cards, BET_AREA.ERROR, 0)
 
 	player_point := logic.Points(f.player.Current_hand().Cards())
@@ -133,7 +133,7 @@ func (f *FlowControl) Round_begin_to_deal() error {
 	msg := fmt.Sprintf("发牌,shoe_card_cnt:%d,player_cards:%s[点数:%d],dealer_cards:%s[点数:%d],", shoe_card_cnt, common.Cards_2_string(player_cards), player_point, common.Cards_2_string(dealer_cards), dealer_point)
 	f.push_message(msg)
 
-	msg = fmt.Sprintf("%s,闲家押注区域:%s,下注额:%d,", suggestion_bet_area.Comment, suggestion_bet_area.Bet_area.String(), bet)
+	msg = fmt.Sprintf("%s,闲家押注区域:%s,下注额:%d,", suggestion_bet_area.Comment, suggestion_bet_area.Bet_area.String(), bet_amount)
 	f.push_message(msg)
 
 	return nil
@@ -263,13 +263,13 @@ func (f *FlowControl) Compare() {
 		win_bet_area = BET_AREA.BANKER
 		win_bet_areas = append(win_bet_areas, win_bet_area)
 
-		bet_area, bet, _ := f.player.Current_hand().Get_bet()
+		bet_area, bet_amount, _ := f.player.Current_hand().Get_bet()
 		if bet_area == win_bet_area {
-			player_profit = 1 * float64(bet) * win_bet_area.Odds()
-			dealer_profit = -1 * float64(bet) * win_bet_area.Odds()
+			player_profit = 1 * float64(bet_amount) * win_bet_area.Odds()
+			dealer_profit = -1 * float64(bet_amount) * win_bet_area.Odds()
 		} else {
-			player_profit = -1 * float64(bet)
-			dealer_profit = 1 * float64(bet)
+			player_profit = -1 * float64(bet_amount)
+			dealer_profit = 1 * float64(bet_amount)
 		}
 		f.dealer.Update_score(dealer_profit, win_bet_areas)
 		f.player.Update_score(player_profit, win_bet_areas)
@@ -281,10 +281,10 @@ func (f *FlowControl) Compare() {
 		win_bet_area = BET_AREA.TIE
 		win_bet_areas = append(win_bet_areas, win_bet_area)
 
-		bet_area, bet, _ := f.player.Current_hand().Get_bet()
+		bet_area, bet_amount, _ := f.player.Current_hand().Get_bet()
 		if bet_area == win_bet_area {
-			player_profit = 1 * float64(bet) * win_bet_area.Odds()
-			dealer_profit = -1 * float64(bet) * win_bet_area.Odds()
+			player_profit = 1 * float64(bet_amount) * win_bet_area.Odds()
+			dealer_profit = -1 * float64(bet_amount) * win_bet_area.Odds()
 		} else {
 			player_profit = 0
 			dealer_profit = 0
@@ -299,13 +299,13 @@ func (f *FlowControl) Compare() {
 		win_bet_area = BET_AREA.PLAYER
 		win_bet_areas = append(win_bet_areas, win_bet_area)
 
-		bet_area, bet, _ := f.player.Current_hand().Get_bet()
+		bet_area, bet_amount, _ := f.player.Current_hand().Get_bet()
 		if bet_area == win_bet_area {
-			player_profit = 1 * float64(bet) * win_bet_area.Odds()
-			dealer_profit = -1 * float64(bet) * win_bet_area.Odds()
+			player_profit = 1 * float64(bet_amount) * win_bet_area.Odds()
+			dealer_profit = -1 * float64(bet_amount) * win_bet_area.Odds()
 		} else {
-			player_profit = -1 * float64(bet)
-			dealer_profit = 1 * float64(bet)
+			player_profit = -1 * float64(bet_amount)
+			dealer_profit = 1 * float64(bet_amount)
 		}
 		f.dealer.Update_score(dealer_profit, win_bet_areas)
 		f.player.Update_score(player_profit, win_bet_areas)
@@ -325,17 +325,17 @@ func (f *FlowControl) Round_end() {
 	f.dump_messages()
 
 	//下注区域策略
-	bet_area, bet, win_bet_areas := f.player.Current_hand().Get_bet()
+	bet_area, bet_amount, win_bet_areas := f.player.Current_hand().Get_bet()
 	//排序
 	sort.SliceStable(win_bet_areas, func(i, j int) bool {
 		return win_bet_areas[i] < win_bet_areas[j]
 	})
 	suggestion_result_node := &suggestion.ResultNode{
-		Current_chip:         f.player.Get_chip(),
-		Current_bet_area:     bet_area,
-		Current_bet:          bet,
-		Current_win_bet_area: win_bet_areas[0], //只需要庄闲和,策略评估不需要庄对闲对
-		Current_score:        f.player.Current_hand().Get_score(),
+		Current_chip:        f.player.Get_chip(),
+		Current_bet_area:    bet_area,
+		Current_bet_amount:  bet_amount,
+		Result_win_bet_area: win_bet_areas[0], //只需要庄闲和,策略评估不需要庄对闲对
+		Result_score:        f.player.Current_hand().Get_score(),
 	}
 	f.bet_area_strategy.Result_node_append(suggestion_result_node)
 
@@ -343,7 +343,7 @@ func (f *FlowControl) Round_end() {
 	Current_bets := make([]int, 0)
 	Game_scores := make([]float64, 0)
 
-	Current_bets = append(Current_bets, bet)
+	Current_bets = append(Current_bets, bet_amount)
 	Game_scores = append(Game_scores, f.player.Current_hand().Get_score())
 
 	result_node := &strategy_bet_amount.ResultNode{

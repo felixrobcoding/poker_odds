@@ -15,7 +15,7 @@ type HandCard struct {
 	cards         []byte
 	game_result   GAME_RESULT.TYPE //手牌结果
 	bet_area      BET_AREA.TYPE    //下注区域
-	bet           int              //下注额
+	bet_amount    int              //下注额
 	win_bet_areas []BET_AREA.TYPE  //获胜下注区域
 	score         float64          //得分
 }
@@ -61,15 +61,15 @@ func (h *HandCard) Card_type() CARD_TYPE.TYPE {
 }
 
 // Set_bet 设置下注额
-func (h *HandCard) Set_bet(bet_area BET_AREA.TYPE, bet int) {
+func (h *HandCard) Set_bet(bet_area BET_AREA.TYPE, bet_amount int) {
 	h.bet_area = bet_area
-	h.bet = bet
+	h.bet_amount = bet_amount
 }
 
 // Get_bet 获取下注
-func (h *HandCard) Get_bet() (bet_area BET_AREA.TYPE, bet int, win_bet_areas []BET_AREA.TYPE) {
+func (h *HandCard) Get_bet() (bet_area BET_AREA.TYPE, bet_amount int, win_bet_areas []BET_AREA.TYPE) {
 	bet_area = h.bet_area
-	bet = h.bet
+	bet_amount = h.bet_amount
 	win_bet_areas = h.win_bet_areas
 	return
 }
