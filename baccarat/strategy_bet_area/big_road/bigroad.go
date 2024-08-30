@@ -16,20 +16,44 @@ type BigRoad struct {
 	cols []Col //列
 }
 
-func NewBigRoad(bet_areas []BET_AREA.TYPE) *BigRoad {
+func NewBigRoad(nodes []Node) *BigRoad {
 	road := &BigRoad{}
 	road.init()
-	road.push(bet_areas)
+	road.push(nodes)
 	return road
 }
 
 // NewBigRoadWithNodes 策略节点链构造大路
-func NewBigRoadWithNodes(nodes []*suggestion.ResultNode) *BigRoad {
-	win_bet_areas := make([]BET_AREA.TYPE, 0)
-	for i := 0; i < len(nodes); i++ {
-		win_bet_areas = append(win_bet_areas, nodes[i].Result_win_bet_area)
+func NewBigRoadWithNodes(suggestion_nodes []*suggestion.FeedbackNode) *BigRoad {
+	nodes := make([]Node, 0)
+	for i := 0; i < len(suggestion_nodes); i++ {
+		node := Node{
+			bet_area:     suggestion_nodes[i].Current_bet_area,
+			bet_amount:   suggestion_nodes[i].Current_bet_amount,
+			result_area:  suggestion_nodes[i].Result_area,
+			result_score: suggestion_nodes[i].Result_score,
+		}
+		nodes = append(nodes, node)
 	}
-	return NewBigRoad(win_bet_areas)
+	return NewBigRoad(nodes)
+}
+
+func NewBigRoadWithCols(cols []*Col) *BigRoad {
+	nodes := make([]Node, 0)
+	for i := 0; i < len(cols); i++ {
+		col := cols[i]
+
+		for j := 0; j < col.Cnt(); j++ {
+			node := Node{
+				bet_area:     col.Get_node(j).bet_area,
+				bet_amount:   col.Get_node(j).bet_amount,
+				result_area:  col.Get_node(j).result_area,
+				result_score: col.Get_node(j).result_score,
+			}
+			nodes = append(nodes, node)
+		}
+	}
+	return NewBigRoad(nodes)
 }
 
 func (b *BigRoad) init() {
@@ -37,32 +61,33 @@ func (b *BigRoad) init() {
 }
 
 // push 插入多个元素
-func (b *BigRoad) push(bet_areas []BET_AREA.TYPE) {
-	for _, v := range bet_areas {
+func (b *BigRoad) push(nodes []Node) {
+	for _, v := range nodes {
 		b.push_element(v)
 	}
 }
 
 // push_element 插入元素
-func (b *BigRoad) push_element(bet_area BET_AREA.TYPE) {
+func (b *BigRoad) push_element(node Node) {
 	if b.cols == nil {
 		b.cols = make([]Col, 0)
 	}
 
 	if b.Col_cnt() == 0 {
 		col := Col{}
-		col.push(bet_area)
+		col.push(node)
 
 		b.cols = append(b.cols, col)
 		return
 	}
 
+	//最后一列
 	col := b.Last_col()
-	if col.Bet_area() == bet_area {
-		col.push(bet_area)
+	if col.Result_area() == node.result_area {
+		col.push(node)
 	} else { //新创建1列
 		col := Col{}
-		col.push(bet_area)
+		col.push(node)
 
 		b.cols = append(b.cols, col)
 	}
@@ -94,6 +119,35 @@ func (b *BigRoad) Total_cnt() int {
 		total_cnt += b.Get_col(col_index).Cnt()
 	}
 	return total_cnt
+}
+
+// Extract_stat_for_svg 统计信息
+func (b *BigRoad) Extract_stat_for_svg() (banker_cnt int, player_cnt int, win_cnt int, lose_cnt int, total_bet_amont int, total_result_score float64) {
+
+	for col_index := 0; col_index < b.Col_cnt(); col_index++ {
+		col := b.Get_col(col_index)
+
+		for row_index := 0; row_index < col.Cnt(); row_index++ {
+			node := col.Get_node(row_index)
+
+			if node.result_area == BET_AREA.BANKER {
+				banker_cnt++
+			}
+			if node.result_area == BET_AREA.PLAYER {
+				player_cnt++
+			}
+
+			if node.bet_area == node.result_area {
+				win_cnt++
+			} else {
+				lose_cnt++
+			}
+
+			total_bet_amont += node.bet_amount
+			total_result_score += node.result_score
+		}
+	}
+	return
 }
 
 // Last_col 最后的一列

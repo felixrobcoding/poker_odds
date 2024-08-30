@@ -22,13 +22,13 @@ import (
 	"fmt"
 	"os"
 	"sort"
+	"strings"
 
 	"github.com/poker-x-studio/x/ximage"
 )
 
 const (
-	PLAYER_INIT_CHIP  = 10000 //
-	ALERT_STYLE_TIMES = 3     //警报后建议下注额倍数
+	PLAYER_INIT_CHIP = 10000 //
 )
 
 var shoe_index int //靴牌索引
@@ -36,11 +36,13 @@ var shoe_index int //靴牌索引
 type FlowControl struct {
 	shoe_index          int                                    //靴牌索引
 	shoe_cards          []byte                                 //牌靴里的牌
+	shoe_cards_all      []byte                                 //牌靴里的牌
 	deal_times          int                                    //发牌次数
 	player              *user_info.UserInfo                    //闲家
 	dealer              *user_info.UserInfo                    //庄家
 	messages            []string                               //复盘信息
 	win_bet_areas       [][]BET_AREA.TYPE                      //获胜区域
+	max_bet_amount      int                                    //最大下注额
 	bet_area_strategy   *strategy_bet_area.Strategy            //下注区域策略
 	bet_amount_strategy strategy_bet_amount.IBetAmountStrategy //下注额策略
 }
@@ -59,9 +61,9 @@ func (f *FlowControl) init() {
 	f.bet_area_strategy = strategy_bet_area.NewStrategy()
 
 	//f.bet_amount_strategy = strategy_bet_amount.NewBetAmountStrategy(BET_AMOUNT_STRATEGY.ALL_IN, PLAYER_INIT_CHIP)
-	f.bet_amount_strategy = strategy_bet_amount.NewBetAmountStrategy(BET_AMOUNT_STRATEGY.FIXED_AMOUNT, PLAYER_INIT_CHIP)
+	//f.bet_amount_strategy = strategy_bet_amount.NewBetAmountStrategy(BET_AMOUNT_STRATEGY.FIXED_AMOUNT, PLAYER_INIT_CHIP)
 	//f.bet_amount_strategy = strategy_bet_amount.NewBetAmountStrategy(BET_AMOUNT_STRATEGY.MARTEGAL, PLAYER_INIT_CHIP)
-	//f.bet_amount_strategy = strategy_bet_amount.NewBetAmountStrategy(BET_AMOUNT_STRATEGY.FIBONACCI, PLAYER_INIT_CHIP)
+	f.bet_amount_strategy = strategy_bet_amount.NewBetAmountStrategy(BET_AMOUNT_STRATEGY.FIBONACCI, PLAYER_INIT_CHIP)
 	//f.bet_amount_strategy = strategy_bet_amount.NewBetAmountStrategy(BET_AMOUNT_STRATEGY.KELLY, PLAYER_INIT_CHIP)
 }
 
@@ -69,8 +71,10 @@ func (f *FlowControl) init() {
 func (f *FlowControl) Shuffle() {
 	f.shoe_index = shoe_index
 	shoe_index++
-	f.shoe_cards = make([]byte, 0)
-	f.shoe_cards = algorithm.Shuffle_cards(DECKS)
+	f.shoe_cards_all = make([]byte, 0)
+	f.shoe_cards_all = algorithm.Shuffle_cards(DECKS)
+	f.shoe_cards = make([]byte, len(f.shoe_cards_all))
+	copy(f.shoe_cards, f.shoe_cards_all)
 	f.deal_times = 0
 
 	//测试
@@ -81,8 +85,10 @@ func (f *FlowControl) Shuffle() {
 func (f *FlowControl) Shuffle_from_outside(shoe_cards []byte) {
 	f.shoe_index = shoe_index
 	shoe_index++
-	f.shoe_cards = make([]byte, 0)
-	f.shoe_cards = shoe_cards
+	f.shoe_cards_all = make([]byte, 0)
+	f.shoe_cards_all = algorithm.Shuffle_cards(DECKS)
+	f.shoe_cards = make([]byte, len(f.shoe_cards_all))
+	copy(f.shoe_cards, f.shoe_cards_all)
 	f.deal_times = 0
 }
 
@@ -118,11 +124,6 @@ func (f *FlowControl) Round_begin_to_deal() error {
 		return errors.New(msg)
 	}
 	f.deal_times++
-
-	//警报
-	if suggestion_bet_area.Alart {
-		bet_amount = ALERT_STYLE_TIMES * bet_amount
-	}
 
 	f.player.Deal(player_cards, suggestion_bet_area.Bet_area, bet_amount) //闲家押注
 	f.dealer.Deal(dealer_cards, BET_AREA.ERROR, 0)
@@ -274,7 +275,7 @@ func (f *FlowControl) Compare() {
 		f.dealer.Update_score(dealer_profit, win_bet_areas)
 		f.player.Update_score(player_profit, win_bet_areas)
 
-		msg := fmt.Sprintf("庄赢,player_cards:%s[点数%d],dealer_cards:%s[点数%d],闲家筹码:%.2f,庄家筹码:%.2f,闲输赢:%.2f,庄输赢:%.2f,", common.Cards_2_string(player_cards), player_point, common.Cards_2_string(dealer_cards), dealer_point, f.player.Get_chip(), f.dealer.Get_chip(), f.player.Get_profit(), f.dealer.Get_profit())
+		msg := fmt.Sprintf("比较结果:庄赢,player_cards:%s[点数%d],dealer_cards:%s[点数%d],闲家筹码:%.2f,庄家筹码:%.2f,本局闲输赢:%.2f,本局庄输赢:%.2f,", common.Cards_2_string(player_cards), player_point, common.Cards_2_string(dealer_cards), dealer_point, f.player.Get_chip(), f.dealer.Get_chip(), player_profit, dealer_profit)
 		f.push_message(msg)
 
 	} else if dealer_point == player_point { //tie
@@ -292,7 +293,7 @@ func (f *FlowControl) Compare() {
 		f.dealer.Update_score(dealer_profit, win_bet_areas)
 		f.player.Update_score(player_profit, win_bet_areas)
 
-		msg := fmt.Sprintf("Tie,player_cards:%s[点数%d],dealer_cards:%s[点数%d],闲家筹码:%.2f,庄家筹码:%.2f,闲输赢:%.2f,庄输赢:%.2f,", common.Cards_2_string(player_cards), player_point, common.Cards_2_string(dealer_cards), dealer_point, f.player.Get_chip(), f.dealer.Get_chip(), f.player.Get_profit(), f.dealer.Get_profit())
+		msg := fmt.Sprintf("比较结果:Tie,player_cards:%s[点数%d],dealer_cards:%s[点数%d],闲家筹码:%.2f,庄家筹码:%.2f,本局闲输赢:%.2f,本局庄输赢:%.2f,", common.Cards_2_string(player_cards), player_point, common.Cards_2_string(dealer_cards), dealer_point, f.player.Get_chip(), f.dealer.Get_chip(), player_profit, dealer_profit)
 		f.push_message(msg)
 
 	} else { //闲赢
@@ -310,7 +311,7 @@ func (f *FlowControl) Compare() {
 		f.dealer.Update_score(dealer_profit, win_bet_areas)
 		f.player.Update_score(player_profit, win_bet_areas)
 
-		msg := fmt.Sprintf("闲赢,player_cards:%s[点数%d],dealer_cards:%s[点数%d],闲家筹码:%.2f,庄家筹码:%.2f,闲输赢:%.2f,庄输赢:%.2f,", common.Cards_2_string(player_cards), player_point, common.Cards_2_string(dealer_cards), dealer_point, f.player.Get_chip(), f.dealer.Get_chip(), f.player.Get_profit(), f.dealer.Get_profit())
+		msg := fmt.Sprintf("比较结果:闲赢,player_cards:%s[点数%d],dealer_cards:%s[点数%d],闲家筹码:%.2f,庄家筹码:%.2f,本局闲输赢:%.2f,本局庄输赢:%.2f,", common.Cards_2_string(player_cards), player_point, common.Cards_2_string(dealer_cards), dealer_point, f.player.Get_chip(), f.dealer.Get_chip(), player_profit, dealer_profit)
 		f.push_message(msg)
 	}
 	f.win_bet_areas = append(f.win_bet_areas, win_bet_areas)
@@ -330,28 +331,28 @@ func (f *FlowControl) Round_end() {
 	sort.SliceStable(win_bet_areas, func(i, j int) bool {
 		return win_bet_areas[i] < win_bet_areas[j]
 	})
-	suggestion_result_node := &suggestion.ResultNode{
-		Current_chip:        f.player.Get_chip(),
-		Current_bet_area:    bet_area,
-		Current_bet_amount:  bet_amount,
-		Result_win_bet_area: win_bet_areas[0], //只需要庄闲和,策略评估不需要庄对闲对
-		Result_score:        f.player.Current_hand().Get_score(),
+	suggestion_feedback_node := &suggestion.FeedbackNode{
+		Current_chip:       f.player.Get_chip(),
+		Current_bet_area:   bet_area,
+		Current_bet_amount: bet_amount,
+		Result_area:        win_bet_areas[0], //只需要庄闲和,策略评估不需要庄对闲对
+		Result_score:       f.player.Current_hand().Get_score(),
 	}
-	f.bet_area_strategy.Result_node_append(suggestion_result_node)
+	f.bet_area_strategy.Feedback_node_append(suggestion_feedback_node)
 
 	//下注额策略
-	Current_bets := make([]int, 0)
-	Game_scores := make([]float64, 0)
-
-	Current_bets = append(Current_bets, bet_amount)
-	Game_scores = append(Game_scores, f.player.Current_hand().Get_score())
-
-	result_node := &strategy_bet_amount.ResultNode{
-		Current_chip:   f.player.Get_chip(),
-		Current_bets:   Current_bets,
-		Current_scores: Game_scores,
+	feedback_node := &strategy_bet_amount.FeedbackNode{
+		Current_chip: f.player.Get_chip(),
+		Bet_amount:   bet_amount,
+		Result_area:  win_bet_areas[0], //只需要庄闲和,策略评估不需要庄对闲对
+		Result_score: f.player.Current_hand().Get_score(),
 	}
-	f.bet_amount_strategy.Result_node_append(result_node)
+	f.bet_amount_strategy.Feedback_node_append(feedback_node)
+
+	//记录最大下注额
+	if f.max_bet_amount < bet_amount {
+		f.max_bet_amount = bet_amount
+	}
 }
 
 // 游戏结束
@@ -362,12 +363,14 @@ func (f *FlowControl) Game_over() {
 	player_stat := f.player.Extract_user_stat()
 	dealer_stat := f.dealer.Extract_user_stat()
 
+	//输出svg,svg和dat文件保存在一起，方便比对调试
+	data_path := f.Make_svg()
+	//保存靴牌
+	Save_file(f.shoe_cards_all, data_path)
+
 	xlog_entry.Debugf("=====游戏结束,总轮数:%d,shoe_card_cnt:%d=====", f.Deal_times(), len(f.shoe_cards))
 	xlog_entry.Debugf("=====游戏结束,player_stat:%s=====", player_stat.String())
 	xlog_entry.Debugf("=====游戏结束,dealer_stat:%s=====", dealer_stat.String())
-
-	//输出svg
-	f.Make_svg()
 }
 
 // 发牌次数
@@ -389,7 +392,7 @@ func (f *FlowControl) dump_messages() {
 }
 
 // 输出svg
-func (f *FlowControl) Make_svg() {
+func (f *FlowControl) Make_svg() string {
 	bigroad := f.bet_area_strategy.Query_big_road()
 
 	instance_svg := big_road.Instance_big_road_svg()
@@ -397,16 +400,18 @@ func (f *FlowControl) Make_svg() {
 
 	jpeg_filepath, svg_filepath, err := ximage.Svg_2_jpeg(svg_content)
 	if err != nil {
-		return
+		return "tmp.dat"
 	}
 	os.Remove(svg_filepath)
 	fmt.Println(jpeg_filepath)
+
+	return strings.Replace(jpeg_filepath, "jpeg", "dat", -1)
 }
 
 // 提取每靴牌的统计
 func (f *FlowControl) Extract_shoe_stat() *ShoeStat {
 	//下注策略
-	min_bet, max_bet, bet_amount_strategy := f.bet_amount_strategy.Query_option()
+	option_min_bet, option_max_bet, bet_amount_strategy := f.bet_amount_strategy.Query_option()
 	//大路统计
 	bigroad := f.bet_area_strategy.Query_big_road()
 	bigroad_stat := bigroad.Extract_bigroad_stat()
@@ -414,10 +419,11 @@ func (f *FlowControl) Extract_shoe_stat() *ShoeStat {
 	user_stat := f.player.Extract_user_stat()
 	shoe_stat := &ShoeStat{
 		shoe_index:          f.shoe_index,
-		min_bet:             min_bet,
-		max_bet:             max_bet,
+		option_min_bet:      option_min_bet,
+		option_max_bet:      option_max_bet,
 		bet_amount_strategy: bet_amount_strategy,
 		deal_times:          f.Deal_times(),
+		max_bet_amount:      f.max_bet_amount,
 		player_init_chip:    f.player.Get_init_chip(),
 		player_chip:         f.player.Get_chip(),
 		player_total_bets:   user_stat.Total_bets,

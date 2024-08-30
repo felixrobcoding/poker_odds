@@ -11,8 +11,8 @@ import (
 )
 
 const (
-	GO_ROUTINE_CNT = 10    //goroutine个数
-	LOOP_TIMES     = 1000  //每个goroutine循环次数
+	GO_ROUTINE_CNT = 1     //goroutine个数
+	LOOP_TIMES     = 1     //每个goroutine循环次数
 	is_output_jpeg = false //
 )
 

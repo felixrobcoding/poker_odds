@@ -4,13 +4,6 @@
 */
 package big_road
 
-import (
-	"Odds/baccarat/define/BET_AREA"
-	"Odds/baccarat/strategy_bet_area/suggestion"
-
-	"github.com/poker-x-studio/x/xdebug"
-)
-
 const (
 	BANKER_NODE string = "🔴"  //庄
 	PLAYER_NODE string = "🔵"  //闲
@@ -18,13 +11,14 @@ const (
 	NIL_NODE    string = "⚪️" //空
 )
 
+/*
 // 转描述字符串
-func nodes_2_string1(nodes []*suggestion.ResultNode) string {
+func nodes_2_string1(nodes []*suggestion.FeedbackNode) string {
 	txt := ""
 	for _, v := range nodes {
-		if v.Result_win_bet_area == BET_AREA.BANKER {
+		if v.Result_area == BET_AREA.BANKER {
 			txt += BANKER_NODE
-		} else if v.Result_win_bet_area == BET_AREA.PLAYER {
+		} else if v.Result_area == BET_AREA.PLAYER {
 			txt += PLAYER_NODE
 		} else {
 			panic(xdebug.Funcname())
@@ -32,6 +26,7 @@ func nodes_2_string1(nodes []*suggestion.ResultNode) string {
 	}
 	return txt
 }
+*/
 
 ///-----------------------------------------------
 //					the end

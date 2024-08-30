@@ -27,21 +27,45 @@ func (b *betAmountFibonacci) init(init_chip int) {
 	b.set_chip(init_chip)
 }
 
+// 斐波那契函数
+func fibonacci(n int) int {
+	if n == 0 {
+		return 0
+	}
+	if n == 1 {
+		return 1
+	}
+	return fibonacci(n-1) + fibonacci(n-2)
+}
+
 // 查询下注额
 // 斐波那契数就是由之前的两数相加而得出
 func (b *betAmountFibonacci) Query_bet_amount() (int, error) {
 	bet := MIN_BET
 
-	len := len(b.result_nodes)
+	len := len(b.feedback_nodes)
 	if len <= 1 {
 		bet = MIN_BET
-	} else if len <= 2 {
-		bet = MIN_BET * 2
 	} else {
-		last_node := b.result_nodes[len-1]
-		last_2_node := b.result_nodes[len-2]
-		bet = xmath.Min(MAX_BET, last_node.Min_bet()+last_2_node.Min_bet())
+		last_node := b.feedback_nodes[len-1]
+		if last_node.Result_score > 0 { //赢了
+			bet = MIN_BET
+		} else { //输了
+			lose_cnt := 0
+			for i := len - 1; i >= 0; i-- {
+				if b.feedback_nodes[i].Result_score < 0 {
+					lose_cnt++
+				} else {
+					break
+				}
+			}
+
+			bet = MIN_BET * fibonacci(lose_cnt)
+		}
 	}
+
+	bet = xmath.Max(MIN_BET, bet)
+	bet = xmath.Min(MAX_BET, bet)
 
 	if b.Is_enough_money(bet) {
 		return bet, nil

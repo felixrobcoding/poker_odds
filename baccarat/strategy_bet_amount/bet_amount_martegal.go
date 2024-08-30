@@ -32,23 +32,22 @@ func (b *betAmountMartegal) init(init_chip int) {
 func (b *betAmountMartegal) Query_bet_amount() (int, error) {
 	bet := MIN_BET
 
-	len := len(b.result_nodes)
+	len := len(b.feedback_nodes)
 	if len <= 0 {
 		bet = MIN_BET
 	} else {
-		last_node := b.result_nodes[len-1]
-		last_sum_score := 0.0
-		for _, v := range last_node.Current_scores {
-			last_sum_score += v
-		}
+		last_node := b.feedback_nodes[len-1]
 
-		if last_sum_score > 0 { //赢了
+		if last_node.Result_score > 0 { //赢了
 			bet = MIN_BET
 		}
-		if last_sum_score < 0 { //输了
-			bet = xmath.Min(MAX_BET, 2*last_node.Min_bet())
+		if last_node.Result_score < 0 { //输了
+			bet = 2 * last_node.Bet_amount
 		}
 	}
+
+	bet = xmath.Max(MIN_BET, bet)
+	bet = xmath.Min(MAX_BET, bet)
 
 	if b.Is_enough_money(bet) {
 		return bet, nil

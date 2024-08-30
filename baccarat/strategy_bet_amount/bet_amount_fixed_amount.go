@@ -7,6 +7,8 @@ package strategy_bet_amount
 import (
 	"Odds/common/BET_AMOUNT_STRATEGY"
 	"errors"
+
+	"github.com/poker-x-studio/x/xmath"
 )
 
 type betAmountFixedAmount struct {
@@ -28,6 +30,9 @@ func (b *betAmountFixedAmount) init(init_chip int) {
 // 查询下注额
 func (b *betAmountFixedAmount) Query_bet_amount() (int, error) {
 	bet := MIN_BET
+
+	bet = xmath.Max(MIN_BET, bet)
+	bet = xmath.Min(MAX_BET, bet)
 
 	if b.Is_enough_money(bet) {
 		return bet, nil

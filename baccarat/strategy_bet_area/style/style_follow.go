@@ -11,7 +11,7 @@ import (
 
 // 跟从形态检测
 // 默认的形态
-func check_follow_style(nodes []*suggestion.ResultNode) (bool, *suggestion.BetAreaSuggestion) {
+func check_follow_style(nodes []*suggestion.FeedbackNode) (bool, *suggestion.BetAreaSuggestion) {
 	len := len(nodes)
 	if len <= 0 {
 		return true, suggestion.NewBetAreaSuggestion()
@@ -19,7 +19,7 @@ func check_follow_style(nodes []*suggestion.ResultNode) (bool, *suggestion.BetAr
 
 	return true, &suggestion.BetAreaSuggestion{
 		Style:    STYLE.FOLLOW,
-		Bet_area: nodes[len-1].Result_win_bet_area,
+		Bet_area: nodes[len-1].Result_area,
 		Comment:  "默认跟随下注",
 		Alart:    false,
 	}

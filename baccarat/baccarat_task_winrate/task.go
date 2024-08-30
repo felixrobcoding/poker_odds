@@ -8,21 +8,22 @@ import (
 	"Odds/baccarat/define/BET_AREA"
 	"Odds/baccarat/svg_utils"
 	"Odds/common/BET_AMOUNT_STRATEGY"
-	"Odds/common/algorithm"
 	"fmt"
 	"os"
+	"path/filepath"
 	"sort"
 	"sync"
 
 	"github.com/poker-x-studio/x/ximage"
+	"github.com/poker-x-studio/x/xpath"
 
 	"github.com/poker-x-studio/x/xdebug"
 )
 
 const (
-	GO_ROUTINE_CNT = 3     //goroutine个数
-	LOOP_TIMES     = 3     //每个goroutine循环次数
-	is_output_jpeg = false //
+	GO_ROUTINE_CNT      = 1     //goroutine个数
+	LOOP_TIMES          = 1     //每个goroutine循环次数
+	is_output_jpeg bool = false //
 )
 
 var (
@@ -31,6 +32,9 @@ var (
 	shoe_stats       []ShoeStat //每靴牌统计
 	shoe_cards       []byte     //靴牌,只洗牌一次,下注测试多次,比较盈利情况
 	shoe_cards_mutex sync.Mutex //靴牌互斥锁
+
+	is_read_file = true                                              //是否读文件
+	filename     = "\\images_tmp\\2024-08-30-14-49-48-651870000.dat" //文件名
 )
 
 // 开启
@@ -44,8 +48,16 @@ func Start() {
 		lifeTime.End()
 	}()
 
-	//洗牌
-	shoe_cards = algorithm.Shuffle_cards(DECKS)
+	//读文件
+	if is_read_file {
+		var err error
+		dir := xpath.Executable_dir()
+		data_path := filepath.Join(dir, filename) //文件路径
+		shoe_cards, err = Load_file(data_path)
+		if err != nil {
+			return
+		}
+	}
 
 	shoe_stats = make([]ShoeStat, 0)
 	wg.Add(GO_ROUTINE_CNT)
@@ -75,11 +87,15 @@ func run_unit() {
 
 	//创建
 	flow_control := NewFlowControl()
+
 	//洗牌
-	//flow_control.Shuffle()
-	shoe_cards_mutex.Lock()
-	flow_control.Shuffle_from_outside(shoe_cards)
-	shoe_cards_mutex.Unlock()
+	if is_read_file {
+		shoe_cards_mutex.Lock()
+		flow_control.Shuffle_from_outside(shoe_cards)
+		shoe_cards_mutex.Unlock()
+	} else {
+		flow_control.Shuffle()
+	}
 
 	//循环
 	for {
@@ -125,11 +141,12 @@ func stat() {
 	stat_bigroad()
 
 	//
-	min_bet := 0
-	max_bet := 0
+	option_min_bet := 0
+	option_max_bet := 0
 	bet_amount_strategy := BET_AMOUNT_STRATEGY.ERROR
 
 	sum_deal_times := 0
+	max_bet_amount := 0
 	sum_hands := 0
 	sum_bets := 0
 	sum_player_lose_hands := 0 //闲家输手数之和
@@ -139,11 +156,14 @@ func stat() {
 
 	player_profits := make([]float64, 0)
 	for _, v := range shoe_stats {
-		min_bet = v.min_bet
-		max_bet = v.max_bet
+		option_min_bet = v.option_min_bet
+		option_max_bet = v.option_max_bet
 		bet_amount_strategy = v.bet_amount_strategy
 
 		sum_deal_times += v.deal_times
+		if max_bet_amount < v.max_bet_amount {
+			max_bet_amount = v.max_bet_amount
+		}
 		sum_bets += v.player_total_bets
 		sum_player_lose_hands += v.player_lose_hands
 		sum_player_push_hands += v.player_push_hands
@@ -180,8 +200,8 @@ func stat() {
 	player_push_hands_ratio := float64(sum_player_push_hands) / float64(sum_hands)
 	player_win_hands_ratio := float64(sum_player_win_hands) / float64(sum_hands)
 
-	xlog_entry.Tracef("min_bet:%d,max_bet:%d,bet_amount_strategy:%s,player_min_profit:%.2f,player_max_profit:%.2f,", min_bet, max_bet, bet_amount_strategy.String(), player_profits[0], player_profits[len(player_profits)-1])
-	xlog_entry.Tracef("sum_deal_times:%d,sum_hands:%d,sum_bets:%d,sum_profit:%.2f,hands_per_shoe:%.2f,profit_per_shoe:%.4f,profit_per_hand:%.4f,sum_profit/sum_bets:%.4f", sum_deal_times, sum_hands, sum_bets, sum_profit, hands_per_shoe, profit_per_shoe, profit_per_hand, porfit_bet_ratio)
+	xlog_entry.Tracef("option_min_bet:%d,option_max_bet:%d,bet_amount_strategy:%s,player_min_profit:%.2f,player_max_profit:%.2f,", option_min_bet, option_max_bet, bet_amount_strategy.String(), player_profits[0], player_profits[len(player_profits)-1])
+	xlog_entry.Tracef("sum_deal_times:%d,max_bet_amount:%d,sum_hands:%d,sum_bets:%d,sum_profit:%.2f,hands_per_shoe:%.2f,profit_per_shoe:%.4f,profit_per_hand:%.4f,sum_profit/sum_bets:%.4f", sum_deal_times, max_bet_amount, sum_hands, sum_bets, sum_profit, hands_per_shoe, profit_per_shoe, profit_per_hand, porfit_bet_ratio)
 	xlog_entry.Tracef("sum_player_lose_hands:%d,sum_player_push_hands:%d,sum_player_win_hands:%d,player_lose_hands_ratio:%.4f%%,player_push_hands_ratio:%.4f%%,player_win_hands_ratio:%.4f%%,", sum_player_lose_hands, sum_player_push_hands, sum_player_win_hands, player_lose_hands_ratio*100, player_push_hands_ratio*100, player_win_hands_ratio*100)
 }
 

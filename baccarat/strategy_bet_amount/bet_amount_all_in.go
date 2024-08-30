@@ -29,15 +29,18 @@ func (b *betAmountAllIn) init(init_chip int) {
 
 // 查询下注额
 func (b *betAmountAllIn) Query_bet_amount() (int, error) {
-	bet := 0
+	bet := MIN_BET
 
-	len := len(b.result_nodes)
+	len := len(b.feedback_nodes)
 	if len <= 0 {
-		bet = xmath.Min(MAX_BET, b.init_chip)
+		bet = b.init_chip
 	} else {
-		last_node := b.result_nodes[len-1]
-		bet = xmath.Min(MAX_BET, int(last_node.Current_chip))
+		last_node := b.feedback_nodes[len-1]
+		bet = int(last_node.Current_chip)
 	}
+
+	bet = xmath.Max(MIN_BET, bet)
+	bet = xmath.Min(MAX_BET, bet)
 
 	if b.Is_enough_money(bet) {
 		return bet, nil

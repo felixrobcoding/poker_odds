@@ -12,33 +12,25 @@ import (
 	"Odds/baccarat/strategy_bet_area/suggestion"
 )
 
-const (
-	LONG_NODE_CNT = 3 //多少个节点判断为长龙
-)
-
 type Strategy struct {
-	nodes []*suggestion.ResultNode //策略节点
+	nodes []*suggestion.FeedbackNode //反馈节点
 }
 
 func NewStrategy() *Strategy {
 	s := &Strategy{}
-
-	options := style.NewStyleOption(
-		style.WithLongNodeCnt(LONG_NODE_CNT))
-	style.Style_set_option(options)
 	return s
 }
 
-// 追加策略节点
-func (s *Strategy) Result_node_append(node *suggestion.ResultNode) {
+// 追加反馈节点
+func (s *Strategy) Feedback_node_append(node *suggestion.FeedbackNode) {
 	if node == nil {
 		return
 	}
 	if s.nodes == nil {
-		s.Result_node_clear()
+		s.Feedback_node_clear()
 	}
 	//策略链中不插入tie
-	if node.Result_win_bet_area == BET_AREA.TIE {
+	if node.Result_area == BET_AREA.TIE {
 		return
 	}
 	s.nodes = append(s.nodes, node)
@@ -57,8 +49,8 @@ func (s *Strategy) Query_big_road() *big_road.BigRoad {
 }
 
 // 清空
-func (s *Strategy) Result_node_clear() {
-	s.nodes = make([]*suggestion.ResultNode, 0)
+func (s *Strategy) Feedback_node_clear() {
+	s.nodes = make([]*suggestion.FeedbackNode, 0)
 }
 
 //-----------------------------------------------

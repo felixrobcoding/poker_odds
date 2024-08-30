@@ -12,7 +12,7 @@ import (
 )
 
 const (
-	KELLY_PERCENTAGE = 0.05
+	KELLY_PERCENTAGE = 0.1
 )
 
 type betAmountKelly struct {
@@ -36,13 +36,16 @@ func (b *betAmountKelly) init(init_chip int) {
 func (b *betAmountKelly) Query_bet_amount() (int, error) {
 	bet := MIN_BET
 
-	len := len(b.result_nodes)
+	len := len(b.feedback_nodes)
 	if len <= 0 {
 		bet = int(float64(b.init_chip) * KELLY_PERCENTAGE)
 	} else {
-		last_node := b.result_nodes[len-1]
-		bet = xmath.Min(MAX_BET, int(float64(last_node.Current_chip*KELLY_PERCENTAGE)))
+		last_node := b.feedback_nodes[len-1]
+		bet = int(float64(last_node.Current_chip * KELLY_PERCENTAGE))
 	}
+
+	bet = xmath.Max(MIN_BET, bet)
+	bet = xmath.Min(MAX_BET, bet)
 
 	if b.Is_enough_money(bet) {
 		return bet, nil

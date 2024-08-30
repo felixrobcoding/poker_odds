@@ -14,16 +14,20 @@ import (
 	"Odds/baccarat/strategy_bet_area/suggestion"
 )
 
+const (
+	LONG_MIN_COL_CNT  = 1 //最少列数
+	LONG_MIN_NODE_CNT = 3 //最少节点数
+)
+
 // 龙形态检测
-func check_long_style(nodes []*suggestion.ResultNode) (bool, *suggestion.BetAreaSuggestion) {
-	len := len(nodes)
-	long_node_cnt := style_option.long_node_cnt
-	if len < long_node_cnt {
+func check_long_style(nodes []*suggestion.FeedbackNode) (bool, *suggestion.BetAreaSuggestion) {
+	nodes_cnt := len(nodes)
+	if nodes_cnt < LONG_MIN_NODE_CNT {
 		return false, nil
 	}
 
-	start_index := len - long_node_cnt
-	part_nodes := nodes[start_index : start_index+long_node_cnt]
+	start_index := nodes_cnt - LONG_MIN_NODE_CNT
+	part_nodes := nodes[start_index : start_index+LONG_MIN_NODE_CNT]
 	big_road := big_road.NewBigRoadWithNodes(part_nodes)
 	if big_road.Col_cnt() != 1 {
 		return false, nil
@@ -31,7 +35,7 @@ func check_long_style(nodes []*suggestion.ResultNode) (bool, *suggestion.BetArea
 
 	return true, &suggestion.BetAreaSuggestion{
 		Style:    STYLE.LONG,
-		Bet_area: big_road.Last_col().Bet_area(),
+		Bet_area: big_road.Last_col().Result_area(),
 		Comment:  "检测到_长龙_形态",
 		Alart:    true,
 	}

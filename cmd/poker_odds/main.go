@@ -6,7 +6,7 @@ package main
 
 import (
 	"Odds/app"
-	"Odds/baccarat/baccarat_task_winrate"
+	"Odds/blackjack/blackjack_task_dealer_bust_rate"
 
 	"Odds/config"
 
@@ -62,10 +62,10 @@ func main() {
 	//go blackjack_task_winrate.Start()
 
 	//blackjack任务-dealer爆牌率
-	//go blackjack_task_dealer_bust_rate.Start()
+	go blackjack_task_dealer_bust_rate.Start()
 
 	//baccarat任务-胜率统计
-	go baccarat_task_winrate.Start()
+	//go baccarat_task_winrate.Start()
 	//baccarat任务-统计庄家/闲家点数分布
 	//go baccarat_task_points.Start()
 	//baccarat任务-danny策略

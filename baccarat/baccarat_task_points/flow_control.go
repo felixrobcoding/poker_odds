@@ -243,7 +243,7 @@ func (f *FlowControl) Compare() {
 		f.dealer.Update_score(dealer_profit, win_bet_areas)
 		f.player.Update_score(player_profit, win_bet_areas)
 
-		msg := fmt.Sprintf("庄赢,player_cards:%s[点数%d],dealer_cards:%s[点数%d],闲家筹码:%.2f,庄家筹码:%.2f,闲输赢:%.2f,庄输赢:%.2f,", common.Cards_2_string(player_cards), player_point, common.Cards_2_string(dealer_cards), dealer_point, f.player.Get_chip(), f.dealer.Get_chip(), f.player.Get_profit(), f.dealer.Get_profit())
+		msg := fmt.Sprintf("比较结果:庄赢,player_cards:%s[点数%d],dealer_cards:%s[点数%d],闲家筹码:%.2f,庄家筹码:%.2f,本局闲输赢:%.2f,本局庄输赢:%.2f,", common.Cards_2_string(player_cards), player_point, common.Cards_2_string(dealer_cards), dealer_point, f.player.Get_chip(), f.dealer.Get_chip(), player_profit, dealer_profit)
 		f.push_message(msg)
 
 	} else if dealer_point == player_point { //tie
@@ -261,7 +261,7 @@ func (f *FlowControl) Compare() {
 		f.dealer.Update_score(dealer_profit, win_bet_areas)
 		f.player.Update_score(player_profit, win_bet_areas)
 
-		msg := fmt.Sprintf("Tie,player_cards:%s[点数%d],dealer_cards:%s[点数%d],闲家筹码:%.2f,庄家筹码:%.2f,闲输赢:%.2f,庄输赢:%.2f,", common.Cards_2_string(player_cards), player_point, common.Cards_2_string(dealer_cards), dealer_point, f.player.Get_chip(), f.dealer.Get_chip(), f.player.Get_profit(), f.dealer.Get_profit())
+		msg := fmt.Sprintf("比较结果:Tie,player_cards:%s[点数%d],dealer_cards:%s[点数%d],闲家筹码:%.2f,庄家筹码:%.2f,本局闲输赢:%.2f,本局庄输赢:%.2f,", common.Cards_2_string(player_cards), player_point, common.Cards_2_string(dealer_cards), dealer_point, f.player.Get_chip(), f.dealer.Get_chip(), player_profit, dealer_profit)
 		f.push_message(msg)
 
 	} else { //闲赢
@@ -279,7 +279,7 @@ func (f *FlowControl) Compare() {
 		f.dealer.Update_score(dealer_profit, win_bet_areas)
 		f.player.Update_score(player_profit, win_bet_areas)
 
-		msg := fmt.Sprintf("闲赢,player_cards:%s[点数%d],dealer_cards:%s[点数%d],闲家筹码:%.2f,庄家筹码:%.2f,闲输赢:%.2f,庄输赢:%.2f,", common.Cards_2_string(player_cards), player_point, common.Cards_2_string(dealer_cards), dealer_point, f.player.Get_chip(), f.dealer.Get_chip(), f.player.Get_profit(), f.dealer.Get_profit())
+		msg := fmt.Sprintf("比较结果:闲赢,player_cards:%s[点数%d],dealer_cards:%s[点数%d],闲家筹码:%.2f,庄家筹码:%.2f,本局闲输赢:%.2f,本局庄输赢:%.2f,", common.Cards_2_string(player_cards), player_point, common.Cards_2_string(dealer_cards), dealer_point, f.player.Get_chip(), f.dealer.Get_chip(), player_profit, dealer_profit)
 		f.push_message(msg)
 	}
 	f.player_points = append(f.player_points, player_point)
@@ -291,14 +291,15 @@ func (f *FlowControl) Round_end() {
 	msg := fmt.Sprintf("=====本轮结束=====")
 	f.push_message(msg)
 
-	//写入日志
-	for _, v := range f.messages {
-		xlog_entry.Debugf("%s", v)
-	}
+	//输出信息
+	f.dump_messages()
 }
 
 // 游戏结束
 func (f *FlowControl) Game_over() {
+	//输出信息
+	f.dump_messages()
+
 	player_stat := f.player.Extract_user_stat()
 	dealer_stat := f.dealer.Extract_user_stat()
 
@@ -316,6 +317,13 @@ func (f *FlowControl) Deal_times() int {
 func (f *FlowControl) push_message(txt string) {
 	msg := fmt.Sprintf("shoe_index:%d,轮数:%d,%d,%s", f.shoe_index, f.Deal_times(), len(f.messages), txt)
 	f.messages = append(f.messages, msg)
+}
+
+// 输出信息
+func (f *FlowControl) dump_messages() {
+	for _, v := range f.messages {
+		xlog_entry.Debugf("%s", v)
+	}
 }
 
 // 提取每靴牌的统计

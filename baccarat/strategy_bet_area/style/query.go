@@ -10,13 +10,10 @@ import (
 	"github.com/poker-x-studio/x/xdebug"
 )
 
-type HandlerCheckStyle func([]*suggestion.ResultNode) (bool, *suggestion.BetAreaSuggestion)
+type HandlerCheckStyle func([]*suggestion.FeedbackNode) (bool, *suggestion.BetAreaSuggestion)
 
 // 查询形态
-func Style_query(nodes []*suggestion.ResultNode) *suggestion.BetAreaSuggestion {
-	if style_option == nil {
-		panic(xdebug.Funcname())
-	}
+func Style_query(nodes []*suggestion.FeedbackNode) *suggestion.BetAreaSuggestion {
 	handlers := []HandlerCheckStyle{
 		check_long_style,
 		check_single_jump_style,
@@ -30,11 +27,6 @@ func Style_query(nodes []*suggestion.ResultNode) *suggestion.BetAreaSuggestion {
 		}
 	}
 	panic(xdebug.Funcname())
-}
-
-// 设置选项
-func Style_set_option(option *StyleOption) {
-	style_option = option
 }
 
 //-----------------------------------------------

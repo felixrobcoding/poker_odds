@@ -10,10 +10,6 @@ import (
 	"fmt"
 )
 
-const (
-	DEFAULT_BET_TIMES = 1.0
-)
-
 // 下注区域建议
 type BetAreaSuggestion struct {
 	Style    STYLE.TYPE    //形态

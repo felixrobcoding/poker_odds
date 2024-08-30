@@ -1,6 +1,14 @@
 /*
 功能：双跳形态
 说明：
+
+1 标准双跳
+🔴🔵
+🔴🔵
+
+2 扩展双跳
+🔴🔵🔴
+🔴🔵
 */
 package style
 
@@ -12,39 +20,58 @@ import (
 )
 
 const (
-	DOUBLE_JUMP_NODE_CNT = 5 //最少需要5个节点
+	DOUBLE_JUMP_MIN_COL_CNT  = 2 //最少列数
+	DOUBLE_JUMP_MIN_NODE_CNT = 4 //最少节点数
 )
 
 // 双跳形态检测
-func check_double_jump_style(nodes []*suggestion.ResultNode) (bool, *suggestion.BetAreaSuggestion) {
-	nodes_len := len(nodes)
-	if nodes_len < DOUBLE_JUMP_NODE_CNT {
+// 前面的两列必须是标准双跳
+func check_double_jump_style(nodes []*suggestion.FeedbackNode) (bool, *suggestion.BetAreaSuggestion) {
+	//最少节点数校验
+	nodes_cnt := len(nodes)
+	if nodes_cnt < DOUBLE_JUMP_MIN_NODE_CNT {
 		return false, nil
 	}
-	start_index := nodes_len - DOUBLE_JUMP_NODE_CNT
-	part_nodes := nodes[start_index : start_index+DOUBLE_JUMP_NODE_CNT]
-	big_road := big_road.NewBigRoadWithNodes(part_nodes)
-	if big_road.Col_cnt() != 3 {
+
+	//最少列数校验
+	big_road_all := big_road.NewBigRoadWithNodes(nodes)
+	cols_cnt := big_road_all.Col_cnt()
+	if cols_cnt < DOUBLE_JUMP_MIN_COL_CNT {
 		return false, nil
 	}
-	for i := 0; i < big_road.Col_cnt(); i++ {
-		if big_road.Get_col(i).Cnt() > 2 {
+
+	last_col := big_road_all.Last_col()
+	last_col_node_cnt := last_col.Cnt()
+	if last_col_node_cnt > 2 {
+		return false, nil
+	}
+
+	bet_area := BET_AREA.ERROR
+
+	if last_col_node_cnt == 1 { //最后三列
+		if cols_cnt < DOUBLE_JUMP_MIN_COL_CNT+1 {
 			return false, nil
 		}
-	}
 
-	//中间一列必须是2
-	if big_road.Get_col(1).Cnt() != 2 {
-		return false, nil
-	}
+		for i := cols_cnt - 3; i < cols_cnt-1; i++ {
+			if big_road_all.Get_col(i).Cnt() != 2 {
+				return false, nil
+			}
+		}
 
-	//最后一列元素个数
-	bet_area := BET_AREA.ERROR
-	last_col_cnt := big_road.Last_col().Cnt()
-	if last_col_cnt == 1 {
-		bet_area = big_road.Last_col().Bet_area()
-	} else if last_col_cnt == 2 {
-		bet_area = big_road.Get_col(1).Bet_area()
+		bet_area = last_col.Result_area()
+	} else if last_col_node_cnt == 2 { //最后两列
+		for i := cols_cnt - 2; i < cols_cnt; i++ {
+			if big_road_all.Get_col(i).Cnt() != 2 {
+				return false, nil
+			}
+		}
+
+		if last_col.Result_area() == BET_AREA.BANKER {
+			bet_area = BET_AREA.PLAYER
+		} else {
+			bet_area = BET_AREA.BANKER
+		}
 	}
 
 	return true, &suggestion.BetAreaSuggestion{
