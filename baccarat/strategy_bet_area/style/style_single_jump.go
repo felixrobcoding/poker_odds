@@ -18,8 +18,8 @@ import (
 )
 
 const (
-	SINGLE_JUMP_MIN_COL_CNT  = 3 //最少列数
 	SINGLE_JUMP_MIN_NODE_CNT = 3 //最少节点数
+	SINGLE_JUMP_MIN_COL_CNT  = 3 //最少列数
 )
 
 // 单跳形态检测

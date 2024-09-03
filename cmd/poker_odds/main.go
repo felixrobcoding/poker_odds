@@ -6,7 +6,7 @@ package main
 
 import (
 	"Odds/app"
-	"Odds/blackjack/blackjack_task_dealer_bust_rate"
+	"Odds/baccarat/baccarat_task_winrate"
 
 	"Odds/config"
 
@@ -60,16 +60,13 @@ func main() {
 	//go ultimate_texas_holdem_task_7_cards_pair.Start()
 	//blackjack任务-胜率统计
 	//go blackjack_task_winrate.Start()
-
 	//blackjack任务-dealer爆牌率
-	go blackjack_task_dealer_bust_rate.Start()
+	//go blackjack_task_dealer_bust_rate.Start()
 
 	//baccarat任务-胜率统计
-	//go baccarat_task_winrate.Start()
+	go baccarat_task_winrate.Start()
 	//baccarat任务-统计庄家/闲家点数分布
 	//go baccarat_task_points.Start()
-	//baccarat任务-danny策略
-	//go baccarat_task_danny_strategy.Start()
 
 	//4张奥马哈任务-计算胜率
 	//go plo4_task_win_rate.Start()

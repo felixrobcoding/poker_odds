@@ -15,8 +15,8 @@ import (
 )
 
 const (
-	LONG_MIN_COL_CNT  = 1 //最少列数
 	LONG_MIN_NODE_CNT = 3 //最少节点数
+	LONG_MIN_COL_CNT  = 1 //最少列数
 )
 
 // 龙形态检测

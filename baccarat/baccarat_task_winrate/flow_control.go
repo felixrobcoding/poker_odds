@@ -63,8 +63,9 @@ func (f *FlowControl) init() {
 	//f.bet_amount_strategy = strategy_bet_amount.NewBetAmountStrategy(BET_AMOUNT_STRATEGY.ALL_IN, PLAYER_INIT_CHIP)
 	//f.bet_amount_strategy = strategy_bet_amount.NewBetAmountStrategy(BET_AMOUNT_STRATEGY.FIXED_AMOUNT, PLAYER_INIT_CHIP)
 	//f.bet_amount_strategy = strategy_bet_amount.NewBetAmountStrategy(BET_AMOUNT_STRATEGY.MARTEGAL, PLAYER_INIT_CHIP)
-	f.bet_amount_strategy = strategy_bet_amount.NewBetAmountStrategy(BET_AMOUNT_STRATEGY.FIBONACCI, PLAYER_INIT_CHIP)
+	//f.bet_amount_strategy = strategy_bet_amount.NewBetAmountStrategy(BET_AMOUNT_STRATEGY.FIBONACCI, PLAYER_INIT_CHIP)
 	//f.bet_amount_strategy = strategy_bet_amount.NewBetAmountStrategy(BET_AMOUNT_STRATEGY.KELLY, PLAYER_INIT_CHIP)
+	f.bet_amount_strategy = strategy_bet_amount.NewBetAmountStrategy(BET_AMOUNT_STRATEGY.DANNY, PLAYER_INIT_CHIP)
 }
 
 // 洗牌
@@ -85,8 +86,8 @@ func (f *FlowControl) Shuffle() {
 func (f *FlowControl) Shuffle_from_outside(shoe_cards []byte) {
 	f.shoe_index = shoe_index
 	shoe_index++
-	f.shoe_cards_all = make([]byte, 0)
-	f.shoe_cards_all = algorithm.Shuffle_cards(DECKS)
+	f.shoe_cards_all = make([]byte, len(shoe_cards))
+	copy(f.shoe_cards_all, shoe_cards)
 	f.shoe_cards = make([]byte, len(f.shoe_cards_all))
 	copy(f.shoe_cards, f.shoe_cards_all)
 	f.deal_times = 0

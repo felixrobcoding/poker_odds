@@ -28,6 +28,7 @@ func NewBetAmountStrategy(t BET_AMOUNT_STRATEGY.TYPE, init_chip int) IBetAmountS
 		BET_AMOUNT_STRATEGY.MARTEGAL,
 		BET_AMOUNT_STRATEGY.FIBONACCI,
 		BET_AMOUNT_STRATEGY.KELLY,
+		BET_AMOUNT_STRATEGY.DANNY,
 	}
 	funcs := []func(int) IBetAmountStrategy{
 		newBetAmountAllIn,
@@ -35,6 +36,7 @@ func NewBetAmountStrategy(t BET_AMOUNT_STRATEGY.TYPE, init_chip int) IBetAmountS
 		newBetAmountMartegal,
 		newBetAmountFibonacci,
 		newBetAmountKelly,
+		newBetAmountDanny,
 	}
 
 	for k, v := range types {

@@ -20,8 +20,8 @@ import (
 )
 
 const (
-	DOUBLE_JUMP_MIN_COL_CNT  = 2 //最少列数
 	DOUBLE_JUMP_MIN_NODE_CNT = 4 //最少节点数
+	DOUBLE_JUMP_MIN_COL_CNT  = 2 //最少列数
 )
 
 // 双跳形态检测
