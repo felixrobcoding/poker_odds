@@ -18,8 +18,8 @@ func init() {
 	items := []Item{
 		{FOLLOW, "Follow", "跟从形态"},
 		{LONG, "Long", "龙形态"},
-		{SINGLE_JUMP, "Single Jump", "单跳形态"},
-		{DOUBLE_JUMP, "Double Jump", "双跳形态"},
+		{MM_JUMP, "MM Jump", "MM跳形态"},
+		{MN_JUMP, "MN Jump", "MN跳形态"},
 	}
 	for k, v := range items {
 		type_map[v.t] = items[k]

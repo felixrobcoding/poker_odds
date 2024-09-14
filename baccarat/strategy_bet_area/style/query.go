@@ -15,9 +15,9 @@ type HandlerCheckStyle func([]*suggestion.FeedbackNode) (bool, *suggestion.BetAr
 // 查询形态
 func Style_query(nodes []*suggestion.FeedbackNode) *suggestion.BetAreaSuggestion {
 	handlers := []HandlerCheckStyle{
+		check_mm_jump_style,
+		check_mn_jump_style,
 		check_long_style,
-		check_single_jump_style,
-		check_double_jump_style,
 		check_follow_style,
 	}
 

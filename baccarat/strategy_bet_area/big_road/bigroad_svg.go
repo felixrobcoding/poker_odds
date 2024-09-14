@@ -136,12 +136,13 @@ func (s *BigRoadSvg) make_bg(canvas *svg.SVG) {
 	y_top := H_HEADER + H_HEADING
 	for y := 0; y <= s.y_axis_cnt; y++ {
 		canvas.Line(LEFT_SPACE, y_top+y*GRID_HEIGHT, s.canvas_width()-RIGHT_SPACE, y_top+y*GRID_HEIGHT, style_line)
-		canvas.Text(6, y_top+y*GRID_HEIGHT, fmt.Sprintf("-%d-", y), style_flag)
+		canvas.Text(8, y_top+y*GRID_HEIGHT+2, fmt.Sprintf("-%d-", y), style_flag)
 	}
 
 	x_left := LEFT_SPACE
 	for x := 0; x <= s.x_axis_cnt; x++ {
 		canvas.Line(x_left+x*GRID_WIDTH, y_top, x_left+x*GRID_WIDTH, s.canvas_height()-H_FOOTER, style_line)
+		canvas.Text(x_left+x*GRID_WIDTH-8, s.canvas_height()-H_FOOTER+10, fmt.Sprintf("-%d-", x), style_flag)
 	}
 }
 
@@ -261,7 +262,7 @@ func (s *BigRoadSvg) make_footer(canvas *svg.SVG, total_height int) {
 	canvas.Gtransform(txt)
 	defer canvas.Gend()
 
-	canvas.Text(s.canvas_width()/2-120, H_FOOTER/2+10, TXT_FOOTER, STYLE_FOOTER_TXT)
+	canvas.Text(s.canvas_width()/2-120, H_FOOTER/2+16, TXT_FOOTER, STYLE_FOOTER_TXT)
 }
 
 //-----------------------------------------------

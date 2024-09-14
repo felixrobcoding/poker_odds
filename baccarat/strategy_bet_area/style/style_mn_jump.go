@@ -1,14 +1,6 @@
 /*
-功能：双跳形态
-说明：
-
-1 标准双跳
-🔴🔵
-🔴🔵
-
-2 扩展双跳
-🔴🔵🔴
-🔴🔵
+功能：mn跳形态
+说明：两列保持不同颗数的跳
 */
 package style
 
@@ -20,23 +12,23 @@ import (
 )
 
 const (
-	DOUBLE_JUMP_MIN_NODE_CNT = 4 //最少节点数
-	DOUBLE_JUMP_MIN_COL_CNT  = 2 //最少列数
+	MN_JUMP_MIN_NODE_CNT = 4 //最少节点数
+	MN_JUMP_MIN_COL_CNT  = 2 //最少列数
 )
 
 // 双跳形态检测
 // 前面的两列必须是标准双跳
-func check_double_jump_style(nodes []*suggestion.FeedbackNode) (bool, *suggestion.BetAreaSuggestion) {
+func check_mn_jump_style(nodes []*suggestion.FeedbackNode) (bool, *suggestion.BetAreaSuggestion) {
 	//最少节点数校验
 	nodes_cnt := len(nodes)
-	if nodes_cnt < DOUBLE_JUMP_MIN_NODE_CNT {
+	if nodes_cnt < MN_JUMP_MIN_NODE_CNT {
 		return false, nil
 	}
 
 	//最少列数校验
 	big_road_all := big_road.NewBigRoadWithNodes(nodes)
 	cols_cnt := big_road_all.Col_cnt()
-	if cols_cnt < DOUBLE_JUMP_MIN_COL_CNT {
+	if cols_cnt < MN_JUMP_MIN_COL_CNT {
 		return false, nil
 	}
 
@@ -49,7 +41,7 @@ func check_double_jump_style(nodes []*suggestion.FeedbackNode) (bool, *suggestio
 	bet_area := BET_AREA.ERROR
 
 	if last_col_node_cnt == 1 { //最后三列
-		if cols_cnt < DOUBLE_JUMP_MIN_COL_CNT+1 {
+		if cols_cnt < MN_JUMP_MIN_COL_CNT+1 {
 			return false, nil
 		}
 
@@ -75,9 +67,9 @@ func check_double_jump_style(nodes []*suggestion.FeedbackNode) (bool, *suggestio
 	}
 
 	return true, &suggestion.BetAreaSuggestion{
-		Style:    STYLE.DOUBLE_JUMP,
+		Style:    STYLE.MN_JUMP,
 		Bet_area: bet_area,
-		Comment:  "检测到_双跳_形态",
+		Comment:  "检测到_MN_形态",
 		Alart:    true,
 	}
 }
