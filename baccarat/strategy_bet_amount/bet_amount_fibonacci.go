@@ -30,7 +30,7 @@ func (b *betAmountFibonacci) init(init_chip int) {
 // 斐波那契函数
 func fibonacci(n int) int {
 	if n == 0 {
-		return 0
+		return 1
 	}
 	if n == 1 {
 		return 1
@@ -44,7 +44,7 @@ func (b *betAmountFibonacci) Query_bet_amount() (int, error) {
 	bet := MIN_BET
 
 	len := len(b.feedback_nodes)
-	if len <= 1 {
+	if len < 1 {
 		bet = MIN_BET
 	} else {
 		last_node := b.feedback_nodes[len-1]

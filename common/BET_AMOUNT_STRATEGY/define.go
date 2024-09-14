@@ -31,7 +31,7 @@ const (
 	MARTEGAL     TYPE = 3 //马丁格尔:输了加倍
 	FIBONACCI    TYPE = 4 //斐波那契:累加【每一个数都是前二个数的和。头二项是0和1，此数列的前几项如下： 0, 1, 1, 2, 3, 5, 】
 	KELLY        TYPE = 5 //凯利准则:每次投注总筹码的某一百分比
-	DANNY        TYPE = 6 //Danny策略
+	MARTEGAL_N   TYPE = 6 //马丁格尔N策略:连续输N把内,输了加倍,之后恢复原始注码,增加止损的概念
 	MIN          TYPE = ALL_IN
 	MAX          TYPE = KELLY
 )

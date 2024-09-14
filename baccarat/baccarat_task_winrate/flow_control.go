@@ -63,9 +63,9 @@ func (f *FlowControl) init() {
 	//f.bet_amount_strategy = strategy_bet_amount.NewBetAmountStrategy(BET_AMOUNT_STRATEGY.ALL_IN, PLAYER_INIT_CHIP)
 	//f.bet_amount_strategy = strategy_bet_amount.NewBetAmountStrategy(BET_AMOUNT_STRATEGY.FIXED_AMOUNT, PLAYER_INIT_CHIP)
 	//f.bet_amount_strategy = strategy_bet_amount.NewBetAmountStrategy(BET_AMOUNT_STRATEGY.MARTEGAL, PLAYER_INIT_CHIP)
-	//f.bet_amount_strategy = strategy_bet_amount.NewBetAmountStrategy(BET_AMOUNT_STRATEGY.FIBONACCI, PLAYER_INIT_CHIP)
+	f.bet_amount_strategy = strategy_bet_amount.NewBetAmountStrategy(BET_AMOUNT_STRATEGY.FIBONACCI, PLAYER_INIT_CHIP)
 	//f.bet_amount_strategy = strategy_bet_amount.NewBetAmountStrategy(BET_AMOUNT_STRATEGY.KELLY, PLAYER_INIT_CHIP)
-	f.bet_amount_strategy = strategy_bet_amount.NewBetAmountStrategy(BET_AMOUNT_STRATEGY.DANNY, PLAYER_INIT_CHIP)
+	//f.bet_amount_strategy = strategy_bet_amount.NewBetAmountStrategy(BET_AMOUNT_STRATEGY.MARTEGAL_N, PLAYER_INIT_CHIP)
 }
 
 // 洗牌
@@ -118,6 +118,9 @@ func (f *FlowControl) Round_begin_to_deal() error {
 	//查询下注区域
 	suggestion_bet_area := f.bet_area_strategy.Query_bet_area()
 	//下注策略
+	// if f.deal_times == 11 {//测试
+	// 	fmt.Println("test")
+	// }
 	bet_amount, err := f.bet_amount_strategy.Query_bet_amount()
 	if err != nil {
 		msg := fmt.Sprintf("本局结束,deal_times:%d,shoe_card_cnt:%d,err:%s,", f.deal_times, shoe_card_cnt, err.Error())
@@ -394,11 +397,15 @@ func (f *FlowControl) dump_messages() {
 
 // 输出svg
 func (f *FlowControl) Make_svg() string {
+	//下注额策略
+	_, _, bet_amount_strategy := f.bet_amount_strategy.Query_option()
+
+	//下注区策略
 	bigroad := f.bet_area_strategy.Query_big_road()
-
 	instance_svg := big_road.Instance_big_road_svg()
-	svg_content := instance_svg.Make_svg(bigroad, true)
 
+	//svg
+	svg_content := instance_svg.Make_svg(bigroad, true, bet_amount_strategy.String())
 	jpeg_filepath, svg_filepath, err := ximage.Svg_2_jpeg(svg_content)
 	if err != nil {
 		return "tmp.dat"

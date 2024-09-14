@@ -23,9 +23,9 @@ const (
 	LEFT_SPACE        = 30                       //左边留白
 	RIGHT_SPACE       = 30                       //右边留白
 	MIN_ROW_CNT       = 6                        //最小行数
-	MIN_WIDTH         = 400                      //最小宽度
+	MIN_WIDTH         = 600                      //最小宽度
 	H_HEADER          = 50                       //header高
-	H_HEADING         = 20                       //标题
+	H_HEADING         = 30                       //标题
 	H_FOOTER          = 40                       //footer高
 	TXT_FOOTER        = xutils.POKER_X_STUDIO    //页脚 文字
 	TXT_HEADER        = "百家乐大路图"                 //
@@ -37,10 +37,11 @@ const (
 )
 
 type BigRoadSvg struct {
-	x_axis_cnt    int    //x轴个数
-	y_axis_cnt    int    //y轴个数
-	heading_txt   string //文字
-	is_view_index bool   //是否显示序号
+	x_axis_cnt         int    //x轴个数
+	y_axis_cnt         int    //y轴个数
+	heading_txt        string //文字
+	heading_bet_amount string //文字
+	is_view_index      bool   //是否显示序号
 }
 
 var instance_big_road_svg *BigRoadSvg
@@ -55,7 +56,7 @@ func Instance_big_road_svg() *BigRoadSvg {
 
 // 生成svg图
 // 返回:svg图字符串
-func (s *BigRoadSvg) Make_svg(bigroad *BigRoad, is_view_index bool) string {
+func (s *BigRoadSvg) Make_svg(bigroad *BigRoad, is_view_index bool, bet_amount_comment string) string {
 	svg_writer := new(bytes.Buffer) //写入缓冲
 	canvas := svg.New(svg_writer)
 
@@ -69,6 +70,8 @@ func (s *BigRoadSvg) Make_svg(bigroad *BigRoad, is_view_index bool) string {
 	s.heading_txt = fmt.Sprintf("总手数:%d[不包含Tie],庄个数:%d,闲个数:%d,押注赢个数:%d,押注输个数:%d,总下注额:%d,总盈利:%.2f",
 		banker_cnt+player_cnt, banker_cnt, player_cnt, win_cnt, lose_cnt,
 		total_bet_amont, total_result_score)
+	s.heading_bet_amount = fmt.Sprintf("下注额策略:%s", bet_amount_comment)
+
 	s.is_view_index = is_view_index
 
 	widht := s.canvas_width()
@@ -119,7 +122,7 @@ func (s *BigRoadSvg) make_bg(canvas *svg.SVG) {
 
 	//const style_line = "stroke:rgb(88,88,88);stroke-width:1"
 	const style_line = "stroke:#DCDCDC;stroke-width:1"
-	const style_flag = "font-size:10;"
+	const style_flag = "font-size:10"
 
 	//背景填充
 	canvas.Rect(0, 0, s.canvas_width(), s.canvas_height(), STYLE_BG)
@@ -174,7 +177,7 @@ func (s *BigRoadSvg) make_body(canvas *svg.SVG, bigroad *BigRoad) {
 				rct_tmp := xmath.NewRectWithCopy(init_rect)
 				rct_tmp.X_move(GRID_WIDTH * col_index)
 				rct_tmp.Y_move(GRID_HEIGHT * row_index)
-				s.make_node(canvas, rct_tmp, node.bet_area, col.Result_area(), index)
+				s.make_node(canvas, rct_tmp, node.bet_area, col.Result_area(), index, node.bet_amount)
 				index++
 				continue
 			}
@@ -182,7 +185,7 @@ func (s *BigRoadSvg) make_body(canvas *svg.SVG, bigroad *BigRoad) {
 				rct_tmp := xmath.NewRectWithCopy(init_rect)
 				rct_tmp.X_move(GRID_WIDTH * col_index)
 				rct_tmp.Y_move(GRID_HEIGHT * row_index)
-				s.make_node(canvas, rct_tmp, node.bet_area, col.Result_area(), index)
+				s.make_node(canvas, rct_tmp, node.bet_area, col.Result_area(), index, node.bet_amount)
 				index++
 				continue
 			}
@@ -202,11 +205,12 @@ func (s *BigRoadSvg) make_headings(canvas *svg.SVG) {
 	canvas.Rect(0, 0, s.canvas_width(), H_HEADING, STYLE_HEADING_BG)
 
 	//头部区域的标题
-	canvas.Text(0, 10, s.heading_txt)
+	canvas.Text(0, 4, s.heading_txt)
+	canvas.Text(0, 20, s.heading_bet_amount)
 }
 
 // 节点
-func (s *BigRoadSvg) make_node(canvas *svg.SVG, rect *xmath.Rect, bet_area BET_AREA.TYPE, result_area BET_AREA.TYPE, index int) {
+func (s *BigRoadSvg) make_node(canvas *svg.SVG, rect *xmath.Rect, bet_area BET_AREA.TYPE, result_area BET_AREA.TYPE, index int, bet_amount int) {
 	const style_player = "stroke:blue;stroke-width:2;fill:none"
 	const style_banker = "stroke:red;stroke-width:2;fill:none"
 
@@ -217,23 +221,33 @@ func (s *BigRoadSvg) make_node(canvas *svg.SVG, rect *xmath.Rect, bet_area BET_A
 		canvas.Circle(rect.Center_X(), rect.Center_y(), NODE_CIRCLE_R, style_banker)
 	}
 
-	const style_index = "font-size:10;"
+	//节点序号
+	const style_index = "font-size:10;fill:#000"
 	const x_space_index = -6
 	const y_space_index = 4
 	if s.is_view_index {
-		canvas.Text(rect.Center_X()+x_space_index, rect.Center_y()+y_space_index, fmt.Sprintf("%d", index), style_index)
+		if index < 10 {
+			canvas.Text(rect.Center_X()+x_space_index/2, rect.Center_y()+y_space_index, fmt.Sprintf("%d", index), style_index)
+		} else {
+			canvas.Text(rect.Center_X()+x_space_index, rect.Center_y()+y_space_index, fmt.Sprintf("%d", index), style_index)
+		}
 	}
 
+	//命中
 	const x_space_check = 8
 	const y_space_check = 8
-	const style_check = "fill:green;"
-	const style_uncheck = "fill:red;"
-	//命中
+	const style_check = "fill:green"
+	const style_uncheck = "fill:red"
 	if bet_area == result_area {
 		canvas.Text(rect.Center_X()+x_space_check, rect.Center_y()+y_space_check, "✓", style_check)
 	} else { //没命中
 		canvas.Text(rect.Center_X()+x_space_check, rect.Center_y()+y_space_check, "x", style_uncheck)
 	}
+
+	//下注额
+	const style_bet_amount = "font-size:7;fill:#8B008B"
+	const y_space_bet_amount = -2
+	canvas.Text(rect.Center_X()+x_space_check, rect.Center_y()+y_space_bet_amount, fmt.Sprintf("%d", bet_amount), style_bet_amount)
 }
 
 // 页脚

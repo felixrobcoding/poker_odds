@@ -1,6 +1,7 @@
 /*
-功能：下注额策略-自定义策略
+功能：下注额策略-马丁格尔N策略
 说明：
+马丁格尔N策略:连续输N把内,输了加倍,之后恢复原始注码,增加止损的概念
 */
 package strategy_bet_amount
 
@@ -12,28 +13,28 @@ import (
 )
 
 const (
-	CONTINUE_LOSE_CNT = 3
+	CONTINUE_LOSE_CNT = 4
 )
 
-type betAmountDanny struct {
+type betAmountMartegalN struct {
 	BetAmountStrategy
 }
 
-func newBetAmountDanny(init_chip int) IBetAmountStrategy {
-	b := &betAmountDanny{}
+func newBetAmountMartegalN(init_chip int) IBetAmountStrategy {
+	b := &betAmountMartegalN{}
 	b.init(init_chip)
 	return b
 }
 
 // 初始化
-func (b *betAmountDanny) init(init_chip int) {
-	b.t = BET_AMOUNT_STRATEGY.MARTEGAL
+func (b *betAmountMartegalN) init(init_chip int) {
+	b.t = BET_AMOUNT_STRATEGY.MARTEGAL_N
 	b.set_chip(init_chip)
 }
 
 // 查询下注额
-// 输了就加倍
-func (b *betAmountDanny) Query_bet_amount() (int, error) {
+// 连续输N把内,输了加倍,之后恢复原始注码,增加止损的概念
+func (b *betAmountMartegalN) Query_bet_amount() (int, error) {
 	bet := MIN_BET
 
 	len := len(b.feedback_nodes)
@@ -49,6 +50,9 @@ func (b *betAmountDanny) Query_bet_amount() (int, error) {
 			for i := len - 1; i >= 0; i-- {
 				if b.feedback_nodes[i].Result_score < 0 {
 					lose_node_cnt++
+				}
+				if b.feedback_nodes[i].Result_score > 0 {
+					break
 				}
 			}
 
