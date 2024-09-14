@@ -20,7 +20,6 @@ func init() {
 		{LONG, "Long", "龙形态"},
 		{SINGLE_JUMP, "Single Jump", "单跳形态"},
 		{DOUBLE_JUMP, "Double Jump", "双跳形态"},
-		{CUT_LONG, "Cut long", "断龙形态"},
 	}
 	for k, v := range items {
 		type_map[v.t] = items[k]

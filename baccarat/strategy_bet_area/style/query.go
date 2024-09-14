@@ -18,7 +18,6 @@ func Style_query(nodes []*suggestion.FeedbackNode) *suggestion.BetAreaSuggestion
 		check_long_style,
 		check_single_jump_style,
 		check_double_jump_style,
-		//check_cut_long_style,//增加后胜率降低了，悲催的
 		check_follow_style,
 	}
 

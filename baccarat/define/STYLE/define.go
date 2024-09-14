@@ -12,7 +12,6 @@ const (
 	LONG        TYPE = 2 //龙形态
 	SINGLE_JUMP TYPE = 3 //单跳形态
 	DOUBLE_JUMP TYPE = 4 //双跳形态
-	CUT_LONG    TYPE = 5 //断龙形态
 )
 
 //-----------------------------------------------
