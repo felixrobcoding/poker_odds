@@ -32,9 +32,8 @@ const (
 	FIBONACCI    TYPE = 4 //斐波那契:累加【每一个数都是前二个数的和。头二项是0和1，此数列的前几项如下： 0, 1, 1, 2, 3, 5, 】
 	KELLY        TYPE = 5 //凯利准则:每次投注总筹码的某一百分比
 	MARTEGAL_N   TYPE = 6 //马丁格尔N策略:连续输N把内,输了加倍,之后恢复原始注码,增加止损的概念
-	FIBONACCI_EX TYPE = 7 //斐波那契扩展策略:下注额为之前所有输的筹码的总和
 	MIN          TYPE = ALL_IN
-	MAX          TYPE = FIBONACCI_EX
+	MAX          TYPE = MARTEGAL_N
 )
 
 //是否有效

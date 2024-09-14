@@ -34,7 +34,7 @@ var (
 	shoe_cards_mutex sync.Mutex //靴牌互斥锁
 
 	is_read_file = false                                             //是否读文件
-	filename     = "\\images_tmp\\2024-09-14-08-52-59-314190700.dat" //文件名
+	filename     = "\\images_tmp\\2024-09-14-09-46-35-204241700.dat" //文件名
 )
 
 // 开启

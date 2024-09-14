@@ -7,6 +7,7 @@ package big_road
 import (
 	"Odds/baccarat/define/BET_AREA"
 	"bytes"
+	"sync"
 
 	"fmt"
 
@@ -45,6 +46,7 @@ type BigRoadSvg struct {
 }
 
 var instance_big_road_svg *BigRoadSvg
+var mutex sync.Mutex
 
 // 单例
 func Instance_big_road_svg() *BigRoadSvg {
@@ -57,6 +59,9 @@ func Instance_big_road_svg() *BigRoadSvg {
 // 生成svg图
 // 返回:svg图字符串
 func (s *BigRoadSvg) Make_svg(bigroad *BigRoad, is_view_index bool, bet_amount_comment string) string {
+	mutex.Lock()
+	defer mutex.Unlock()
+
 	svg_writer := new(bytes.Buffer) //写入缓冲
 	canvas := svg.New(svg_writer)
 
