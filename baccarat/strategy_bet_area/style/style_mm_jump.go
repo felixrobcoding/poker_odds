@@ -132,7 +132,7 @@ func _check_double_jump_style(nodes []*suggestion.FeedbackNode) (bool, *suggesti
 			🔴🔵
 			*/
 			style_type:            HALF_STYLE,
-			check_col_cnt:         2,
+			check_col_cnt:         3,
 			col_node_cnts:         []int{2, 2, -1},
 			min_last_col_node_cnt: 1,
 			max_last_col_node_cnt: 1,

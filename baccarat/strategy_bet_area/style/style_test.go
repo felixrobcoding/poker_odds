@@ -53,7 +53,35 @@ func Test_single_jump(t *testing.T) {
 	}
 }
 
-func Test_double_jump1(t *testing.T) {
+func Test_double_jump_half_col_1(t *testing.T) {
+	nodes := []*suggestion.FeedbackNode{
+		{Result_area: BET_AREA.PLAYER},
+		{Result_area: BET_AREA.BANKER},
+		{Result_area: BET_AREA.BANKER},
+		{Result_area: BET_AREA.PLAYER},
+	}
+	is, suggestion := _check_double_jump_style(nodes)
+	if is {
+		fmt.Println(suggestion.String())
+	}
+}
+
+func Test_double_jump_half_col_2(t *testing.T) {
+	nodes := []*suggestion.FeedbackNode{
+		{Result_area: BET_AREA.BANKER},
+		{Result_area: BET_AREA.BANKER},
+		{Result_area: BET_AREA.PLAYER},
+		{Result_area: BET_AREA.PLAYER},
+		{Result_area: BET_AREA.BANKER},
+	}
+
+	is, suggestion := _check_double_jump_style(nodes)
+	if is {
+		fmt.Println(suggestion.String())
+	}
+}
+
+func Test_double_jump_full_col_1(t *testing.T) {
 	nodes := []*suggestion.FeedbackNode{
 		{Result_area: BET_AREA.BANKER},
 		{Result_area: BET_AREA.BANKER},
@@ -65,33 +93,6 @@ func Test_double_jump1(t *testing.T) {
 		fmt.Println(suggestion.String())
 	}
 }
-
-func Test_double_jump2(t *testing.T) {
-	nodes1 := []*suggestion.FeedbackNode{
-		{Result_area: BET_AREA.BANKER},
-		{Result_area: BET_AREA.BANKER},
-		{Result_area: BET_AREA.PLAYER},
-		{Result_area: BET_AREA.PLAYER},
-		{Result_area: BET_AREA.BANKER},
-	}
-	nodes2 := []*suggestion.FeedbackNode{
-		{Result_area: BET_AREA.PLAYER},
-		{Result_area: BET_AREA.PLAYER},
-		{Result_area: BET_AREA.BANKER},
-		{Result_area: BET_AREA.BANKER},
-		{Result_area: BET_AREA.PLAYER},
-	}
-
-	is, suggestion := _check_double_jump_style(nodes1)
-	if is {
-		fmt.Println(suggestion.String())
-	}
-	is, suggestion = _check_double_jump_style(nodes2)
-	if is {
-		fmt.Println(suggestion.String())
-	}
-}
-
 func Test_3_jump_half_col_1(t *testing.T) {
 	nodes := []*suggestion.FeedbackNode{
 		{Result_area: BET_AREA.BANKER},

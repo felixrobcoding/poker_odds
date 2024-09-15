@@ -18,6 +18,7 @@ func Style_query(nodes []*suggestion.FeedbackNode) *suggestion.BetAreaSuggestion
 		check_mm_jump_style,
 		check_mn_jump_style,
 		check_long_style,
+		check_reverse_style,
 		check_follow_style,
 	}
 

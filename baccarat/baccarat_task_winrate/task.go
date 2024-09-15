@@ -21,8 +21,8 @@ import (
 )
 
 const (
-	GO_ROUTINE_CNT      = 10    //goroutine个数
-	LOOP_TIMES          = 10    //每个goroutine循环次数
+	GO_ROUTINE_CNT      = 1     //goroutine个数
+	LOOP_TIMES          = 1     //每个goroutine循环次数
 	is_output_jpeg bool = false //
 )
 
@@ -33,8 +33,8 @@ var (
 	shoe_cards       []byte     //靴牌,只洗牌一次,下注测试多次,比较盈利情况
 	shoe_cards_mutex sync.Mutex //靴牌互斥锁
 
-	is_read_file = false                                             //是否读文件
-	filename     = "\\images_tmp\\2024-09-14-17-21-22-238486700.dat" //文件名
+	is_read_file = true                                              //是否读文件
+	filename     = "\\images_tmp\\2024-09-15-13-59-26-337447200.dat" //文件名
 )
 
 // 开启
