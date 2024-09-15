@@ -22,3 +22,27 @@ msg="sum_deal_times:7047,max_bet_amount:80,sum_hands:7047,sum_bets:77250,sum_pro
 msg="sum_player_lose_hands:3299,sum_player_push_hands:652,sum_player_win_hands:3096,player_lose_hands_ratio:46.8142%,player_push_hands_ratio:9.2522%,player_win_hands_ratio:43.9336%," func=Odds/baccarat/baccarat_task_winrate.stat file="D:/private/poker_odds/baccarat/baccarat_task_winrate/task.go:205" TAG=baccarat_task_winrate
 
 增加 断龙检测后，胜率下降了
+
+
+## 三 大路上列统计:
+
+统计条件：1000次循环，每次循环中一靴牌中有8副扑克，也就是一共1000靴牌的情况
+|列节点数|列数/总列数|百分比|说明|
+|---|---|---|---|
+|1|16346/32446|50.3791%|总手数63868[去掉和局的情况]|
+|2|8294/32446|25.5625||
+|3|3963/32446|12.2141%||
+|4|1993/32446|6.1425%||
+|5|912/32446|2.8108%||
+|6|504/32446|1.5534%||
+|7|211/32446|0.6503%||
+|8|122/32446|0.3760%||
+|9|42/32446|0.1294%||
+|10|27/32446|0.0832%||
+|11|16/32446|0.0493%||
+|12|6/32446|0.0185%||
+|13|5/32446|0.0154%||
+|14|2/32446|0.0062%||
+|15|1/32446|0.0031%||
+|16|2/32446|0.0062%||
+

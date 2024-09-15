@@ -368,7 +368,10 @@ func (f *FlowControl) Game_over() {
 	dealer_stat := f.dealer.Extract_user_stat()
 
 	//输出svg,svg和dat文件保存在一起，方便比对调试
-	data_path := f.Make_svg()
+	data_path, err := f.Make_svg()
+	if err != nil {
+		xlog_entry.Errorf("生成svg出错,总轮数:%d,shoe_card_cnt:%d", f.Deal_times(), len(f.shoe_cards))
+	}
 	//保存靴牌
 	Save_file(f.shoe_cards_all, data_path)
 
@@ -396,7 +399,7 @@ func (f *FlowControl) dump_messages() {
 }
 
 // 输出svg
-func (f *FlowControl) Make_svg() string {
+func (f *FlowControl) Make_svg() (string, error) {
 	//下注额策略
 	_, _, bet_amount_strategy := f.bet_amount_strategy.Query_option()
 
@@ -408,12 +411,12 @@ func (f *FlowControl) Make_svg() string {
 	svg_content := instance_svg.Make_svg(bigroad, true, bet_amount_strategy.String())
 	jpeg_filepath, svg_filepath, err := ximage.Svg_2_jpeg(svg_content)
 	if err != nil {
-		return "tmp.dat"
+		return "", err
 	}
 	os.Remove(svg_filepath)
 	fmt.Println(jpeg_filepath)
 
-	return strings.Replace(jpeg_filepath, "jpeg", "dat", -1)
+	return strings.Replace(jpeg_filepath, "jpeg", "dat", -1), nil
 }
 
 // 提取每靴牌的统计
