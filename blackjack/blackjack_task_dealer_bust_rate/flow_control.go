@@ -5,17 +5,15 @@
 package blackjack_task_dealer_bust_rate
 
 import (
-	"Odds/blackjack"
-	"Odds/blackjack/define"
-	"Odds/blackjack/define/ACTION_TYPE"
-	"Odds/blackjack/define/CARD_TYPE"
-	"Odds/blackjack/logic"
-	"Odds/blackjack/user_info"
-	"Odds/common"
-	"Odds/common/USER_TYPE"
-	"Odds/common/algorithm"
 	"errors"
 	"fmt"
+	"github.com/felixrobcoding/poker_oddsblackjack/define"
+	"github.com/felixrobcoding/poker_oddsblackjack/define/ACTION_TYPE"
+	"github.com/felixrobcoding/poker_oddsblackjack/define/CARD_TYPE"
+	"github.com/felixrobcoding/poker_oddsblackjack/logic"
+	"github.com/felixrobcoding/poker_oddsblackjack/user_info"
+	"github.com/felixrobcoding/poker_oddscommon/USER_TYPE"
+	"github.com/felixrobcoding/poker_oddscommon/algorithm"
 )
 
 const ()

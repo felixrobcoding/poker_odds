@@ -5,10 +5,10 @@
 package baccarat_task_winrate
 
 import (
-	"Odds/baccarat/define/BET_AREA"
-	"Odds/baccarat/strategy_bet_area/big_road"
-	"Odds/common/BET_AMOUNT_STRATEGY"
 	"fmt"
+	"github.com/felixrobcoding/poker_oddsbaccarat/define/BET_AREA"
+	"github.com/felixrobcoding/poker_oddsbaccarat/strategy_bet_area/big_road"
+	"github.com/felixrobcoding/poker_oddscommon/BET_AMOUNT_STRATEGY"
 )
 
 // 每靴牌统计

@@ -5,9 +5,8 @@
 package blackjack_task_dealer_bust_rate
 
 import (
-	"Odds/blackjack/define"
-	"Odds/common"
 	"fmt"
+	"github.com/felixrobcoding/poker_oddsblackjack/define"
 	"sort"
 )
 

@@ -5,8 +5,8 @@
 package big_road
 
 import (
-	"Odds/baccarat/define/BET_AREA"
 	"bytes"
+	"github.com/felixrobcoding/poker_oddsbaccarat/define/BET_AREA"
 	"sync"
 
 	"fmt"

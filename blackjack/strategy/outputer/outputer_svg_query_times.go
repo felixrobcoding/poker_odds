@@ -5,11 +5,11 @@
 package outputer
 
 import (
-	"Odds/blackjack/define/ACTION_TYPE"
-	"Odds/blackjack/define/HAND_TYPE"
-	"Odds/blackjack/strategy/node"
 	"bytes"
 	"fmt"
+	"github.com/felixrobcoding/poker_oddsblackjack/define/ACTION_TYPE"
+	"github.com/felixrobcoding/poker_oddsblackjack/define/HAND_TYPE"
+	"github.com/felixrobcoding/poker_oddsblackjack/strategy/node"
 
 	svg "github.com/ajstarks/svgo"
 	"github.com/poker-x-studio/x/xmath"

@@ -5,8 +5,7 @@
 package logic
 
 import (
-	"Odds/common"
-	"Odds/texas_holdem/define/CARD_TYPE"
+	"github.com/felixrobcoding/poker_oddstexas_holdem/define/CARD_TYPE"
 
 	"fmt"
 )

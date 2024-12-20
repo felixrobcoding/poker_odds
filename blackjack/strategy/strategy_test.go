@@ -5,9 +5,9 @@
 package strategy
 
 import (
-	"Odds/blackjack/strategy/outputer"
-	"Odds/blackjack/strategy/standard_strategy"
 	"fmt"
+	"github.com/felixrobcoding/poker_oddsblackjack/strategy/outputer"
+	"github.com/felixrobcoding/poker_oddsblackjack/strategy/standard_strategy"
 	"os"
 	"testing"
 

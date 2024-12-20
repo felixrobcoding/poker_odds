@@ -5,16 +5,15 @@
 package baccarat_task_points
 
 import (
-	"Odds/baccarat/define"
-	"Odds/baccarat/define/BET_AREA"
-	"Odds/baccarat/define/CARD_TYPE"
-	"Odds/baccarat/logic"
-	"Odds/baccarat/user_info"
-	"Odds/common"
-	"Odds/common/USER_TYPE"
-	"Odds/common/algorithm"
 	"errors"
 	"fmt"
+	"github.com/felixrobcoding/poker_oddsbaccarat/define"
+	"github.com/felixrobcoding/poker_oddsbaccarat/define/BET_AREA"
+	"github.com/felixrobcoding/poker_oddsbaccarat/define/CARD_TYPE"
+	"github.com/felixrobcoding/poker_oddsbaccarat/logic"
+	"github.com/felixrobcoding/poker_oddsbaccarat/user_info"
+	"github.com/felixrobcoding/poker_oddscommon/USER_TYPE"
+	"github.com/felixrobcoding/poker_oddscommon/algorithm"
 )
 
 const (

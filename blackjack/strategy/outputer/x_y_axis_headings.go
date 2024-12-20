@@ -5,8 +5,8 @@
 package outputer
 
 import (
-	"Odds/blackjack/define"
-	"Odds/blackjack/logic"
+	"github.com/felixrobcoding/poker_oddsblackjack/define"
+	"github.com/felixrobcoding/poker_oddsblackjack/logic"
 )
 
 const (

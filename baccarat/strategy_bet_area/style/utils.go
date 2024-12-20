@@ -5,8 +5,8 @@
 package style
 
 import (
-	"Odds/baccarat/strategy_bet_area/big_road"
 	"errors"
+	"github.com/felixrobcoding/poker_oddsbaccarat/strategy_bet_area/big_road"
 )
 
 type STYLE_TYPE int //形态类型

@@ -5,10 +5,10 @@
 package baccarat_task_winrate
 
 import (
-	"Odds/baccarat/define/BET_AREA"
-	"Odds/baccarat/svg_utils"
-	"Odds/common/BET_AMOUNT_STRATEGY"
 	"fmt"
+	"github.com/felixrobcoding/poker_oddsbaccarat/define/BET_AREA"
+	"github.com/felixrobcoding/poker_oddsbaccarat/svg_utils"
+	"github.com/felixrobcoding/poker_oddscommon/BET_AMOUNT_STRATEGY"
 	"os"
 	"path/filepath"
 	"sort"

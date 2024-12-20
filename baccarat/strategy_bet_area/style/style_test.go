@@ -5,9 +5,9 @@
 package style
 
 import (
-	"Odds/baccarat/define/BET_AREA"
-	"Odds/baccarat/strategy_bet_area/suggestion"
 	"fmt"
+	"github.com/felixrobcoding/poker_oddsbaccarat/define/BET_AREA"
+	"github.com/felixrobcoding/poker_oddsbaccarat/strategy_bet_area/suggestion"
 	"testing"
 )
 

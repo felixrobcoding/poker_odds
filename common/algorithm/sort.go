@@ -5,7 +5,7 @@
 package algorithm
 
 import (
-	"Odds/common/ORDER_TYPE"
+	"github.com/felixrobcoding/poker_oddscommon/ORDER_TYPE"
 	"sort"
 )
 

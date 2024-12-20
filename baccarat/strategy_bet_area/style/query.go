@@ -5,7 +5,7 @@
 package style
 
 import (
-	"Odds/baccarat/strategy_bet_area/suggestion"
+	"github.com/felixrobcoding/poker_oddsbaccarat/strategy_bet_area/suggestion"
 
 	"github.com/poker-x-studio/x/xdebug"
 )

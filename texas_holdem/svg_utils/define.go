@@ -5,7 +5,7 @@
 package svg_utils
 
 import (
-	"Odds/texas_holdem/define/CARD_TYPE"
+	"github.com/felixrobcoding/poker_oddstexas_holdem/define/CARD_TYPE"
 
 	"github.com/poker-x-studio/x/xutils"
 )

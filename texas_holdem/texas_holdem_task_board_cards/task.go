@@ -5,15 +5,15 @@
 package texas_holdem_task_board_cards
 
 import (
-	"Odds/common/algorithm"
 	"fmt"
+	"github.com/felixrobcoding/poker_oddscommon/algorithm"
 	"os"
 
 	"github.com/poker-x-studio/x/ximage"
 
-	"Odds/texas_holdem/define/CARD_TYPE"
-	"Odds/texas_holdem/logic"
-	"Odds/texas_holdem/svg_utils"
+	"github.com/felixrobcoding/poker_oddstexas_holdem/define/CARD_TYPE"
+	"github.com/felixrobcoding/poker_oddstexas_holdem/logic"
+	"github.com/felixrobcoding/poker_oddstexas_holdem/svg_utils"
 
 	"sync"
 

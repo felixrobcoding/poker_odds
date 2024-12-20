@@ -5,9 +5,9 @@
 package suggestion
 
 import (
-	"Odds/baccarat/define/BET_AREA"
-	"Odds/baccarat/define/STYLE"
 	"fmt"
+	"github.com/felixrobcoding/poker_oddsbaccarat/define/BET_AREA"
+	"github.com/felixrobcoding/poker_oddsbaccarat/define/STYLE"
 )
 
 // 下注区域建议

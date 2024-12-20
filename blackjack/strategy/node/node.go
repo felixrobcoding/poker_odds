@@ -5,9 +5,9 @@
 package node
 
 import (
-	"Odds/blackjack/define/ACTION_TYPE"
-	"Odds/blackjack/define/HAND_TYPE"
 	"fmt"
+	"github.com/felixrobcoding/poker_oddsblackjack/define/ACTION_TYPE"
+	"github.com/felixrobcoding/poker_oddsblackjack/define/HAND_TYPE"
 	"strconv"
 	"strings"
 )

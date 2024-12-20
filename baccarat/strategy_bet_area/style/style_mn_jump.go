@@ -5,10 +5,10 @@
 package style
 
 import (
-	"Odds/baccarat/define/BET_AREA"
-	"Odds/baccarat/define/STYLE"
-	"Odds/baccarat/strategy_bet_area/big_road"
-	"Odds/baccarat/strategy_bet_area/suggestion"
+	"github.com/felixrobcoding/poker_oddsbaccarat/define/BET_AREA"
+	"github.com/felixrobcoding/poker_oddsbaccarat/define/STYLE"
+	"github.com/felixrobcoding/poker_oddsbaccarat/strategy_bet_area/big_road"
+	"github.com/felixrobcoding/poker_oddsbaccarat/strategy_bet_area/suggestion"
 )
 
 const (

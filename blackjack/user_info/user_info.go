@@ -5,12 +5,12 @@
 package user_info
 
 import (
-	"Odds/blackjack/define"
-	"Odds/blackjack/define/ACTION_TYPE"
-	"Odds/blackjack/logic"
-	"Odds/common/GAME_RESULT"
-	"Odds/common/USER_TYPE"
 	"fmt"
+	"github.com/felixrobcoding/poker_oddsblackjack/define"
+	"github.com/felixrobcoding/poker_oddsblackjack/define/ACTION_TYPE"
+	"github.com/felixrobcoding/poker_oddsblackjack/logic"
+	"github.com/felixrobcoding/poker_oddscommon/GAME_RESULT"
+	"github.com/felixrobcoding/poker_oddscommon/USER_TYPE"
 )
 
 type UserInfo struct {

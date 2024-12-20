@@ -5,9 +5,8 @@
 package logic
 
 import (
-	"Odds/common"
-	"Odds/common/ORDER_TYPE"
-	"Odds/common/algorithm"
+	"github.com/felixrobcoding/poker_oddscommon/ORDER_TYPE"
+	"github.com/felixrobcoding/poker_oddscommon/algorithm"
 )
 
 // is_ex_flush_3 是否3张同色

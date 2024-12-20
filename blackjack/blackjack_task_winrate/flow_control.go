@@ -5,19 +5,17 @@
 package blackjack_task_winrate
 
 import (
-	"Odds/baccarat/strategy_bet_amount"
-	"Odds/blackjack"
-	"Odds/blackjack/define"
-	"Odds/blackjack/define/ACTION_TYPE"
-	"Odds/blackjack/define/CARD_TYPE"
-	"Odds/blackjack/logic"
-	"Odds/blackjack/strategy"
-	"Odds/blackjack/user_info"
-	"Odds/common"
-	"Odds/common/USER_TYPE"
-	"Odds/common/algorithm"
 	"errors"
 	"fmt"
+	"github.com/felixrobcoding/poker_oddsbaccarat/strategy_bet_amount"
+	"github.com/felixrobcoding/poker_oddsblackjack/define"
+	"github.com/felixrobcoding/poker_oddsblackjack/define/ACTION_TYPE"
+	"github.com/felixrobcoding/poker_oddsblackjack/define/CARD_TYPE"
+	"github.com/felixrobcoding/poker_oddsblackjack/logic"
+	"github.com/felixrobcoding/poker_oddsblackjack/strategy"
+	"github.com/felixrobcoding/poker_oddsblackjack/user_info"
+	"github.com/felixrobcoding/poker_oddscommon/USER_TYPE"
+	"github.com/felixrobcoding/poker_oddscommon/algorithm"
 )
 
 const (

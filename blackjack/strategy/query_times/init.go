@@ -5,9 +5,9 @@
 package query_times
 
 import (
-	"Odds/blackjack/strategy/node"
-	"Odds/blackjack/strategy/outputer"
-	"Odds/blackjack/strategy/standard_strategy"
+	"github.com/felixrobcoding/poker_oddsblackjack/strategy/node"
+	"github.com/felixrobcoding/poker_oddsblackjack/strategy/outputer"
+	"github.com/felixrobcoding/poker_oddsblackjack/strategy/standard_strategy"
 	"sync"
 )
 

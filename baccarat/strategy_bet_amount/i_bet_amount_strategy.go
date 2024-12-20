@@ -4,7 +4,7 @@
 */
 package strategy_bet_amount
 
-import "Odds/common/BET_AMOUNT_STRATEGY"
+import "github.com/felixrobcoding/poker_oddscommon/BET_AMOUNT_STRATEGY"
 
 type IBetAmountStrategy interface {
 	Feedback_node_append(node *FeedbackNode)            //追加反馈节点

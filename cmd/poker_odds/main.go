@@ -5,10 +5,7 @@
 package main
 
 import (
-	"Odds/app"
-	"Odds/baccarat/baccarat_task_winrate"
-
-	"Odds/config"
+	"github.com/felixrobcoding/poker_oddsbaccarat/baccarat_task_winrate"
 
 	"fmt"
 

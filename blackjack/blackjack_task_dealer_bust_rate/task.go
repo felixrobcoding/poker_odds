@@ -5,7 +5,7 @@
 package blackjack_task_dealer_bust_rate
 
 import (
-	"Odds/blackjack/define/CARD_TYPE"
+	"github.com/felixrobcoding/poker_oddsblackjack/define/CARD_TYPE"
 	"sync"
 )
 

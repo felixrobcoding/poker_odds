@@ -4,8 +4,6 @@
 */
 package logic
 
-import "Odds/common"
-
 // 计算点数
 func Point(card byte) int {
 	value := common.Value(card)

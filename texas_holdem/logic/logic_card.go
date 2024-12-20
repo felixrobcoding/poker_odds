@@ -4,10 +4,6 @@
 */
 package logic
 
-import (
-	"Odds/common"
-)
-
 // card_2_lcard 牌转逻辑牌
 //
 //lcard:logic card

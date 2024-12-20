@@ -6,10 +6,10 @@
 package strategy_bet_area
 
 import (
-	"Odds/baccarat/define/BET_AREA"
-	"Odds/baccarat/strategy_bet_area/big_road"
-	"Odds/baccarat/strategy_bet_area/style"
-	"Odds/baccarat/strategy_bet_area/suggestion"
+	"github.com/felixrobcoding/poker_oddsbaccarat/define/BET_AREA"
+	"github.com/felixrobcoding/poker_oddsbaccarat/strategy_bet_area/big_road"
+	"github.com/felixrobcoding/poker_oddsbaccarat/strategy_bet_area/style"
+	"github.com/felixrobcoding/poker_oddsbaccarat/strategy_bet_area/suggestion"
 )
 
 type Strategy struct {

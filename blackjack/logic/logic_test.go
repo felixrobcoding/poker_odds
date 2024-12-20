@@ -5,8 +5,7 @@
 package logic
 
 import (
-	"Odds/common"
-	"fmt"
+	"github.com/felixrobcoding/poker_oddscommon"
 	"testing"
 )
 

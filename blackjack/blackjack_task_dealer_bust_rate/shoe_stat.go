@@ -5,9 +5,8 @@
 package blackjack_task_dealer_bust_rate
 
 import (
-	"Odds/blackjack/define/CARD_TYPE"
-	"Odds/common"
 	"fmt"
+	"github.com/felixrobcoding/poker_oddsblackjack/define/CARD_TYPE"
 )
 
 // 每靴牌统计

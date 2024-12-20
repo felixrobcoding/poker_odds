@@ -23,4 +23,4 @@
     - svg转jpeg图
 
 ## 三 github commit之间比较
- https://github.com/poker-x-studio/poker_odds/compare/49c83f4..1abff3f
+ https://github.com/poker-x-studio/poker_github.com/felixrobcoding/poker_oddscompare/49c83f4..1abff3f

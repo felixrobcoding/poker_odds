@@ -5,10 +5,10 @@
 package logic_plo
 
 import (
-	"Odds/common/COMPARE_TYPE"
-	"Odds/common/algorithm"
-	"Odds/texas_holdem/define"
-	"Odds/texas_holdem/logic"
+	"github.com/felixrobcoding/poker_oddscommon/COMPARE_TYPE"
+	"github.com/felixrobcoding/poker_oddscommon/algorithm"
+	"github.com/felixrobcoding/poker_oddstexas_holdem/define"
+	"github.com/felixrobcoding/poker_oddstexas_holdem/logic"
 )
 
 // Combo_best_card_type 组合最佳牌型

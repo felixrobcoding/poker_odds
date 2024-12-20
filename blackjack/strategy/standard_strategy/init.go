@@ -5,10 +5,10 @@
 package standard_strategy
 
 import (
-	"Odds/blackjack/define/ACTION_TYPE"
-	"Odds/blackjack/define/HAND_TYPE"
-	"Odds/blackjack/strategy/node"
-	"Odds/blackjack/strategy/outputer"
+	"github.com/felixrobcoding/poker_oddsblackjack/define/ACTION_TYPE"
+	"github.com/felixrobcoding/poker_oddsblackjack/define/HAND_TYPE"
+	"github.com/felixrobcoding/poker_oddsblackjack/strategy/node"
+	"github.com/felixrobcoding/poker_oddsblackjack/strategy/outputer"
 )
 
 type Chart struct {

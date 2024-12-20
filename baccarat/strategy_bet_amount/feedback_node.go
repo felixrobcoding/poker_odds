@@ -5,7 +5,7 @@
 package strategy_bet_amount
 
 import (
-	"Odds/baccarat/define/BET_AREA"
+	"github.com/felixrobcoding/poker_oddsbaccarat/define/BET_AREA"
 )
 
 type FeedbackNode struct {

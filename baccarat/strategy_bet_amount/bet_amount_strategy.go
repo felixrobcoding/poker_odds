@@ -5,8 +5,8 @@
 package strategy_bet_amount
 
 import (
-	"Odds/baccarat/define/BET_AREA"
-	"Odds/common/BET_AMOUNT_STRATEGY"
+	"github.com/felixrobcoding/poker_oddsbaccarat/define/BET_AREA"
+	"github.com/felixrobcoding/poker_oddscommon/BET_AMOUNT_STRATEGY"
 )
 
 const (

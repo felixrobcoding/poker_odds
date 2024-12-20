@@ -5,8 +5,8 @@
 package svg_utils
 
 import (
-	"Odds/baccarat/define/BET_AREA"
 	"fmt"
+	"github.com/felixrobcoding/poker_oddsbaccarat/define/BET_AREA"
 
 	"github.com/poker-x-studio/x/xutils"
 )

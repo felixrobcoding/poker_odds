@@ -5,9 +5,9 @@
 package blackjack_task_winrate
 
 import (
-	"Odds/blackjack/strategy/query_times"
-	"Odds/common/BET_AMOUNT_STRATEGY"
 	"fmt"
+	"github.com/felixrobcoding/poker_oddsblackjack/strategy/query_times"
+	"github.com/felixrobcoding/poker_oddscommon/BET_AMOUNT_STRATEGY"
 	"os"
 	"sort"
 	"sync"

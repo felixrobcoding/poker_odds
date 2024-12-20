@@ -5,9 +5,9 @@
 package user_info
 
 import (
-	"Odds/baccarat/define/BET_AREA"
-	"Odds/common/GAME_RESULT"
-	"Odds/common/USER_TYPE"
+	"github.com/felixrobcoding/poker_oddsbaccarat/define/BET_AREA"
+	"github.com/felixrobcoding/poker_oddscommon/GAME_RESULT"
+	"github.com/felixrobcoding/poker_oddscommon/USER_TYPE"
 )
 
 type UserInfo struct {

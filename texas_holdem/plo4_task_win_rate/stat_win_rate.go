@@ -5,8 +5,8 @@
 package plo4_task_win_rate
 
 import (
-	"Odds/common/COMPARE_TYPE"
 	"fmt"
+	"github.com/felixrobcoding/poker_oddscommon/COMPARE_TYPE"
 	"sync"
 )
 

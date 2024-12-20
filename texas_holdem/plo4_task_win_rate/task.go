@@ -5,12 +5,11 @@
 package plo4_task_win_rate
 
 import (
-	"Odds/common"
-	"Odds/common/algorithm"
+	"github.com/felixrobcoding/poker_oddscommon/algorithm"
 
-	"Odds/texas_holdem/define"
-	"Odds/texas_holdem/logic"
-	"Odds/texas_holdem/logic_plo"
+	"github.com/felixrobcoding/poker_oddstexas_holdem/define"
+	"github.com/felixrobcoding/poker_oddstexas_holdem/logic"
+	"github.com/felixrobcoding/poker_oddstexas_holdem/logic_plo"
 
 	"sync"
 

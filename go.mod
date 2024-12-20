@@ -1,4 +1,4 @@
-module Odds
+module github.com/felixrobcoding/poker_odds
 
 go 1.20
 

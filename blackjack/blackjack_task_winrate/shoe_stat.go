@@ -5,8 +5,8 @@
 package blackjack_task_winrate
 
 import (
-	"Odds/common/BET_AMOUNT_STRATEGY"
 	"fmt"
+	"github.com/felixrobcoding/poker_oddscommon/BET_AMOUNT_STRATEGY"
 )
 
 // 每靴牌统计

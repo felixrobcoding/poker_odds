@@ -5,11 +5,10 @@
 package logic
 
 import (
-	"Odds/blackjack/define"
-	"Odds/blackjack/define/CARD_TYPE"
-	"Odds/blackjack/define/HAND_TYPE"
-	"Odds/common"
-	"Odds/common/algorithm"
+	"github.com/felixrobcoding/poker_oddsblackjack/define"
+	"github.com/felixrobcoding/poker_oddsblackjack/define/CARD_TYPE"
+	"github.com/felixrobcoding/poker_oddsblackjack/define/HAND_TYPE"
+	"github.com/felixrobcoding/poker_oddscommon/algorithm"
 )
 
 // 分析hand type

@@ -5,17 +5,16 @@
 package strategy
 
 import (
-	"Odds/blackjack/define"
-	"Odds/blackjack/define/ACTION_TYPE"
-	"Odds/blackjack/define/HAND_TYPE"
-	"Odds/blackjack/logic"
-	"Odds/blackjack/strategy/node"
-	"Odds/blackjack/strategy/outputer"
-	"Odds/blackjack/strategy/query_times"
-	"Odds/blackjack/strategy/standard_strategy"
-	"Odds/common"
-	"Odds/common/algorithm"
 	"fmt"
+	"github.com/felixrobcoding/poker_oddsblackjack/define"
+	"github.com/felixrobcoding/poker_oddsblackjack/define/ACTION_TYPE"
+	"github.com/felixrobcoding/poker_oddsblackjack/define/HAND_TYPE"
+	"github.com/felixrobcoding/poker_oddsblackjack/logic"
+	"github.com/felixrobcoding/poker_oddsblackjack/strategy/node"
+	"github.com/felixrobcoding/poker_oddsblackjack/strategy/outputer"
+	"github.com/felixrobcoding/poker_oddsblackjack/strategy/query_times"
+	"github.com/felixrobcoding/poker_oddsblackjack/strategy/standard_strategy"
+	"github.com/felixrobcoding/poker_oddscommon/algorithm"
 
 	"github.com/poker-x-studio/x/xdebug"
 )

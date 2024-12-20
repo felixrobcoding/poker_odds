@@ -5,7 +5,7 @@
 package big_road
 
 import (
-	"Odds/baccarat/define/BET_AREA"
+	"github.com/felixrobcoding/poker_oddsbaccarat/define/BET_AREA"
 )
 
 // Col 列,列中的所有元素都相同

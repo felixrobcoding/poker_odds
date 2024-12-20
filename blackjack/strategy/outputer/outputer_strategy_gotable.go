@@ -5,9 +5,9 @@
 package outputer
 
 import (
-	"Odds/blackjack/define/HAND_TYPE"
-	"Odds/blackjack/strategy/node"
 	"fmt"
+	"github.com/felixrobcoding/poker_oddsblackjack/define/HAND_TYPE"
+	"github.com/felixrobcoding/poker_oddsblackjack/strategy/node"
 
 	"github.com/liushuochen/gotable"
 	"github.com/poker-x-studio/x/xdebug"

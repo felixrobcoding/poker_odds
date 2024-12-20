@@ -5,11 +5,11 @@
 package user_info
 
 import (
-	"Odds/blackjack/define/ACTION_TYPE"
-	"Odds/blackjack/define/CARD_TYPE"
-	"Odds/blackjack/define/HAND_TYPE"
-	"Odds/blackjack/logic"
-	"Odds/common/GAME_RESULT"
+	"github.com/felixrobcoding/poker_oddsblackjack/define/ACTION_TYPE"
+	"github.com/felixrobcoding/poker_oddsblackjack/define/CARD_TYPE"
+	"github.com/felixrobcoding/poker_oddsblackjack/define/HAND_TYPE"
+	"github.com/felixrobcoding/poker_oddsblackjack/logic"
+	"github.com/felixrobcoding/poker_oddscommon/GAME_RESULT"
 )
 
 type HandCard struct {

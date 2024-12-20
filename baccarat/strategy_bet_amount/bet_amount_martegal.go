@@ -5,8 +5,8 @@
 package strategy_bet_amount
 
 import (
-	"Odds/common/BET_AMOUNT_STRATEGY"
 	"errors"
+	"github.com/felixrobcoding/poker_oddscommon/BET_AMOUNT_STRATEGY"
 
 	"github.com/poker-x-studio/x/xmath"
 )

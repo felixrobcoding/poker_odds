@@ -5,9 +5,8 @@
 package logic
 
 import (
-	"Odds/baccarat/define"
-	"Odds/baccarat/define/CARD_TYPE"
-	"Odds/common"
+	"github.com/felixrobcoding/poker_oddsbaccarat/define"
+	"github.com/felixrobcoding/poker_oddsbaccarat/define/CARD_TYPE"
 )
 
 // Card_type 牌型

@@ -5,7 +5,7 @@
 package suggestion
 
 import (
-	"Odds/baccarat/define/BET_AREA"
+	"github.com/felixrobcoding/poker_oddsbaccarat/define/BET_AREA"
 )
 
 // 反馈节点

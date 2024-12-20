@@ -5,11 +5,9 @@
 package logic
 
 import (
-	"Odds/blackjack/define"
-	"Odds/blackjack/define/HAND_TYPE"
-	"Odds/common"
 	"fmt"
-
+	"github.com/felixrobcoding/poker_oddsblackjack/define"
+	"github.com/felixrobcoding/poker_oddsblackjack/define/HAND_TYPE"
 	"github.com/poker-x-studio/x/xutils"
 )
 

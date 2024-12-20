@@ -5,8 +5,8 @@
 package style
 
 import (
-	"Odds/baccarat/define/STYLE"
-	"Odds/baccarat/strategy_bet_area/suggestion"
+	"github.com/felixrobcoding/poker_oddsbaccarat/define/STYLE"
+	"github.com/felixrobcoding/poker_oddsbaccarat/strategy_bet_area/suggestion"
 )
 
 // 跟从形态检测
